@@ -1,0 +1,448 @@
+@extends('admin.layouts.app')
+@section('title', 'Edit Tentang Kami')
+@section('page_title', 'Tentang Kami')
+
+@section('content')
+
+@if(session('sukses') || session('success'))
+<div class="alert-success-admin mb-4 d-flex align-items-center gap-2">
+    <i class="bi bi-check-circle-fill"></i> {{ session('sukses') ?? session('success') }}
+</div>
+@endif
+
+@if($errors->any())
+<div class="alert-danger-admin mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <strong>Terdapat kesalahan:</strong>
+    </div>
+    <ul class="mb-0 ps-4">
+        @foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach
+    </ul>
+</div>
+@endif
+
+<form action="{{ route('admin.tentang.update') }}" method="POST" enctype="multipart/form-data">
+    @csrf @method('PUT')
+
+    {{-- IDENTITAS --}}
+    <div class="admin-card mb-4">
+        <div class="admin-card-header">
+            <h5><i class="bi bi-building me-2 text-primary"></i>Identitas Perusahaan</h5>
+        </div>
+        <div class="admin-card-body p-4">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>Nama Perusahaan <span class="text-danger">*</span></label>
+                        <input type="text" name="nama_perusahaan"
+                            class="form-control-admin @error('nama_perusahaan') is-invalid @enderror"
+                            value="{{ old('nama_perusahaan', $tentang->nama_perusahaan ?? $tentang->judul ?? '') }}"
+                            placeholder="contoh: PT ICDE Semarang" required>
+                        @error('nama_perusahaan')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group-admin">
+                        <label>Tahun Berdiri</label>
+                        <input type="text" name="tahun_berdiri"
+                            class="form-control-admin @error('tahun_berdiri') is-invalid @enderror"
+                            value="{{ old('tahun_berdiri', $tentang->tahun_berdiri ?? '') }}"
+                            placeholder="contoh: 2010" maxlength="10">
+                        @error('tahun_berdiri')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group-admin">
+                        <label>Website</label>
+                        <input type="url" name="website"
+                            class="form-control-admin @error('website') is-invalid @enderror"
+                            value="{{ old('website', $tentang->website ?? '') }}"
+                            placeholder="https://icde.id">
+                        @error('website')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- PROFIL --}}
+    <div class="admin-card mb-4">
+        <div class="admin-card-header">
+            <h5><i class="bi bi-file-text me-2 text-primary"></i>Profil Perusahaan</h5>
+        </div>
+        <div class="admin-card-body p-4">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="form-group-admin">
+                        <label>Nama Lengkap Perusahaan</label>
+                        <input type="text" name="nama_lengkap"
+                            class="form-control-admin @error('nama_lengkap') is-invalid @enderror"
+                            value="{{ old('nama_lengkap', $tentang->nama_lengkap ?? '') }}"
+                            placeholder="PT. Indonesian Consultant for Development and Empowerment">
+                        @error('nama_lengkap')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group-admin">
+                        <label>Profil Singkat <span class="text-danger">*</span></label>
+                        <textarea name="profil_singkat" rows="6"
+                            class="form-control-admin @error('profil_singkat') is-invalid @enderror"
+                            placeholder="Tuliskan deskripsi singkat tentang perusahaan...">{{ old('profil_singkat', $tentang->profil_singkat ?? $tentang->deskripsi ?? '') }}</textarea>
+                        @error('profil_singkat')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <div style="font-size:0.78rem;color:#94a3b8;margin-top:4px;">Tampil di halaman Tentang Kami dan digunakan sebagai meta description.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- DATA PERUSAHAAN --}}
+    <div class="admin-card mb-4">
+        <div class="admin-card-header">
+            <h5><i class="bi bi-journal-text me-2 text-primary"></i>Data Perusahaan</h5>
+            <small class="text-muted">Informasi legalitas dan formal perusahaan</small>
+        </div>
+        <div class="admin-card-body p-4">
+
+            {{-- Identitas Formal --}}
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #f1f5f9;">
+                Identitas Formal
+            </div>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>Bentuk Perusahaan</label>
+                        <input type="text" name="bentuk_perusahaan"
+                            class="form-control-admin @error('bentuk_perusahaan') is-invalid @enderror"
+                            value="{{ old('bentuk_perusahaan', $tentang->bentuk_perusahaan ?? '') }}"
+                            placeholder="Perseroan Terbatas (PT)">
+                        @error('bentuk_perusahaan')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>Status Kantor</label>
+                        <input type="text" name="status_kantor"
+                            class="form-control-admin @error('status_kantor') is-invalid @enderror"
+                            value="{{ old('status_kantor', $tentang->status_kantor ?? '') }}"
+                            placeholder="Kantor Pusat">
+                        @error('status_kantor')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group-admin">
+                        <label>Pengesahan Badan Hukum</label>
+                        <input type="text" name="pengesahan_badan_hukum"
+                            class="form-control-admin @error('pengesahan_badan_hukum') is-invalid @enderror"
+                            value="{{ old('pengesahan_badan_hukum', $tentang->pengesahan_badan_hukum ?? '') }}"
+                            placeholder="Kepmenhumham Nomor AHU-19246.AH.01.01, Tahun 2011">
+                        @error('pengesahan_badan_hukum')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>Direktur Utama</label>
+                        <input type="text" name="direktur_utama"
+                            class="form-control-admin @error('direktur_utama') is-invalid @enderror"
+                            value="{{ old('direktur_utama', $tentang->direktur_utama ?? '') }}"
+                            placeholder="Drs. H. Gunarto, MM.">
+                        @error('direktur_utama')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+            </div>
+
+            {{-- Akta Pendirian --}}
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #f1f5f9;">
+                Akta Pendirian
+            </div>
+            <div class="row g-3 mb-4">
+                <div class="col-md-5">
+                    <div class="form-group-admin">
+                        <label>Notaris</label>
+                        <input type="text" name="akta_notaris"
+                            class="form-control-admin @error('akta_notaris') is-invalid @enderror"
+                            value="{{ old('akta_notaris', $tentang->akta_notaris ?? '') }}"
+                            placeholder="Tri Isdiyanti, SH">
+                        @error('akta_notaris')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group-admin">
+                        <label>Nomor Akta</label>
+                        <input type="text" name="akta_nomor"
+                            class="form-control-admin @error('akta_nomor') is-invalid @enderror"
+                            value="{{ old('akta_nomor', $tentang->akta_nomor ?? '') }}"
+                            placeholder="05 (lima)">
+                        @error('akta_nomor')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group-admin">
+                        <label>Tanggal Akta</label>
+                        <input type="text" name="akta_tanggal"
+                            class="form-control-admin @error('akta_tanggal') is-invalid @enderror"
+                            value="{{ old('akta_tanggal', $tentang->akta_tanggal ?? '') }}"
+                            placeholder="9 April 2010">
+                        @error('akta_tanggal')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+            </div>
+
+            {{-- Legalitas --}}
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #f1f5f9;">
+                Legalitas Usaha
+            </div>
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="form-group-admin">
+                        <label>NPWP</label>
+                        <input type="text" name="npwp"
+                            class="form-control-admin @error('npwp') is-invalid @enderror"
+                            value="{{ old('npwp', $tentang->npwp ?? '') }}"
+                            placeholder="31.315.457.7-517.000">
+                        @error('npwp')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group-admin">
+                        <label>NIB (Nomor Induk Berusaha)</label>
+                        <input type="text" name="nib"
+                            class="form-control-admin @error('nib') is-invalid @enderror"
+                            value="{{ old('nib', $tentang->nib ?? '') }}"
+                            placeholder="9120005752888">
+                        @error('nib')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group-admin">
+                        <label>Kode KBLI</label>
+                        <input type="text" name="kbli"
+                            class="form-control-admin @error('kbli') is-invalid @enderror"
+                            value="{{ old('kbli', $tentang->kbli ?? '') }}"
+                            placeholder="70209, 62019, 62012, 62090">
+                        @error('kbli')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group-admin">
+                        <label>Tanggal SIUP/OSS</label>
+                        <input type="text" name="siup_tanggal"
+                            class="form-control-admin @error('siup_tanggal') is-invalid @enderror"
+                            value="{{ old('siup_tanggal', $tentang->siup_tanggal ?? '') }}"
+                            placeholder="28 Juli 2019">
+                        @error('siup_tanggal')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+            </div>
+
+            {{-- Keanggotaan --}}
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #f1f5f9;">
+                Keanggotaan
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>Nomor Anggota KADIN</label>
+                        <input type="text" name="kadin_nomor"
+                            class="form-control-admin @error('kadin_nomor') is-invalid @enderror"
+                            value="{{ old('kadin_nomor', $tentang->kadin_nomor ?? '') }}"
+                            placeholder="20301-25093146511">
+                        @error('kadin_nomor')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>KADIN Berlaku s/d</label>
+                        <input type="text" name="kadin_berlaku"
+                            class="form-control-admin @error('kadin_berlaku') is-invalid @enderror"
+                            value="{{ old('kadin_berlaku', $tentang->kadin_berlaku ?? '') }}"
+                            placeholder="03 Januari 2026">
+                        @error('kadin_berlaku')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>Nomor Anggota INKINDO</label>
+                        <input type="text" name="inkindo_nomor"
+                            class="form-control-admin @error('inkindo_nomor') is-invalid @enderror"
+                            value="{{ old('inkindo_nomor', $tentang->inkindo_nomor ?? '') }}"
+                            placeholder="15323/P/0673.JT">
+                        @error('inkindo_nomor')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>INKINDO Berlaku s/d</label>
+                        <input type="text" name="inkindo_berlaku"
+                            class="form-control-admin @error('inkindo_berlaku') is-invalid @enderror"
+                            value="{{ old('inkindo_berlaku', $tentang->inkindo_berlaku ?? '') }}"
+                            placeholder="31 Desember 2025">
+                        @error('inkindo_berlaku')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- VISI MISI --}}
+    <div class="admin-card mb-4">
+        <div class="admin-card-header">
+            <h5><i class="bi bi-bullseye me-2 text-primary"></i>Visi & Misi</h5>
+        </div>
+        <div class="admin-card-body p-4">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>Visi</label>
+                        <textarea name="visi" rows="5"
+                            class="form-control-admin tinymce-editor @error('visi') is-invalid @enderror"
+                            placeholder="Visi perusahaan...">{{ old('visi', $tentang->visi ?? '') }}</textarea>
+                        @error('visi')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>Misi</label>
+                        <textarea name="misi" rows="5"
+                            class="form-control-admin tinymce-editor @error('misi') is-invalid @enderror"
+                            placeholder="Misi perusahaan (pisahkan tiap poin dengan baris baru)...">{{ old('misi', $tentang->misi ?? '') }}</textarea>
+                        @error('misi')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- KONTAK --}}
+    <div class="admin-card mb-4">
+        <div class="admin-card-header">
+            <h5><i class="bi bi-telephone me-2 text-primary"></i>Informasi Kontak</h5>
+        </div>
+        <div class="admin-card-body p-4">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="form-group-admin">
+                        <label>Alamat</label>
+                        <textarea name="alamat" rows="3"
+                            class="form-control-admin @error('alamat') is-invalid @enderror"
+                            placeholder="Alamat lengkap kantor...">{{ old('alamat', $tentang->alamat ?? '') }}</textarea>
+                        @error('alamat')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group-admin">
+                        <label>Nomor Telepon</label>
+                        <div style="position:relative;">
+                            <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;"><i class="bi bi-telephone"></i></span>
+                            <input type="text" name="telepon"
+                                class="form-control-admin @error('telepon') is-invalid @enderror"
+                                style="padding-left:36px;"
+                                value="{{ old('telepon', $tentang->telepon ?? '') }}"
+                                placeholder="+62-24-6705577">
+                        </div>
+                        @error('telepon')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group-admin">
+                        <label>Nomor Fax</label>
+                        <div style="position:relative;">
+                            <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;"><i class="bi bi-printer"></i></span>
+                            <input type="text" name="fax"
+                                class="form-control-admin @error('fax') is-invalid @enderror"
+                                style="padding-left:36px;"
+                                value="{{ old('fax', $tentang->fax ?? '') }}"
+                                placeholder="+62-24-6701321">
+                        </div>
+                        @error('fax')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group-admin">
+                        <label>Email</label>
+                        <div style="position:relative;">
+                            <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;"><i class="bi bi-envelope"></i></span>
+                            <input type="email" name="email"
+                                class="form-control-admin @error('email') is-invalid @enderror"
+                                style="padding-left:36px;"
+                                value="{{ old('email', $tentang->email ?? '') }}"
+                                placeholder="icde.semarang@gmail.com">
+                        </div>
+                        @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- MEDIA --}}
+    <div class="admin-card mb-4">
+        <div class="admin-card-header">
+            <h5><i class="bi bi-image me-2 text-primary"></i>Logo & Gambar</h5>
+        </div>
+        <div class="admin-card-body p-4">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>Logo Perusahaan</label>
+                        <input type="file" name="logo" class="form-control-admin @error('logo') is-invalid @enderror"
+                            accept="image/*" onchange="previewImg(this,'prevLogo','prevLogoWrap')">
+                        @error('logo')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <div style="font-size:0.78rem;color:#94a3b8;margin-top:4px;">Format: JPG, PNG, SVG. Maks 2MB.</div>
+                        <div id="prevLogoWrap" class="mt-3" style="{{ $tentang->logo ? '' : 'display:none;' }}">
+                            <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:6px;">{{ $tentang->logo ? 'Logo saat ini:' : 'Preview:' }}</div>
+                            <img id="prevLogo" src="{{ $tentang->logo ? asset('storage/'.$tentang->logo) : '' }}"
+                                style="height:70px;object-fit:contain;background:#f8fafc;padding:8px;border-radius:10px;border:1.5px solid #e2e8f0;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group-admin">
+                        <label>Gambar Tentang Kami</label>
+                        <input type="file" name="gambar" class="form-control-admin @error('gambar') is-invalid @enderror"
+                            accept="image/*" onchange="previewImg(this,'prevGambar','prevGambarWrap')">
+                        @error('gambar')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <div style="font-size:0.78rem;color:#94a3b8;margin-top:4px;">Tampil di halaman Tentang Kami. Format: JPG, PNG. Maks 2MB.</div>
+                        <div id="prevGambarWrap" class="mt-3" style="{{ $tentang->gambar ? '' : 'display:none;' }}">
+                            <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:6px;">{{ $tentang->gambar ? 'Gambar saat ini:' : 'Preview:' }}</div>
+                            <img id="prevGambar" src="{{ $tentang->gambar ? asset('storage/'.$tentang->gambar) : '' }}"
+                                style="height:100px;width:100%;object-fit:cover;border-radius:10px;border:1.5px solid #e2e8f0;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- SAVE --}}
+    <div class="form-actions-admin">
+        <button type="submit" class="btn-admin btn-primary-admin">
+            <i class="bi bi-save-fill me-2"></i>Simpan Perubahan
+        </button>
+        <a href="{{ route('tentang-kami') }}" target="_blank" class="btn-admin btn-light-admin">
+            <i class="bi bi-box-arrow-up-right me-1"></i>Lihat di Website
+        </a>
+    </div>
+
+</form>
+
+@endsection
+
+@push('scripts')
+<script>
+function previewImg(input, imgId, wrapId) {
+    if (!input.files || !input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById(imgId).src = e.target.result;
+        document.getElementById(wrapId).style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+</script>
+@endpush
+
+{{-- DELETE everything below (old form remnant) --}}
+@if(false)
+@endif
