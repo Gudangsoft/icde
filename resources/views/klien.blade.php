@@ -52,89 +52,83 @@
         margin-top: 4px;
     }
 
-    /* ── Client Cards ── */
-    .klien-card {
-        background: #fff;
-        border-radius: 14px;
-        padding: 22px 16px 18px;
+    /* ── Client Grid 10 Kolom Seamless ── */
+    .klien-grid-10 {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 16px;
+    }
+    @media (max-width: 1400px) { .klien-grid-10 { grid-template-columns: repeat(8, 1fr); } }
+    @media (max-width: 1200px) { .klien-grid-10 { grid-template-columns: repeat(6, 1fr); } }
+    @media (max-width: 991px)  { .klien-grid-10 { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 575px)  { .klien-grid-10 { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 400px)  { .klien-grid-10 { grid-template-columns: repeat(2, 1fr); } }
+
+    .klien-seamless {
         text-align: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 10px;
-        transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-        border: 1.5px solid #f1f5f9;
         text-decoration: none;
         color: var(--icde-dark);
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-    }
-    .klien-card::before {
-        content: '';
-        position: absolute;
-        bottom: 0; left: 0; right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--icde-gold), var(--icde-gold-light));
-        transform: scaleX(0);
         transition: transform 0.3s;
+        padding: 12px 8px;
     }
-    .klien-card:hover {
-        box-shadow: 0 10px 32px rgba(0,0,0,0.10);
+    .klien-seamless:hover {
         transform: translateY(-5px);
-        border-color: var(--icde-gold);
-        color: var(--icde-primary);
     }
-    .klien-card:hover::before { transform: scaleX(1); }
-
-    .klien-icon-wrap {
-        width: 56px; height: 56px;
-        border-radius: 14px;
-        background: var(--icde-light-bg);
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.6rem;
-        color: var(--icde-gray-light);
-        transition: all 0.3s;
-        flex-shrink: 0;
-    }
-    .klien-card:hover .klien-icon-wrap {
-        background: linear-gradient(135deg, var(--icde-navy-mid), var(--icde-navy));
-        color: #fff;
-    }
-    .klien-logo {
-        max-height: 55px;
-        max-width: 130px;
+    .klien-logo-seamless {
+        max-height: 50px;
+        max-width: 100%;
         object-fit: contain;
-        transition: transform 0.3s;
+        transition: transform 0.3s, filter 0.3s;
+        filter: grayscale(100%) opacity(80%);
     }
-    .klien-card:hover .klien-logo { transform: scale(1.06); }
-    .klien-name {
-        font-size: 0.83rem;
-        font-weight: 700;
-        line-height: 1.35;
-        color: var(--icde-dark);
-        transition: color 0.3s;
+    .klien-seamless:hover .klien-logo-seamless {
+        transform: scale(1.1);
+        filter: grayscale(0%) opacity(100%);
     }
-    .klien-card:hover .klien-name { color: var(--icde-primary); }
-    .klien-count {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        background: var(--icde-light-bg);
-        color: var(--icde-primary);
+    .klien-name-seamless {
         font-size: 0.72rem;
         font-weight: 700;
-        padding: 3px 10px;
-        border-radius: 20px;
-        border: 1px solid rgba(18,102,66,0.15);
+        line-height: 1.3;
+        color: var(--icde-navy-dark);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: color 0.2s;
+    }
+    .klien-seamless:hover .klien-name-seamless {
+        color: var(--icde-primary);
+    }
+    .klien-icon-seamless {
+        width: 50px; height: 50px;
+        border-radius: 12px;
+        background: #f1f5f9;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.4rem;
+        color: #94a3b8;
         transition: all 0.3s;
     }
-    .klien-card:hover .klien-count {
-        background: var(--icde-primary);
-        color: #fff;
-        border-color: transparent;
+    .klien-seamless:hover .klien-icon-seamless {
+        background: var(--icde-primary-light);
+        color: var(--icde-primary);
+    }
+    .klien-selanjutnya {
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: #94a3b8;
+        transition: color 0.3s, transform 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+    }
+    .klien-seamless:hover .klien-selanjutnya {
+        color: var(--icde-primary);
+        transform: translateX(3px);
     }
 </style>
 @endpush
@@ -152,63 +146,37 @@
 
 {{-- ── Client Grid ── --}}
 <section class="section" style="background:#f8fafc;">
-    <div class="container">
+    <div class="container-fluid px-4 px-lg-5">
 
         @if($klien->isEmpty())
         {{-- Fallback placeholder data --}}
         @php
         $placeholders = [
-            'Kementerian Pemberdayaan Perempuan dan Perlindungan Anak',
-            'Kabupaten Banyumas', 'Kabupaten Purbalingga', 'Kabupaten Boyolali',
-            'Kabupaten Magelang', 'Kabupaten Pati', 'Kabupaten Wonogiri',
-            'Kabupaten Kudus', 'Kabupaten Cilacap', 'Kabupaten Demak',
-            'Kabupaten Grobogan', 'Kabupaten Kendal', 'Kabupaten Sukoharjo',
-            'Kota Semarang', 'Kota Tangerang', 'Provinsi Jawa Tengah',
-            'Provinsi DKI Jakarta', 'Kabupaten Karanganyar', 'Kota Surakarta',
-            'Kota Salatiga', 'Kota Pekalongan', 'Kota Tegal',
+            'Kementerian PPPA', 'Bappenas RI', 'Kementerian Desa PDTT', 'Bappeda Jawa Tengah',
+            'Kabupaten Banyumas', 'Kabupaten Purbalingga', 'Kabupaten Boyolali', 'Kabupaten Magelang', 
+            'Kabupaten Pati', 'Kabupaten Wonogiri',
         ];
         @endphp
-        <div class="row g-3">
+        <div class="klien-grid-10">
             @foreach($placeholders as $idx => $nama)
-            <div class="col-lg-3 col-md-4 col-sm-6 col-6" data-aos="fade-up" data-aos-delay="{{ ($idx % 4) * 50 }}">
-                <a href="#" class="klien-card" onclick="event.preventDefault()">
-                    <div class="klien-icon-wrap"><i class="bi bi-building"></i></div>
-                    <div class="klien-name">{{ $nama }}</div>
-                </a>
-            </div>
+            <a href="#" class="klien-seamless" data-aos="fade-up" data-aos-delay="{{ ($idx % 10) * 40 }}" onclick="event.preventDefault()">
+                <div class="klien-icon-seamless"><i class="bi bi-building"></i></div>
+                <div class="klien-name-seamless">{{ $nama }}</div>
+            </a>
             @endforeach
         </div>
         @else
-        <div class="row g-3">
-            @foreach($klien as $k)
-            @php
-                // Hitung jumlah proyek: exact match dulu, lalu partial match
-                $jumlah = $proyekPerKlien->get($k->nama, 0);
-                if ($jumlah == 0) {
-                    // cari partial match
-                    $jumlah = $proyekPerKlien->filter(function($v, $key) use ($k) {
-                        return str_contains(strtolower($key), strtolower($k->nama))
-                            || str_contains(strtolower($k->nama), strtolower($key));
-                    })->sum();
-                }
-            @endphp
-            <div class="col-lg-3 col-md-4 col-sm-6 col-6"
-                 data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 50 }}">
-                <a class="klien-card" href="{{ route('klien.detail', $k->id) }}">
-                    @if($k->logo)
-                    <img src="{{ asset('storage/' . $k->logo) }}" alt="{{ $k->nama }}" class="klien-logo">
-                    @else
-                    <div class="klien-icon-wrap"><i class="bi bi-building"></i></div>
-                    @endif
-                    <div class="klien-name">{{ $k->nama }}</div>
-                    @if($jumlah > 0)
-                    <span class="klien-count">
-                        <i class="bi bi-briefcase-fill" style="font-size:0.65rem;"></i>
-                        {{ $jumlah }} proyek
-                    </span>
-                    @endif
-                </a>
-            </div>
+        <div class="klien-grid-10">
+            @foreach($klien as $idx => $k)
+            <a class="klien-seamless" href="{{ route('klien.detail', $k->id) }}" data-aos="fade-up" data-aos-delay="{{ ($idx % 10) * 30 }}">
+                @if($k->logo)
+                <img src="{{ asset('storage/' . $k->logo) }}" alt="{{ $k->nama }}" class="klien-logo-seamless">
+                @else
+                <div class="klien-icon-seamless"><i class="bi bi-building"></i></div>
+                @endif
+                <div class="klien-name-seamless">{{ $k->nama }}</div>
+                <div class="klien-selanjutnya">Selanjutnya <i class="bi bi-arrow-right"></i></div>
+            </a>
             @endforeach
         </div>
         @endif
