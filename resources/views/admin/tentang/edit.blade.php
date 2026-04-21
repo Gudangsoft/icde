@@ -25,14 +25,14 @@
 <form action="{{ route('admin.tentang.update') }}" method="POST" enctype="multipart/form-data">
     @csrf @method('PUT')
 
-    {{-- IDENTITAS --}}
+    {{-- PROFIL PERUSAHAAN --}}
     <div class="admin-card mb-4">
         <div class="admin-card-header">
-            <h5><i class="bi bi-building me-2 text-primary"></i>Identitas Perusahaan</h5>
+            <h5><i class="bi bi-building me-2 text-primary"></i>Profil Perusahaan</h5>
         </div>
         <div class="admin-card-body p-4">
             <div class="row g-3">
-                <div class="col-md-6">
+                <div class="col-12">
                     <div class="form-group-admin">
                         <label>Judul <span class="text-danger">*</span></label>
                         <input type="text" name="nama_perusahaan"
@@ -40,47 +40,6 @@
                             value="{{ old('nama_perusahaan', $tentang->nama_perusahaan ?? $tentang->judul ?? '') }}"
                             placeholder="contoh: PT ICDE Semarang" required>
                         @error('nama_perusahaan')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group-admin">
-                        <label>Tahun Berdiri</label>
-                        <input type="text" name="tahun_berdiri"
-                            class="form-control-admin @error('tahun_berdiri') is-invalid @enderror"
-                            value="{{ old('tahun_berdiri', $tentang->tahun_berdiri ?? '') }}"
-                            placeholder="contoh: 2010" maxlength="10">
-                        @error('tahun_berdiri')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group-admin">
-                        <label>Website</label>
-                        <input type="url" name="website"
-                            class="form-control-admin @error('website') is-invalid @enderror"
-                            value="{{ old('website', $tentang->website ?? '') }}"
-                            placeholder="https://icde.id">
-                        @error('website')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- PROFIL --}}
-    <div class="admin-card mb-4">
-        <div class="admin-card-header">
-            <h5><i class="bi bi-file-text me-2 text-primary"></i>Profil Perusahaan</h5>
-        </div>
-        <div class="admin-card-body p-4">
-            <div class="row g-3">
-                <div class="col-12">
-                    <div class="form-group-admin">
-                        <label>Nama Lengkap Perusahaan</label>
-                        <input type="text" name="nama_lengkap"
-                            class="form-control-admin @error('nama_lengkap') is-invalid @enderror"
-                            value="{{ old('nama_lengkap', $tentang->nama_lengkap ?? '') }}"
-                            placeholder="PT. Indonesian Consultant for Development and Empowerment">
-                        @error('nama_lengkap')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>
                 <div class="col-12">
