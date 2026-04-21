@@ -44,7 +44,6 @@ class TentangKamiAdminController extends Controller
             'email'                => 'nullable|email|max:100',
             'fax'                  => 'nullable|string|max:50',
             'website'              => 'nullable|url|max:255',
-            'logo'                 => 'nullable|image|max:2048',
             'gambar'               => 'nullable|image|max:2048',
         ]);
 
@@ -85,11 +84,6 @@ class TentangKamiAdminController extends Controller
             }
         }
         $tentang->keanggotaan_dinamis = $keanggotaanDinamis;
-
-        if ($request->hasFile('logo')) {
-            if ($tentang->logo) Storage::disk('public')->delete($tentang->logo);
-            $tentang->logo = $request->file('logo')->store('tentang', 'public');
-        }
 
         if ($request->hasFile('gambar')) {
             if ($tentang->gambar) Storage::disk('public')->delete($tentang->gambar);

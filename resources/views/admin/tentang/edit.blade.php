@@ -336,35 +336,21 @@
     {{-- MEDIA --}}
     <div class="admin-card mb-4">
         <div class="admin-card-header">
-            <h5><i class="bi bi-image me-2 text-primary"></i>Logo & Gambar</h5>
+            <h5><i class="bi bi-image me-2 text-primary"></i>Media & Gambar</h5>
         </div>
         <div class="admin-card-body p-4">
             <div class="row g-4">
-                <div class="col-md-6">
+                <div class="col-12">
                     <div class="form-group-admin">
-                        <label>Logo Perusahaan</label>
-                        <input type="file" name="logo" class="form-control-admin @error('logo') is-invalid @enderror"
-                            accept="image/*" onchange="previewImg(this,'prevLogo','prevLogoWrap')">
-                        @error('logo')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        <div style="font-size:0.78rem;color:#94a3b8;margin-top:4px;">Format: JPG, PNG, SVG. Maks 2MB.</div>
-                        <div id="prevLogoWrap" class="mt-3" style="{{ $tentang->logo ? '' : 'display:none;' }}">
-                            <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:6px;">{{ $tentang->logo ? 'Logo saat ini:' : 'Preview:' }}</div>
-                            <img id="prevLogo" src="{{ $tentang->logo ? asset('storage/'.$tentang->logo) : '' }}"
-                                style="height:70px;object-fit:contain;background:#f8fafc;padding:8px;border-radius:10px;border:1.5px solid #e2e8f0;">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group-admin">
-                        <label>Gambar Tentang Kami</label>
+                        <label>Gambar Utama (Profil Perusahaan)</label>
                         <input type="file" name="gambar" class="form-control-admin @error('gambar') is-invalid @enderror"
                             accept="image/*" onchange="previewImg(this,'prevGambar','prevGambarWrap')">
                         @error('gambar')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        <div style="font-size:0.78rem;color:#94a3b8;margin-top:4px;">Tampil di halaman Tentang Kami. Format: JPG, PNG. Maks 2MB.</div>
+                        <div style="font-size:0.78rem;color:#94a3b8;margin-top:4px;">Tampil sebagai header di halaman Tentang Kami. Format: JPG, PNG. Maks 2MB.</div>
                         <div id="prevGambarWrap" class="mt-3" style="{{ $tentang->gambar ? '' : 'display:none;' }}">
                             <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:6px;">{{ $tentang->gambar ? 'Gambar saat ini:' : 'Preview:' }}</div>
                             <img id="prevGambar" src="{{ $tentang->gambar ? asset('storage/'.$tentang->gambar) : '' }}"
-                                style="height:100px;width:100%;object-fit:cover;border-radius:10px;border:1.5px solid #e2e8f0;">
+                                style="max-height:180px;width:100%;object-fit:cover;border-radius:10px;border:1.5px solid #e2e8f0;">
                         </div>
                     </div>
                 </div>
