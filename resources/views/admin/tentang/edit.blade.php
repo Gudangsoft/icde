@@ -34,7 +34,7 @@
             <div class="row g-3">
                 <div class="col-md-6">
                     <div class="form-group-admin">
-                        <label>Nama Perusahaan <span class="text-danger">*</span></label>
+                        <label>Judul <span class="text-danger">*</span></label>
                         <input type="text" name="nama_perusahaan"
                             class="form-control-admin @error('nama_perusahaan') is-invalid @enderror"
                             value="{{ old('nama_perusahaan', $tentang->nama_perusahaan ?? $tentang->judul ?? '') }}"
