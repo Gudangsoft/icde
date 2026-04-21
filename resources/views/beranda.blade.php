@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Beranda - PT ICDE Konsultan Profesional')
-
 @push('styles')
 <style>
     /* ===== HERO ===== */
@@ -156,49 +154,57 @@
     /* ===== SERVICE CARD ===== */
     .service-card {
         border: none;
-        border-radius: 16px;
-        box-shadow: 0 4px 24px rgba(11,44,95,0.07);
-        padding: 32px 26px;
-        transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
-        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(6, 49, 30, 0.15);
+        padding: 40px 30px;
+        transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        background: linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark));
+        color: white;
         height: 100%;
-        border-top: 4px solid transparent;
         position: relative;
         overflow: hidden;
+        text-align: center;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     .service-card::before {
         content: '';
         position: absolute;
-        bottom: 0; left: 0; right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--icde-navy), var(--icde-sky));
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-        transform-origin: left;
+        top: -30px; right: -20px;
+        width: 140px; height: 140px;
+        background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+        border-radius: 50%;
+        z-index: -1;
     }
     .service-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 50px rgba(11,44,95,0.14);
-        border-top-color: var(--icde-gold);
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(6, 49, 30, 0.3);
     }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-icon {
-        width: 68px; height: 68px;
-        border-radius: 16px;
-        background: linear-gradient(135deg, rgba(11,44,95,0.07), rgba(30,144,212,0.1));
+    .service-icon-box {
+        width: 70px; height: 70px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, var(--icde-gold), var(--icde-gold-light));
         display: flex; align-items: center; justify-content: center;
-        font-size: 1.65rem;
-        color: var(--icde-navy-mid);
-        margin-bottom: 20px;
+        margin: 0 auto 28px auto;
         transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(132, 204, 22, 0.35);
+        transform: rotate(-3deg);
     }
-    .service-card:hover .service-icon {
-        background: linear-gradient(135deg, var(--icde-navy), var(--icde-sky));
-        color: #fff;
-        transform: scale(1.05) rotate(-5deg);
+    .service-card:hover .service-icon-box {
+        transform: scale(1.1) rotate(0deg);
+        box-shadow: 0 10px 30px rgba(132, 204, 22, 0.5);
     }
-    .service-card h5 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--icde-navy-dark); margin-bottom: 12px; }
-    .service-card p { font-size: 1rem; color: #334155; line-height: 1.75; font-weight: 500; }
+    .service-card h5 { 
+        font-family: 'Poppins', sans-serif; 
+        font-weight: 800; 
+        font-size: 1.25rem; 
+        color: #fff; 
+        margin-bottom: 0px; 
+        letter-spacing: 0.5px;
+        line-height: 1.4;
+    }
 
     /* ===== WHY CHOOSE US ===== */
     .why-item { display: flex; gap: 18px; margin-bottom: 28px; align-items: flex-start; }
@@ -217,25 +223,41 @@
 
     /* ===== PENGALAMAN ===== */
     .exp-card {
-        border-left: 4px solid var(--icde-gold);
-        background: #fff;
-        border-radius: 12px;
-        padding: 22px 24px;
-        box-shadow: 0 3px 16px rgba(11,44,95,0.06);
-        transition: all 0.3s ease;
+        background: linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark));
+        color: white;
+        border-radius: 24px;
+        padding: 30px 24px;
+        box-shadow: 0 8px 32px rgba(6, 49, 30, 0.15);
+        transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        border: none;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        height: 100%;
+    }
+    .exp-card::after {
+        content: '';
+        position: absolute;
+        top: -20px; right: -20px;
+        width: 100px; height: 100px;
+        background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+        border-radius: 50%;
+        z-index: -1;
     }
     .exp-card:hover {
-        box-shadow: 0 10px 30px rgba(11,44,95,0.12);
-        transform: translateX(5px);
-        border-left-color: var(--icde-navy-mid);
+        box-shadow: 0 20px 50px rgba(6, 49, 30, 0.3);
+        transform: translateY(-6px);
     }
+    .exp-card h6 { font-weight:800; font-size:1.15rem; color: #fff; margin-bottom: 0; }
+    .exp-card .text-muted { color: rgba(255,255,255,0.85) !important; }
+    .exp-card p { color: rgba(255,255,255,0.9) !important; }
     .exp-year {
         font-size: 0.75rem;
         font-weight: 700;
-        color: var(--icde-gold-dark);
-        background: rgba(232,169,0,0.1);
-        border: 1px solid rgba(232,169,0,0.3);
-        padding: 3px 12px;
+        color: #fff;
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.25);
+        padding: 4px 14px;
         border-radius: 20px;
         display: inline-block;
     }
@@ -258,62 +280,68 @@
     }
     .klien-item {
         flex-shrink: 0;
-        background: #fff;
-        padding: 16px 28px;
-        border-radius: 12px;
-        box-shadow: 0 2px 12px rgba(11,44,95,0.07);
         display: flex;
         align-items: center;
         justify-content: center;
-        min-width: 160px;
         height: 72px;
-        font-weight: 700;
-        color: var(--icde-gray);
-        font-size: 0.85rem;
-        text-align: center;
         transition: all 0.3s ease;
-        border: 1px solid rgba(11,44,95,0.06);
     }
     .klien-item:hover {
-        border-color: var(--icde-gold);
-        box-shadow: 0 6px 22px rgba(232,169,0,0.15);
+        transform: scale(1.1);
     }
     .klien-item img { max-height: 45px; max-width: 130px; object-fit: contain; }
 
     /* ===== TESTIMONI ===== */
     .testimoni-card {
-        background: #fff;
-        border-radius: 18px;
-        padding: 32px;
-        box-shadow: 0 4px 24px rgba(11,44,95,0.07);
+        background: linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark));
+        color: white;
+        border-radius: 24px;
+        padding: 35px;
+        box-shadow: 0 8px 32px rgba(6, 49, 30, 0.15);
+        transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        border: none;
         position: relative;
+        overflow: hidden;
         height: 100%;
-        border: 1px solid rgba(11,44,95,0.05);
-        transition: all 0.3s ease;
+        z-index: 1;
+    }
+    .testimoni-card::after {
+        content: '';
+        position: absolute;
+        bottom: -20px; left: -20px;
+        width: 120px; height: 120px;
+        background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+        border-radius: 50%;
+        z-index: -1;
     }
     .testimoni-card:hover {
-        box-shadow: 0 16px 40px rgba(11,44,95,0.12);
-        transform: translateY(-4px);
-        border-color: rgba(232,169,0,0.2);
+        box-shadow: 0 20px 50px rgba(6, 49, 30, 0.3);
+        transform: translateY(-8px);
     }
     .testimoni-card::before {
         content: '\201C';
         position: absolute;
         top: 10px; left: 18px;
         font-size: 5rem;
-        color: rgba(11,44,95,0.06);
+        color: rgba(255,255,255,0.1);
         font-family: Georgia, serif;
         line-height: 1;
+        z-index: -1;
     }
     .star-rating { color: var(--icde-gold); font-size: 1rem; }
     .testimoni-avatar {
         width: 52px; height: 52px;
         border-radius: 50%;
-        background: linear-gradient(135deg, var(--icde-navy-mid), var(--icde-sky));
+        background: rgba(255,255,255,0.1);
+        border: 2px solid rgba(255,255,255,0.2);
         display: flex; align-items: center; justify-content: center;
         color: #fff; font-size: 1.3rem;
         flex-shrink: 0;
     }
+    .testimoni-text { color: rgba(255,255,255,0.95); font-size: 0.95rem; line-height: 1.8; position: relative; z-index: 1; }
+    .testimoni-name { font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: 2px; }
+    .testimoni-job { font-size: 0.8rem; color: rgba(255,255,255,0.8); }
+    .testimoni-company { font-size: 0.8rem; color: var(--icde-gold-light); font-weight: 600; }
 
     /* ===== CTA ===== */
     .cta-section {
@@ -511,35 +539,69 @@
 
 <!-- LAYANAN SECTION -->
 @if($sectionSettings['show_section_layanan'])
+@php
+    $iconSvgs = [
+        'bi-diagram-3-fill' => '<path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1.5h1h3.5a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1a1.5 1.5 0 0 1 1.5-1.5h-1.5V7.5h-3.5h-1V6A1.5 1.5 0 0 1 10 4.5v-1zM8.5 4.5V3.5h-1v1h1zM11 9.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4.5 10a1.5 1.5 0 0 1-1.5-1.5v-1A1.5 1.5 0 0 1 4.5 6h1A1.5 1.5 0 0 1 7 7.5v1A1.5 1.5 0 0 1 5.5 10h-1zM4 8.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1zM9 13.5a1.5 1.5 0 0 1-1.5-1.5v-1A1.5 1.5 0 0 1 9 9.5h1A1.5 1.5 0 0 1 11.5 11v1A1.5 1.5 0 0 1 10 13.5H9zm.5-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/>',
+        'bi-clipboard2-check-fill' => '<path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5Z"/> <path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585c.055.156.085.325.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5c0-.175.03-.344.085-.5Zm6.769 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>',
+        'bi-bank2' => '<path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h15a.5.5 0 0 0 .277-.916l-7.5-5zM12.354 5 8 2.097 3.646 5h8.708zM5 14.5a.5.5 0 0 1 .5.5v.474a.5.5 0 0 1-1 0V15a.5.5 0 0 1 .5-.5zM8 14.5a.5.5 0 0 1 .5.5v.474a.5.5 0 0 1-1 0V15a.5.5 0 0 1 .5-.5zM11 14.5a.5.5 0 0 1 .5.5v.474a.5.5 0 0 1-1 0V15a.5.5 0 0 1 .5-.5zM2 14h12v.5a.5.5 0 0 1-1 0V14H3v.5a.5.5 0 0 1-1 0V14zM1 15h14v.5a.5.5 0 0 1-1 0H2a.5.5 0 0 1-1 0V15zM2 6h1.25L3 14H2V6zm11 0h1v8h-1l-.25-8zM9.5 6h.75l.25 8h-1.25l.25-8zM5.75 6h.75l.25 8h-1.25l.25-8z"/>',
+        'bi-layers-half' => '<path d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.812 8l2.924-1.559a.5.5 0 0 0 0-.882l-7.5-4zM8 9.433 1.562 6 8 2.567 14.438 6 8 9.433z"/>',
+        'bi-search' => '<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>',
+        'bi-people-fill' => '<path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>',
+        'bi-clipboard-data' => '<path d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0V9z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3z"/>',
+        
+        // Database mappings (Fixing circles in screenshot)
+        'bi-cloud-download-fill' => '<path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0m-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708z"/>',
+        'bi-journal-bookmark-fill' => '<path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/> <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/> <path d="M6 1h6v7l-3-2-3 2V1z"/>',
+        'bi-graph-up-arrow' => '<path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.707l-5.364 5.364a.5.5 0 0 1-.708 0L5.293 7.929l-3.647 3.646a.5.5 0 1 1-.708-.708l4-4a.5.5 0 0 1 .708 0L8.293 9.071l4.646-4.647H10.5a.5.5 0 0 1-.5-.5Z"/>',
+        'bi-file-earmark-gear-fill' => '<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8 8.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/> <path d="M12.933 9.046c.147-.52.147-1.072 0-1.592l-1.424-.475c-.156-.052-.294-.15-.393-.284l-.847-1.129c-.117-.156-.168-.344-.146-.534l.178-1.53c.061-.527-.272-1.002-.743-1.114l-1.424-.316c-.516-.115-1.054-.115-1.57 0L5.14 2.391c-.47.112-.804.587-.743 1.114l.178 1.53c.022.19-.029.378-.146.534l-.847 1.129a.628.628 0 0 1-.393.284l-1.424.475c-.496.165-.824.636-.782 1.156l.115 1.442a1.012 1.012 0 0 0 .11 1.592l1.24 1.115c.137.123.238.283.288.46l.475 1.636c.165.568.746.903 1.285.743l1.442-.433a1.006 1.006 0 0 0 1.57-.146l1.21-1.614a.63.63 0 0 1 .46-.22l1.635.178c.527.057 1.002-.272 1.114-.743l.433-1.442a1.012 1.012 0 0 0-.11-1.592l-1.24-1.115zM8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>',
+        'bi-search-heart-fill' => '<path d="M6.5 13a5.5 5.5 0 1 1 4.546-2.392L14.154 15a1 1 0 0 1-1.414 1.414l-3.21-3.21A5.5 5.5 0 0 1 6.5 13zM6.5 4a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM2.5 5.5a4 4 0 0 1 7.07-2.61l.66.66-.66.66a4 4 0 0 1-7.07 1.29z"/>',
+
+        // Common fallbacks
+        'bi-box-seam' => '<path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.722V6.838L1 4.24v7.922l6.5 2.6zM2.847 3.5l2.454.982L8 5.438l2.699-1.08L13.153 3.5 8 1.439 2.847 3.5z"/>',
+    ];
+    $fallbackIcon = '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>';
+@endphp
 <section class="section">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
             <h2 class="section-title text-center">{{ $settings['section_layanan_title'] ?? 'Lingkup Layanan' }}</h2>
         </div>
         <div class="row g-4">
-            @forelse($layanan->take(3) as $item)
+            @forelse($layanan as $item)
+            @php
+                $currentIcon = $item->ikon ?? 'bi-clipboard-data';
+                if(!str_contains($currentIcon, 'bi-')) $currentIcon = 'bi-'.$currentIcon;
+            @endphp
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="bi {{ $item->ikon ?? 'bi-clipboard-data' }}"></i>
+                    <div class="service-icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 16 16" fill="var(--icde-navy-dark)" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+                            {!! $iconSvgs[$currentIcon] ?? $fallbackIcon !!}
+                        </svg>
                     </div>
                     <h5>{{ $item->judul }}</h5>
-                    <p>{{ Str::limit(strip_tags(html_entity_decode($item->deskripsi)), 120) }}</p>
+                    @if($item->deskripsi)
+                    <p class="mb-0 mt-3" style="font-size:0.9rem;opacity:0.9;">{{ Str::limit(strip_tags(html_entity_decode($item->deskripsi)), 120) }}</p>
+                    @endif
                 </div>
             </div>
             @empty
             @foreach([
-                ['ikon' => 'bi-bar-chart-line', 'judul' => 'Perencanaan Pembangunan', 'deskripsi' => 'Penyusunan dokumen perencanaan pembangunan daerah yang komprehensif dan berbasis data.'],
-                ['ikon' => 'bi-search', 'judul' => 'Evaluasi Program', 'deskripsi' => 'Evaluasi pelaksanaan program dan kebijakan pembangunan secara independen dan objektif.'],
-                ['ikon' => 'bi-graph-up', 'judul' => 'Penelitian & Kajian', 'deskripsi' => 'Penelitian berbasis data untuk mendukung pengambilan keputusan yang tepat dan terukur.'],
+                ['ikon' => 'bi-diagram-3-fill', 'judul' => 'Perencanaan Pembangunan'],
+                ['ikon' => 'bi-clipboard2-check-fill', 'judul' => 'Evaluasi Pembangunan'],
+                ['ikon' => 'bi-bank2', 'judul' => 'Analisis Keuangan'],
+                ['ikon' => 'bi-layers-half', 'judul' => 'Perencanaan Sektoral'],
+                ['ikon' => 'bi-search', 'judul' => 'Penelitian & Kajian'],
+                ['ikon' => 'bi-people-fill', 'judul' => 'Peningkatan Kapasitas SDM'],
             ] as $idx => $def)
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ $idx * 100 }}">
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="bi {{ $def['ikon'] }}"></i>
+                    <div class="service-icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 16 16" fill="var(--icde-navy-dark)" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+                            {!! $iconSvgs[$def['ikon']] ?? $fallbackIcon !!}
+                        </svg>
                     </div>
                     <h5>{{ $def['judul'] }}</h5>
-                    <p>{{ $def['deskripsi'] }}</p>
                 </div>
             </div>
             @endforeach
@@ -640,19 +702,17 @@
             <div class="col-md-6" data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
                 <div class="exp-card">
                     <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h6 class="mb-0 fw-700" style="font-weight:800;font-size:1.1rem;color:var(--icde-navy-dark);">{{ $exp->nama_proyek }}</h6>
+                        <h6 class="mb-0 fw-700">{{ $exp->nama_proyek }}</h6>
                         <span class="exp-year">{{ $exp->tahun }}</span>
                     </div>
-                    <div class="text-muted" style="font-size:0.9rem;font-weight:500;">
+                    <div class="text-muted mb-2">
                         <i class="bi bi-building me-1"></i>{{ $exp->pemberi_kerja }}
                         @if($exp->lokasi)
                         <span class="mx-1">|</span>
                         <i class="bi bi-geo-alt me-1"></i>{{ $exp->lokasi }}
                         @endif
                     </div>
-                    @if($exp->deskripsi)
-                    <p class="mt-2 mb-0" style="font-size:0.95rem;font-weight:500;color:#334155;">{{ Str::limit(strip_tags(html_entity_decode($exp->deskripsi)), 120) }}</p>
-                    @endif
+                    {{-- Deskripsi dihapus sesuai permintaan --}}
                 </div>
             </div>
             @endforeach
@@ -670,7 +730,7 @@
 @if($sectionSettings['show_section_klien'] && $klien->count() > 0)
 <div class="klien-strip">
     <div class="container mb-4 text-center" data-aos="fade-up">
-        <h5 style="font-weight:700;color:var(--icde-dark);">{{ $settings['section_klien_title'] ?? 'Klien & Mitra Kami' }}</h5>
+        <h2 class="section-title text-center">{{ $settings['section_klien_title'] ?? 'Klien & Mitra' }}</h2>
     </div>
     <div style="overflow:hidden;">
         <div class="klien-track">
@@ -704,10 +764,10 @@
                         <i class="bi bi-star-fill"></i>
                         @endfor
                     </div>
-                    <div style="font-size:0.9rem;color:#555;line-height:1.8;position:relative;z-index:1;">
+                    <div class="testimoni-text">
                         {!! $t->isi !!}
                     </div>
-                    <div class="d-flex align-items-center gap-3 mt-3">
+                    <div class="d-flex align-items-center gap-3 mt-4">
                         <div class="testimoni-avatar">
                             @if($t->foto)
                             <img src="{{ asset('storage/' . $t->foto) }}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
@@ -716,9 +776,9 @@
                             @endif
                         </div>
                         <div>
-                            <div style="font-weight:700;font-size:0.9rem;">{{ $t->nama }}</div>
-                            @if($t->jabatan)<div style="font-size:0.78rem;color:var(--icde-gray);">{{ $t->jabatan }}</div>@endif
-                            @if($t->instansi)<div style="font-size:0.78rem;color:var(--icde-primary);font-weight:600;">{{ $t->instansi }}</div>@endif
+                            <div class="testimoni-name">{{ $t->nama }}</div>
+                            @if($t->jabatan)<div class="testimoni-job">{{ $t->jabatan }}</div>@endif
+                            @if($t->instansi)<div class="testimoni-company">{{ $t->instansi }}</div>@endif
                         </div>
                     </div>
                 </div>
@@ -735,8 +795,7 @@
 <section class="section">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <span class="section-badge"><i class="bi bi-images me-1"></i>{{ $settings['section_galeri_badge'] ?? 'Galeri ICDE' }}</span>
-            <h2 class="section-title text-center">{{ $settings['section_galeri_title'] ?? 'Dokumentasi & Kegiatan' }}</h2>
+            <h2 class="section-title text-center">{{ $settings['section_galeri_title'] ?? 'Dokumentasi Kegiatan' }}</h2>
         </div>
         
         <div class="row g-4">

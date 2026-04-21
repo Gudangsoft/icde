@@ -145,7 +145,7 @@
 <section class="section" style="padding-bottom:0;">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title text-center">Klien & Mitra Kami</h2>
+            <h2 class="section-title text-center">Klien & Mitra</h2>
         </div>
     </div>
 </section>

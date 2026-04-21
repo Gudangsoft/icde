@@ -22,8 +22,61 @@
             <h2 class="section-title text-center">Apa Kata Klien Kami</h2>
         </div>
 
+        <style>
+            .testimoni-card {
+                background: linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark));
+                color: white;
+                border-radius: 24px;
+                padding: 35px;
+                box-shadow: 0 8px 32px rgba(6, 49, 30, 0.15);
+                transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+                border: none;
+                position: relative;
+                overflow: hidden;
+                height: 100%;
+                z-index: 1;
+            }
+            .testimoni-card::after {
+                content: '';
+                position: absolute;
+                bottom: -20px; left: -20px;
+                width: 120px; height: 120px;
+                background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+                border-radius: 50%;
+                z-index: -1;
+            }
+            .testimoni-card:hover {
+                box-shadow: 0 20px 50px rgba(6, 49, 30, 0.3);
+                transform: translateY(-8px);
+            }
+            .testimoni-card::before {
+                content: '\201C';
+                position: absolute;
+                top: 10px; left: 18px;
+                font-size: 5rem;
+                color: rgba(255,255,255,0.1);
+                font-family: Georgia, serif;
+                line-height: 1;
+                z-index: -1;
+            }
+            .star-rating { color: var(--icde-gold); font-size: 1rem; }
+            .testimoni-avatar {
+                width: 52px; height: 52px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.1);
+                border: 2px solid rgba(255,255,255,0.2);
+                display: flex; align-items: center; justify-content: center;
+                color: #fff; font-size: 1.3rem;
+                flex-shrink: 0;
+            }
+            .testimoni-text { color: rgba(255,255,255,0.95); font-size: 0.95rem; line-height: 1.8; position: relative; z-index: 1; flex-grow: 1; }
+            .testimoni-name { font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: 2px; }
+            .testimoni-job { font-size: 0.8rem; color: rgba(255,255,255,0.8); }
+            .testimoni-company { font-size: 0.8rem; color: var(--icde-gold-light); font-weight: 600; }
+        </style>
+        
         @if($testimoni->isEmpty())
-        <div class="row g-4">
+        <div class="row g-4 d-flex align-items-stretch">
             @foreach([
                 ['nama' => 'DR. Heru Santoso, M.Si', 'jabatan' => 'Kepala Bappeda', 'instansi' => 'Kota Semarang', 'bintang' => 5, 'isi' => 'PT ICDE telah membantu kami dalam menyusun RPJMD dengan sangat profesional. Metodologi yang digunakan sangat komprehensif dan hasilnya memuaskan. Tim yang berpengalaman dan responsif terhadap kebutuhan kami.'],
                 ['nama' => 'Ir. Sari Dewi Pratiwi', 'jabatan' => 'Direktur Perencanaan', 'instansi' => 'Kementerian Desa PDTT', 'bintang' => 5, 'isi' => 'Kajian yang dihasilkan PT ICDE sangat berkualitas tinggi dan berbasis data yang akurat. Rekomendasi yang diberikan sangat actionable dan telah kami implementasikan dalam kebijakan.'],
@@ -33,22 +86,21 @@
                 ['nama' => 'Dra. Sri Mulyani, M.Si', 'jabatan' => 'Kepala Dinas Kesehatan', 'instansi' => 'Provinsi Jawa Tengah', 'bintang' => 5, 'isi' => 'Evaluasi program yang dilakukan PT ICDE sangat objektif dan independen. Temuan dan rekomendasinya membantu kami meningkatkan efektivitas program kesehatan masyarakat.'],
             ] as $idx => $t)
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ ($idx % 3) * 100 }}">
-                <div class="card" style="border:none;border-radius:16px;padding:30px;box-shadow:0 4px 20px rgba(0,0,0,0.07);position:relative;height:100%;">
-                    <div style="position:absolute;top:15px;left:20px;font-size:5rem;color:rgba(27,108,168,0.06);font-family:Georgia,serif;line-height:1;">"</div>
-                    <div style="color:#f5a623;font-size:0.9rem;margin-bottom:12px;position:relative;z-index:1;">
+                <div class="testimoni-card d-flex flex-column">
+                    <div class="star-rating mb-3">
                         @for($i = 0; $i < $t['bintang']; $i++)
                         <i class="bi bi-star-fill"></i>
                         @endfor
                     </div>
-                    <div style="font-size:0.9rem;color:#555;line-height:1.8;position:relative;z-index:1;flex-grow:1;">{!! $t['isi'] !!}</div>
-                    <div class="d-flex align-items-center gap-3 mt-3">
-                        <div style="width:52px;height:52px;border-radius:50%;background:var(--icde-primary);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.3rem;flex-shrink:0;">
+                    <div class="testimoni-text">{!! $t['isi'] !!}</div>
+                    <div class="d-flex align-items-center gap-3 mt-4">
+                        <div class="testimoni-avatar">
                             <i class="bi bi-person-fill"></i>
                         </div>
                         <div>
-                            <div style="font-weight:700;font-size:0.9rem;">{{ $t['nama'] }}</div>
-                            <div style="font-size:0.78rem;color:var(--icde-gray);">{{ $t['jabatan'] }}</div>
-                            <div style="font-size:0.78rem;color:var(--icde-primary);font-weight:600;">{{ $t['instansi'] }}</div>
+                            <div class="testimoni-name">{{ $t['nama'] }}</div>
+                            <div class="testimoni-job">{{ $t['jabatan'] }}</div>
+                            <div class="testimoni-company">{{ $t['instansi'] }}</div>
                         </div>
                     </div>
                 </div>
@@ -56,19 +108,18 @@
             @endforeach
         </div>
         @else
-        <div class="row g-4">
+        <div class="row g-4 d-flex align-items-stretch">
             @foreach($testimoni as $t)
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
-                <div class="card" style="border:none;border-radius:16px;padding:30px;box-shadow:0 4px 20px rgba(0,0,0,0.07);position:relative;height:100%;">
-                    <div style="position:absolute;top:15px;left:20px;font-size:5rem;color:rgba(27,108,168,0.06);font-family:Georgia,serif;line-height:1;">"</div>
-                    <div style="color:#f5a623;font-size:0.9rem;margin-bottom:12px;position:relative;z-index:1;">
+                <div class="testimoni-card d-flex flex-column">
+                    <div class="star-rating mb-3">
                         @for($i = 0; $i < $t->bintang; $i++)
                         <i class="bi bi-star-fill"></i>
                         @endfor
                     </div>
-                    <div style="font-size:0.9rem;color:#555;line-height:1.8;position:relative;z-index:1;">{!! $t->isi !!}</div>
-                    <div class="d-flex align-items-center gap-3 mt-3">
-                        <div style="width:52px;height:52px;border-radius:50%;background:var(--icde-primary);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.3rem;flex-shrink:0;overflow:hidden;">
+                    <div class="testimoni-text">{!! $t->isi !!}</div>
+                    <div class="d-flex align-items-center gap-3 mt-4">
+                        <div class="testimoni-avatar" style="overflow:hidden;">
                             @if($t->foto)
                             <img src="{{ asset('storage/' . $t->foto) }}" style="width:100%;height:100%;object-fit:cover;">
                             @else
@@ -76,9 +127,9 @@
                             @endif
                         </div>
                         <div>
-                            <div style="font-weight:700;font-size:0.9rem;">{{ $t->nama }}</div>
-                            @if($t->jabatan)<div style="font-size:0.78rem;color:var(--icde-gray);">{{ $t->jabatan }}</div>@endif
-                            @if($t->instansi)<div style="font-size:0.78rem;color:var(--icde-primary);font-weight:600;">{{ $t->instansi }}</div>@endif
+                            <div class="testimoni-name">{{ $t->nama }}</div>
+                            @if($t->jabatan)<div class="testimoni-job">{{ $t->jabatan }}</div>@endif
+                            @if($t->instansi)<div class="testimoni-company">{{ $t->instansi }}</div>@endif
                         </div>
                     </div>
                 </div>

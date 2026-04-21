@@ -270,8 +270,7 @@
 <section style="background:#f8fafc;">
     <div class="container">
         <div class="text-center pt-5 pb-2" data-aos="fade-up">
-            <h2 style="font-size:1.5rem; font-weight:800; color:var(--icde-dark);">Pengalaman PT. ICDE</h2>
-            <hr style="width:60px; border:2px solid var(--icde-primary); opacity:1; margin:10px auto 0;">
+            <h2 class="section-title text-center">Pengalaman</h2>
         </div>
         @if($countPerKat->isEmpty())
         <div class="text-center py-5" style="color:#94a3b8;">

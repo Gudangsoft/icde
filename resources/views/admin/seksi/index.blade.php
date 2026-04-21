@@ -243,7 +243,7 @@ $sections = [
         'desc'  => 'Logo carousel klien (slider)',
         'show_key' => 'show_section_klien',
         'fields' => [
-            ['key' => 'section_klien_title', 'label' => 'Teks Judul', 'ph' => 'Klien & Mitra Kami'],
+            ['key' => 'section_klien_title', 'label' => 'Teks Judul', 'ph' => 'Klien & Mitra'],
         ],
     ],
     [
@@ -264,7 +264,7 @@ $sections = [
         'show_key' => 'show_section_galeri',
         'fields' => [
             ['key' => 'section_galeri_badge', 'label' => 'Teks Kotak Label (Badge)', 'ph' => 'Galeri ICDE'],
-            ['key' => 'section_galeri_title', 'label' => 'Teks Judul', 'ph' => 'Dokumentasi & Kegiatan'],
+            ['key' => 'section_galeri_title', 'label' => 'Teks Judul', 'ph' => 'Dokumentasi Kegiatan'],
         ],
     ],
     [

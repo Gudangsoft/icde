@@ -4,17 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', ($settings['site_name'] ?? 'PT ICDE') . ' - ' . ($settings['site_tagline'] ?? 'Konsultan Profesional'))</title>
-    <meta name="description" content="@yield('meta_description', $settings['site_description'] ?? 'PT ICDE adalah konsultan profesional di bidang perencanaan, evaluasi pembangunan, penelitian dan kajian berbasis data.')">
-    @if(!empty($settings['site_keywords']))
-    <meta name="keywords" content="{{ $settings['site_keywords'] }}">
-    @endif
-    @if(!empty($settings['meta_author']))
-    <meta name="author" content="{{ $settings['meta_author'] }}">
-    @endif
-    @if(!empty($settings['site_favicon']))
-    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $settings['site_favicon']) }}">
-    @endif
+    <x-seo-head />
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -126,34 +116,28 @@
         }
         .navbar-main .nav-link {
             font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 700;
             color: #0f172a !important;
-            padding: 24px 14px !important;
+            padding: 10px 14px !important;
+            margin: 4px 2px;
             letter-spacing: 0.04em;
             text-transform: uppercase;
             position: relative;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            border-radius: 50px;
+            white-space: nowrap;
         }
-        .navbar-main .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--icde-gold), var(--icde-gold-light));
-            border-radius: 3px 3px 0 0;
-            transition: width 0.3s ease;
+        @media (min-width: 992px) {
+            .navbar-main .nav-link {
+                margin: 14px 2px !important;
+            }
         }
         .navbar-main .nav-link:hover,
         .navbar-main .nav-link.active {
-            color: var(--icde-navy) !important;
-        }
-        .navbar-main .nav-link:hover::after,
-        .navbar-main .nav-link.active::after {
-            width: 80%;
+            background: linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark)) !important;
+            color: var(--icde-gold) !important;
+            box-shadow: 0 4px 12px rgba(6, 49, 30, 0.15);
         }
         .navbar-toggler { border: none; }
         .navbar-toggler:focus { box-shadow: none; }
@@ -162,7 +146,10 @@
         .page-header { display: none !important; }
 
         /* ===== SECTION ===== */
-        .section { padding: 90px 0; }
+        .section { padding: 45px 0; }
+        @media (min-width: 992px) {
+            .section { padding: 60px 0; }
+        }
         .section-alt { background: var(--icde-light-bg); }
 
         /* AOS fallback */
@@ -223,6 +210,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
         .btn-icde-primary::before {
             content: '';
@@ -231,6 +219,7 @@
             background: linear-gradient(135deg, var(--icde-sky), var(--icde-navy-mid));
             opacity: 0;
             transition: opacity 0.3s;
+            z-index: -1;
         }
         .btn-icde-primary:hover {
             color: #fff;

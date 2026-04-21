@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<!-- PROFIL -->
+<!-- SEJARAH -->
 <section class="section">
     <div class="container">
         <div class="row g-5 align-items-center">
@@ -30,21 +30,27 @@
                         <div class="text-center text-white p-4">
                             <i class="bi bi-buildings-fill mb-3 opacity-75" style="font-size: 4rem;"></i>
                             <div class="fw-bold fs-5">{{ $tentang->nama_lengkap ?? $tentang->nama_perusahaan ?? 'PT ICDE Semarang' }}</div>
-                            <div class="small opacity-75 mt-2">Professional Consultant</div>
                         </div>
                     </div>
                 @endif
             </div>
             <div class="col-lg-6" data-aos="fade-left">
-                <h2 class="section-title" style="text-align: left;">{{ $tentang->judul ?? 'PT ICDE Semarang' }}</h2>
-                
-                <div style="color:#334155; line-height:1.85; font-size:1.1rem; font-weight:500; text-align:justify;">
-                    @if(!empty($tentang->deskripsi))
-                        {!! $tentang->deskripsi !!}
-                    @else
-                        <p>PT. ICDE adalah konsultan profesional di bidang perencanaan, evaluasi pembangunan, penelitian dan kajian berbasis data, menghadirkan analisis tajam untuk menghasilkan kebijakan yang tepat, terukur, dan berdampak nyata.</p>
-                        <p>Didirikan sejak 1999, PT ICDE telah berkontribusi dalam ratusan proyek pembangunan di berbagai wilayah Indonesia. Dengan dukungan tim multidisiplin yang berpengalaman dan metodologi berbasis bukti, kami berkomitmen untuk menjadi mitra strategis pembangunan yang terpercaya.</p>
-                    @endif
+                <div class="card border-0 shadow-lg" style="border-radius: 24px; overflow: hidden; background: linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark)); color: white; position: relative;">
+                    <!-- Decor -->
+                    <i class="bi bi-clock-history position-absolute" style="font-size: 8rem; opacity: 0.05; top: -20px; right: -10px; transform: rotate(-10deg);"></i>
+                    
+                    <div class="p-4 p-md-5 position-relative z-1">
+                        <h2 class="fw-bold mb-4" style="color: #fff; border-bottom: 3px solid var(--icde-gold-light); display: inline-block; padding-bottom: 5px;">{{ $tentang->judul ?? 'Sejarah' }}</h2>
+                        
+                        <div class="sejarah-text" style="font-size: 1.05rem; line-height: 1.8; font-weight: 500; color: rgba(255,255,255,0.95); text-align: justify;">
+                            @if(!empty($tentang->deskripsi))
+                                {!! $tentang->deskripsi !!}
+                            @else
+                                <p>PT. ICDE adalah konsultan profesional di bidang perencanaan, evaluasi pembangunan, penelitian dan kajian berbasis data, menghadirkan analisis tajam untuk menghasilkan kebijakan yang tepat, terukur, dan berdampak nyata.</p>
+                                <p>Didirikan sejak 1999, PT ICDE telah berkontribusi dalam ratusan proyek pembangunan di berbagai wilayah Indonesia. Dengan dukungan tim multidisiplin yang berpengalaman dan metodologi berbasis bukti, kami berkomitmen untuk menjadi mitra strategis pembangunan yang terpercaya.</p>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,7 +76,7 @@
                         <div class="d-inline-flex align-items-center justify-content-center mb-4" style="width: 76px; height: 76px; background: rgba(255,255,255,0.1); border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
                             <i class="bi bi-eye-fill text-white fs-1"></i>
                         </div>
-                        <h3 class="fw-bold mb-4" style="letter-spacing: 1px;">Visi Perusahaan</h3>
+                        <h3 class="fw-bold mb-4" style="letter-spacing: 1px;">Visi</h3>
                         
                         <div class="visi-text mx-auto" style="max-width: 800px; font-size: 1.35rem; line-height: 1.8; font-weight: 500; font-style: italic; opacity: 1;">
                             @if(!empty($tentang->visi))
@@ -87,29 +93,30 @@
                 </div>
 
                 <!-- Misi Card -->
-                <div class="card border-0 shadow-sm" data-aos="fade-up" data-aos-delay="200" style="border-radius: 24px; background: #fff; overflow: hidden;">
-                    <div class="p-5 p-md-5">
-                        <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-4">
-                            <div class="d-flex align-items-center justify-content-center me-4" style="width: 70px; height: 70px; background: linear-gradient(135deg, rgba(132,204,22,0.15), rgba(29,145,94,0.1)); border-radius: 20px; border: 1px solid rgba(132,204,22,0.2);">
-                                <i class="bi bi-bullseye" style="font-size: 2rem; color: var(--icde-secondary);"></i>
-                            </div>
-                            <h3 class="fw-bold mb-0" style="color: var(--icde-primary);">Misi Kami</h3>
+                <div class="card border-0 shadow-lg" data-aos="fade-up" data-aos-delay="200" style="border-radius: 24px; background: linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark)); color: white; overflow: hidden; position: relative;">
+                    <!-- Decor -->
+                    <i class="bi bi-bullseye position-absolute" style="font-size: 15rem; opacity: 0.05; bottom: -40px; right: -20px; transform: rotate(-10deg);"></i>
+                    
+                    <div class="p-5 p-md-5 text-center position-relative z-1">
+                        <div class="d-inline-flex align-items-center justify-content-center mb-4" style="width: 76px; height: 76px; background: rgba(255,255,255,0.1); border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                            <i class="bi bi-bullseye text-white fs-1"></i>
                         </div>
+                        <h3 class="fw-bold mb-4" style="letter-spacing: 1px;">Misi</h3>
                         
-                        <div class="misi-text" style="line-height: 1.9; font-size: 1.1rem; font-weight: 500; color: #334155;">
+                        <div class="misi-text mx-auto text-center" style="max-width: 900px; line-height: 1.9; font-size: 1.15rem; font-weight: 500; color: rgba(255,255,255,0.95);">
                             @if(!empty($tentang->misi))
                                 {!! $tentang->misi !!}
                             @else
-                                <ul class="list-unstyled mb-0">
-                                    <li class="mb-3 d-flex"><i class="bi bi-check2-circle me-3 mt-1" style="color:var(--icde-secondary); font-size:1.4rem;"></i><span>Menyediakan layanan konsultansi perencanaan dan evaluasi pembangunan yang berkualitas.</span></li>
-                                    <li class="mb-3 d-flex"><i class="bi bi-check2-circle me-3 mt-1" style="color:var(--icde-secondary); font-size:1.4rem;"></i><span>Mengembangkan SDM yang profesional, kompeten, dan berintegritas tinggi.</span></li>
-                                    <li class="mb-3 d-flex"><i class="bi bi-check2-circle me-3 mt-1" style="color:var(--icde-secondary); font-size:1.4rem;"></i><span>Menerapkan metodologi penelitian berbasis data yang ilmiah dan terstandar.</span></li>
-                                    <li class="mb-3 d-flex"><i class="bi bi-check2-circle me-3 mt-1" style="color:var(--icde-secondary); font-size:1.4rem;"></i><span>Berkontribusi aktif dalam peningkatan kualitas kebijakan pembangunan nasional dan daerah.</span></li>
+                                <ul class="list-unstyled mb-0 d-inline-block text-start">
+                                    <li class="mb-3 d-flex"><i class="bi bi-check2-circle me-3 mt-1" style="color:var(--icde-gold-light); font-size:1.4rem;"></i><span>Menyediakan layanan konsultansi perencanaan dan evaluasi pembangunan yang berkualitas.</span></li>
+                                    <li class="mb-3 d-flex"><i class="bi bi-check2-circle me-3 mt-1" style="color:var(--icde-gold-light); font-size:1.4rem;"></i><span>Mengembangkan SDM yang profesional, kompeten, dan berintegritas tinggi.</span></li>
+                                    <li class="mb-3 d-flex"><i class="bi bi-check2-circle me-3 mt-1" style="color:var(--icde-gold-light); font-size:1.4rem;"></i><span>Menerapkan metodologi penelitian berbasis data yang ilmiah dan terstandar.</span></li>
+                                    <li class="mb-3 d-flex"><i class="bi bi-check2-circle me-3 mt-1" style="color:var(--icde-gold-light); font-size:1.4rem;"></i><span>Berkontribusi aktif dalam peningkatan kualitas kebijakan pembangunan nasional dan daerah.</span></li>
                                 </ul>
                             @endif
                         </div>
                         <style>
-                            .misi-text ul, .misi-text ol { padding-left: 1.5rem; margin-bottom: 0; }
+                            .misi-text ul, .misi-text ol { display: inline-block; text-align: left; padding-left: 0; margin-bottom: 0; }
                             .misi-text li { margin-bottom: 12px; }
                             /* Merapikan jika admin menggunakan line break <br> alih-alih list */
                             .misi-text p { margin-bottom: 15px; }
@@ -239,17 +246,58 @@ $hasDataPerusahaan = $tentang && ($tentang->npwp || $tentang->nib || $tentang->a
             <h2 class="section-title text-center" style="color: var(--icde-primary); font-weight: 800;">Legalitas Perusahaan</h2>
         </div>
         
+        <style>
+            .legalitas-card {
+                background: linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark));
+                color: white;
+                border-radius: 24px;
+                padding: 35px 20px;
+                box-shadow: 0 8px 32px rgba(6, 49, 30, 0.15);
+                transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+                border: none;
+                height: 100%;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+                z-index: 1;
+            }
+            .legalitas-card::after {
+                content: '';
+                position: absolute;
+                top: -20px; right: -20px;
+                width: 100px; height: 100px;
+                background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+                border-radius: 50%;
+                z-index: -1;
+            }
+            .legalitas-card:hover {
+                box-shadow: 0 20px 50px rgba(6, 49, 30, 0.3);
+                transform: translateY(-6px);
+            }
+            .legalitas-icon {
+                width: 60px; height: 60px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 50%;
+                border: 1px solid rgba(255,255,255,0.2);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            }
+            .legalitas-title { font-size: 0.95rem; font-weight: 800; color: rgba(255,255,255,0.9); margin-bottom: 8px; }
+            .legalitas-value { font-size: 1.05rem; font-weight: 600; color: #fff; line-height: 1.6; }
+        </style>
+
         <div class="row g-4 justify-content-center">
             
             {{-- Akte Pendirian --}}
             @if($tentang->akta_notaris || $tentang->akta_nomor)
             <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="card h-100 border-0 shadow-sm text-center" style="border-radius: 8px; padding: 30px 20px;">
-                    <div style="width: 54px; height: 54px; background: var(--icde-navy-dark); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="bi bi-file-earmark-text-fill text-white fs-4"></i>
-                    </div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #334155; margin-bottom: 8px;">Akte Pendirian</div>
-                    <div style="font-size: 1.05rem; font-weight: 800; color: var(--icde-navy-dark); line-height: 1.6;">
+                <div class="legalitas-card">
+                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                    <div class="legalitas-title">Akte Pendirian</div>
+                    <div class="legalitas-value">
                         @if($tentang->akta_notaris) Notaris : {{ $tentang->akta_notaris }} @if($tentang->akta_nomor) Nomor: {{ $tentang->akta_nomor }} @endif <br>@endif
                         @if($tentang->akta_tanggal) Tanggal : {{ $tentang->akta_tanggal }} @endif
                     </div>
@@ -260,12 +308,10 @@ $hasDataPerusahaan = $tentang && ($tentang->npwp || $tentang->nib || $tentang->a
             {{-- SK Kemenkumham --}}
             @if($tentang->pengesahan_badan_hukum)
             <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="card h-100 border-0 shadow-sm text-center" style="border-radius: 8px; padding: 30px 20px;">
-                    <div style="width: 54px; height: 54px; background: var(--icde-navy-dark); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="bi bi-file-earmark-text-fill text-white fs-4"></i>
-                    </div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #334155; margin-bottom: 8px;">SK Pengesahan Badan Hukum Kepmenkumham</div>
-                    <div style="font-size: 1.05rem; font-weight: 800; color: var(--icde-navy-dark); line-height: 1.6;">
+                <div class="legalitas-card">
+                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                    <div class="legalitas-title">SK Pengesahan Badan Hukum Kepmenkumham</div>
+                    <div class="legalitas-value">
                         Nomor : {{ $tentang->pengesahan_badan_hukum }}
                     </div>
                 </div>
@@ -275,12 +321,10 @@ $hasDataPerusahaan = $tentang && ($tentang->npwp || $tentang->nib || $tentang->a
             {{-- Noreg KADIN --}}
             @if($tentang->kadin_nomor)
             <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="300">
-                <div class="card h-100 border-0 shadow-sm text-center" style="border-radius: 8px; padding: 30px 20px;">
-                    <div style="width: 54px; height: 54px; background: var(--icde-navy-dark); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="bi bi-file-earmark-text-fill text-white fs-4"></i>
-                    </div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #334155; margin-bottom: 8px;">Noreg KADIN</div>
-                    <div style="font-size: 1.05rem; font-weight: 800; color: var(--icde-navy-dark); line-height: 1.6;">
+                <div class="legalitas-card">
+                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                    <div class="legalitas-title">Noreg KADIN</div>
+                    <div class="legalitas-value">
                         Nomor : {{ $tentang->kadin_nomor }}
                         @if($tentang->kadin_berlaku)<br> Berlaku s/d : {{ $tentang->kadin_berlaku }} @endif
                     </div>
@@ -291,12 +335,10 @@ $hasDataPerusahaan = $tentang && ($tentang->npwp || $tentang->nib || $tentang->a
             {{-- NPWP --}}
             @if($tentang->npwp)
             <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="card h-100 border-0 shadow-sm text-center" style="border-radius: 8px; padding: 30px 20px;">
-                    <div style="width: 54px; height: 54px; background: var(--icde-navy-dark); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="bi bi-file-earmark-text-fill text-white fs-4"></i>
-                    </div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #334155; margin-bottom: 8px;">NPWP</div>
-                    <div style="font-size: 1.05rem; font-weight: 800; color: var(--icde-navy-dark); line-height: 1.6;">
+                <div class="legalitas-card">
+                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                    <div class="legalitas-title">NPWP</div>
+                    <div class="legalitas-value">
                         Nomor : {{ $tentang->npwp }}
                     </div>
                 </div>
@@ -306,12 +348,10 @@ $hasDataPerusahaan = $tentang && ($tentang->npwp || $tentang->nib || $tentang->a
             {{-- NIB --}}
             @if($tentang->nib)
             <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="500">
-                <div class="card h-100 border-0 shadow-sm text-center" style="border-radius: 8px; padding: 30px 20px;">
-                    <div style="width: 54px; height: 54px; background: var(--icde-navy-dark); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="bi bi-file-earmark-text-fill text-white fs-4"></i>
-                    </div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #334155; margin-bottom: 8px;">NIB</div>
-                    <div style="font-size: 1.05rem; font-weight: 800; color: var(--icde-navy-dark); line-height: 1.6;">
+                <div class="legalitas-card">
+                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                    <div class="legalitas-title">NIB</div>
+                    <div class="legalitas-value">
                         Nomor : {{ $tentang->nib }}
                     </div>
                 </div>
@@ -321,12 +361,10 @@ $hasDataPerusahaan = $tentang && ($tentang->npwp || $tentang->nib || $tentang->a
             {{-- KBLI --}}
             @if($tentang->kbli)
             <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="550">
-                <div class="card h-100 border-0 shadow-sm text-center" style="border-radius: 8px; padding: 30px 20px;">
-                    <div style="width: 54px; height: 54px; background: var(--icde-navy-dark); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="bi bi-file-earmark-text-fill text-white fs-4"></i>
-                    </div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #334155; margin-bottom: 8px;">Izin Usaha Industri & KBLI</div>
-                    <div style="font-size: 1.05rem; font-weight: 800; color: var(--icde-navy-dark); line-height: 1.6;">
+                <div class="legalitas-card">
+                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                    <div class="legalitas-title">Izin Usaha Industri & KBLI</div>
+                    <div class="legalitas-value">
                         Kode : {{ $tentang->kbli }}
                     </div>
                 </div>
@@ -336,12 +374,10 @@ $hasDataPerusahaan = $tentang && ($tentang->npwp || $tentang->nib || $tentang->a
             {{-- INKINDO --}}
             @if($tentang->inkindo_nomor)
             <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="600">
-                <div class="card h-100 border-0 shadow-sm text-center" style="border-radius: 8px; padding: 30px 20px;">
-                    <div style="width: 54px; height: 54px; background: var(--icde-navy-dark); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="bi bi-file-earmark-text-fill text-white fs-4"></i>
-                    </div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #334155; margin-bottom: 8px;">Noreg INKINDO</div>
-                    <div style="font-size: 1.05rem; font-weight: 800; color: var(--icde-navy-dark); line-height: 1.6;">
+                <div class="legalitas-card">
+                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                    <div class="legalitas-title">Noreg INKINDO</div>
+                    <div class="legalitas-value">
                         Provinsi Jawa Tengah<br>
                         Nomor : {{ $tentang->inkindo_nomor }}
                         @if($tentang->inkindo_berlaku)<br> Berlaku s/d : {{ $tentang->inkindo_berlaku }} @endif
@@ -353,12 +389,10 @@ $hasDataPerusahaan = $tentang && ($tentang->npwp || $tentang->nib || $tentang->a
             {{-- SIUP/OSS --}}
             @if($tentang->siup_tanggal)
             <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="700">
-                <div class="card h-100 border-0 shadow-sm text-center" style="border-radius: 8px; padding: 30px 20px;">
-                    <div style="width: 54px; height: 54px; background: var(--icde-navy-dark); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="bi bi-file-earmark-text-fill text-white fs-4"></i>
-                    </div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #334155; margin-bottom: 8px;">SIUP / OSS</div>
-                    <div style="font-size: 1.05rem; font-weight: 800; color: var(--icde-navy-dark); line-height: 1.6;">
+                <div class="legalitas-card">
+                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                    <div class="legalitas-title">SIUP / OSS</div>
+                    <div class="legalitas-value">
                         Tanggal : {{ $tentang->siup_tanggal }}
                     </div>
                 </div>
