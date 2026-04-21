@@ -395,14 +395,14 @@
             <i class="bi bi-house-fill"></i> Beranda
         </a>
         <a href="{{ route('admin.slider.index') }}" class="sidebar-link {{ request()->routeIs('admin.slider*') ? 'active' : '' }}">
-            <i class="bi bi-collection-play-fill text-muted" style="font-size:0.8rem;margin-left:8px;"></i> Slider / Banner
+            <i class="bi bi-collection-play-fill" style="margin-left:8px; opacity:0.7;"></i> Slider / Banner
         </a>
         
         <a href="{{ route('admin.tentang.edit') }}" class="sidebar-link {{ request()->routeIs('admin.tentang*') ? 'active' : '' }} mt-1">
             <i class="bi bi-info-circle-fill"></i> Tentang Kami
         </a>
         <a href="{{ route('admin.struktur.index') }}" class="sidebar-link {{ request()->routeIs('admin.struktur*') ? 'active' : '' }}">
-            <i class="bi bi-diagram-3-fill text-muted" style="font-size:0.8rem;margin-left:8px;"></i> Struktur Organisasi
+            <i class="bi bi-diagram-3-fill" style="margin-left:8px; opacity:0.7;"></i> Struktur Organisasi
         </a>
 
         <a href="{{ route('admin.layanan.index') }}" class="sidebar-link {{ request()->routeIs('admin.layanan*') ? 'active' : '' }} mt-1">
