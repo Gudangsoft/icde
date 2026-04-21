@@ -58,6 +58,21 @@ class TentangKamiAdminController extends Controller
             ]
         ));
 
+        // Handle legalitas dinamis
+        $legalitasLabels = $request->input('legalitas_dinamis_label', []);
+        $legalitasValues = $request->input('legalitas_dinamis_value', []);
+        $legalitasDinamis = [];
+        
+        foreach ($legalitasLabels as $index => $label) {
+            if (!empty($label)) {
+                $legalitasDinamis[] = [
+                    'label' => $label,
+                    'value' => $legalitasValues[$index] ?? '',
+                ];
+            }
+        }
+        $tentang->legalitas_dinamis = $legalitasDinamis;
+
         if ($request->hasFile('logo')) {
             if ($tentang->logo) Storage::disk('public')->delete($tentang->logo);
             $tentang->logo = $request->file('logo')->store('tentang', 'public');
