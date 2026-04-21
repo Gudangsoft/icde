@@ -64,52 +64,6 @@
         </div>
         <div class="admin-card-body p-4">
 
-            {{-- Identitas Formal --}}
-            <div style="font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #f1f5f9;">
-                Identitas Formal
-            </div>
-            <div class="row g-3 mb-4">
-                <div class="col-md-6">
-                    <div class="form-group-admin">
-                        <label>Bentuk Perusahaan</label>
-                        <input type="text" name="bentuk_perusahaan"
-                            class="form-control-admin @error('bentuk_perusahaan') is-invalid @enderror"
-                            value="{{ old('bentuk_perusahaan', $tentang->bentuk_perusahaan ?? '') }}"
-                            placeholder="Perseroan Terbatas (PT)">
-                        @error('bentuk_perusahaan')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group-admin">
-                        <label>Status Kantor</label>
-                        <input type="text" name="status_kantor"
-                            class="form-control-admin @error('status_kantor') is-invalid @enderror"
-                            value="{{ old('status_kantor', $tentang->status_kantor ?? '') }}"
-                            placeholder="Kantor Pusat">
-                        @error('status_kantor')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="form-group-admin">
-                        <label>Pengesahan Badan Hukum</label>
-                        <input type="text" name="pengesahan_badan_hukum"
-                            class="form-control-admin @error('pengesahan_badan_hukum') is-invalid @enderror"
-                            value="{{ old('pengesahan_badan_hukum', $tentang->pengesahan_badan_hukum ?? '') }}"
-                            placeholder="Kepmenhumham Nomor AHU-19246.AH.01.01, Tahun 2011">
-                        @error('pengesahan_badan_hukum')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group-admin">
-                        <label>Direktur Utama</label>
-                        <input type="text" name="direktur_utama"
-                            class="form-control-admin @error('direktur_utama') is-invalid @enderror"
-                            value="{{ old('direktur_utama', $tentang->direktur_utama ?? '') }}"
-                            placeholder="Drs. H. Gunarto, MM.">
-                        @error('direktur_utama')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-            </div>
 
             {{-- Akta Pendirian --}}
             <div style="font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #f1f5f9;">

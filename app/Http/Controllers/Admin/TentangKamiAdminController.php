@@ -22,10 +22,7 @@ class TentangKamiAdminController extends Controller
             'nama_lengkap'         => 'nullable|string|max:255',
             'tahun_berdiri'        => 'nullable|string|max:10',
             'profil_singkat'       => 'required|string',
-            'bentuk_perusahaan'    => 'nullable|string|max:100',
-            'status_kantor'        => 'nullable|string|max:100',
-            'pengesahan_badan_hukum' => 'nullable|string|max:255',
-            'direktur_utama'       => 'nullable|string|max:150',
+
             'akta_notaris'         => 'nullable|string|max:150',
             'akta_nomor'           => 'nullable|string|max:50',
             'akta_tanggal'         => 'nullable|string|max:50',
