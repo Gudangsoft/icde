@@ -149,7 +149,7 @@
             $grouped = $sdm->groupBy(function($item) {
                 $jab = strtolower($item->jabatan ?? '');
                 if (str_contains($jab, 'komisaris')) return 'Komisaris';
-                if (str_contains($jab, 'direk')) return 'Direksi';
+                if (str_contains($jab, 'direk') || str_contains($jab, 'sekretaris')) return 'Direksi';
                 if (str_contains($jab, 'ahli')) return 'Tenaga Ahli';
                 return 'Lainnya';
             });

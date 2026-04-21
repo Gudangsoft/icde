@@ -36,6 +36,17 @@
                         <input type="text" name="jabatan" class="form-control-admin @error('jabatan') is-invalid @enderror"
                             value="{{ old('jabatan', $sdm->jabatan ?? '') }}" required>
                         @error('jabatan')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        
+                        <div class="mt-3 p-3 rounded" style="background:#f0f9ff; border:1px solid #bae6fd; border-left: 4px solid var(--icde-primary); font-size: 0.85rem; color: #0369a1;">
+                            <strong><i class="bi bi-info-circle-fill me-1"></i> Info Pengelompokan Otomatis:</strong><br>
+                            Sistem mengatur posisi SDM berdasarkan istilah pada kolom Jabatan ini:
+                            <ul class="mb-0 mt-1 ps-3" style="color: #0c4a6e;">
+                                <li>Kata <b>"Komisaris"</b> &rarr; Kategori <b>Komisaris</b></li>
+                                <li>Kata <b>"Direk"</b> / <b>"Sekretaris"</b> &rarr; Kategori <b>Direksi</b></li>
+                                <li>Kata <b>"Ahli"</b> &rarr; Kategori <b>Tenaga Ahli</b></li>
+                                <li>Selain kata di atas &rarr; Kategori <b>Lainnya</b></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-12">
