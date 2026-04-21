@@ -190,50 +190,46 @@
             </div>
 
             {{-- Legalitas --}}
-            <div style="font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #f1f5f9;">
-                Legalitas Usaha
+            <div class="d-flex justify-content-between align-items-center" style="border-bottom:1px solid #f1f5f9;margin-bottom:14px;padding-bottom:6px;">
+                <div style="font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;">
+                    Legalitas Usaha
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="btnAddLegalitas" style="font-size:0.75rem;padding:4px 10px;">
+                    <i class="bi bi-plus-circle me-1"></i>Tambah Kolom
+                </button>
             </div>
-            <div class="row g-3 mb-4">
-                <div class="col-md-4">
-                    <div class="form-group-admin">
-                        <label>NPWP</label>
-                        <input type="text" name="npwp"
-                            class="form-control-admin @error('npwp') is-invalid @enderror"
-                            value="{{ old('npwp', $tentang->npwp ?? '') }}"
-                            placeholder="31.315.457.7-517.000">
-                        @error('npwp')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            <div id="legalitas-container" class="mb-4">
+                @php
+                    $legalitasDinamis = $tentang->legalitas_dinamis ?? [];
+                    // Fallback to static fields if JSON is empty (Migration compatibility)
+                    if (empty($legalitasDinamis) && ($tentang->npwp || $tentang->nib || $tentang->kbli || $tentang->siup_tanggal)) {
+                        if($tentang->npwp) $legalitasDinamis[] = ['label' => 'NPWP', 'value' => $tentang->npwp];
+                        if($tentang->nib) $legalitasDinamis[] = ['label' => 'NIB (Nomor Induk Berusaha)', 'value' => $tentang->nib];
+                        if($tentang->kbli) $legalitasDinamis[] = ['label' => 'Kode KBLI', 'value' => $tentang->kbli];
+                        if($tentang->siup_tanggal) $legalitasDinamis[] = ['label' => 'Tanggal SIUP/OSS', 'value' => $tentang->siup_tanggal];
+                    }
+                    if(empty($legalitasDinamis)) {
+                        $legalitasDinamis[] = ['label' => '', 'value' => ''];
+                    }
+                @endphp
+                
+                @foreach($legalitasDinamis as $idx => $leg)
+                <div class="row g-2 align-items-end legalitas-row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label" style="font-size:0.8rem;color:#64748b;margin-bottom:4px;">Label (Contoh: NPWP)</label>
+                        <input type="text" name="legalitas_dinamis_label[]" class="form-control-admin" placeholder="Nama Dokumen" value="{{ $leg['label'] }}">
+                    </div>
+                    <div class="col-md-7">
+                        <label class="form-label" style="font-size:0.8rem;color:#64748b;margin-bottom:4px;">Isi / Nilai Dokumen</label>
+                        <input type="text" name="legalitas_dinamis_value[]" class="form-control-admin" placeholder="31.315.457.7-517.000" value="{{ $leg['value'] }}">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-outline-danger w-100 btn-remove-legalitas" title="Hapus">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group-admin">
-                        <label>NIB (Nomor Induk Berusaha)</label>
-                        <input type="text" name="nib"
-                            class="form-control-admin @error('nib') is-invalid @enderror"
-                            value="{{ old('nib', $tentang->nib ?? '') }}"
-                            placeholder="9120005752888">
-                        @error('nib')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group-admin">
-                        <label>Kode KBLI</label>
-                        <input type="text" name="kbli"
-                            class="form-control-admin @error('kbli') is-invalid @enderror"
-                            value="{{ old('kbli', $tentang->kbli ?? '') }}"
-                            placeholder="70209, 62019, 62012, 62090">
-                        @error('kbli')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group-admin">
-                        <label>Tanggal SIUP/OSS</label>
-                        <input type="text" name="siup_tanggal"
-                            class="form-control-admin @error('siup_tanggal') is-invalid @enderror"
-                            value="{{ old('siup_tanggal', $tentang->siup_tanggal ?? '') }}"
-                            placeholder="28 Juli 2019">
-                        @error('siup_tanggal')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             {{-- Keanggotaan --}}
@@ -440,6 +436,38 @@ function previewImg(input, imgId, wrapId) {
     };
     reader.readAsDataURL(input.files[0]);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('legalitas-container');
+    const btnAdd = document.getElementById('btnAddLegalitas');
+
+    btnAdd.addEventListener('click', function() {
+        const row = document.createElement('div');
+        row.className = 'row g-2 align-items-end legalitas-row mb-3';
+        row.innerHTML = `
+            <div class="col-md-4">
+                <label class="form-label" style="font-size:0.8rem;color:#64748b;margin-bottom:4px;">Label (Contoh: NPWP)</label>
+                <input type="text" name="legalitas_dinamis_label[]" class="form-control-admin" placeholder="Nama Dokumen" value="">
+            </div>
+            <div class="col-md-7">
+                <label class="form-label" style="font-size:0.8rem;color:#64748b;margin-bottom:4px;">Isi / Nilai Dokumen</label>
+                <input type="text" name="legalitas_dinamis_value[]" class="form-control-admin" placeholder="Nilai Dokumen" value="">
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-outline-danger w-100 btn-remove-legalitas" title="Hapus">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        `;
+        container.appendChild(row);
+    });
+
+    container.addEventListener('click', function(e) {
+        if(e.target.closest('.btn-remove-legalitas')) {
+            e.target.closest('.legalitas-row').remove();
+        }
+    });
+});
 </script>
 @endpush
 

@@ -241,7 +241,7 @@
 
 {{-- DATA PERUSAHAAN (LEGALITAS) --}}
 @php
-$hasDataPerusahaan = $tentang && ($tentang->npwp || $tentang->nib || $tentang->akta_nomor || $tentang->kadin_nomor || $tentang->pengesahan_badan_hukum);
+$hasDataPerusahaan = $tentang && (!empty($tentang->legalitas_dinamis) || $tentang->npwp || $tentang->nib || $tentang->akta_nomor || $tentang->kadin_nomor || $tentang->pengesahan_badan_hukum);
 @endphp
 @if($hasDataPerusahaan)
 <section class="section section-alt" style="background:#f8fafc;">
