@@ -25,10 +25,12 @@ class TentangKami extends Model
         'logo', 'gambar',
         // Legacy
         'judul', 'deskripsi',
-        'legalitas_dinamis'
+        'legalitas_dinamis',
+        'keanggotaan_dinamis'
     ];
 
     protected $casts = [
         'legalitas_dinamis' => 'array',
+        'keanggotaan_dinamis' => 'array',
     ];
 }

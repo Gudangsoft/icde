@@ -233,50 +233,52 @@
             </div>
 
             {{-- Keanggotaan --}}
-            <div style="font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #f1f5f9;">
-                Keanggotaan
+            <div class="d-flex justify-content-between align-items-center" style="border-bottom:1px solid #f1f5f9;margin-bottom:14px;padding-bottom:6px;">
+                <div style="font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;">
+                    Keanggotaan
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="btnAddKeanggotaan" style="font-size:0.75rem;padding:4px 10px;">
+                    <i class="bi bi-plus-circle me-1"></i>Tambah Keanggotaan
+                </button>
             </div>
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <div class="form-group-admin">
-                        <label>Nomor Anggota KADIN</label>
-                        <input type="text" name="kadin_nomor"
-                            class="form-control-admin @error('kadin_nomor') is-invalid @enderror"
-                            value="{{ old('kadin_nomor', $tentang->kadin_nomor ?? '') }}"
-                            placeholder="20301-25093146511">
-                        @error('kadin_nomor')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            <div id="keanggotaan-container" class="mb-4">
+                @php
+                    $keanggotaanDinamis = $tentang->keanggotaan_dinamis ?? [];
+                    // Fallback to static fields if JSON is empty (Migration compatibility)
+                    if (empty($keanggotaanDinamis) && ($tentang->kadin_nomor || $tentang->inkindo_nomor)) {
+                        if($tentang->kadin_nomor) {
+                            $kadinValue = 'Nomor: ' . $tentang->kadin_nomor;
+                            if($tentang->kadin_berlaku) $kadinValue .= ' | Berlaku s/d: ' . $tentang->kadin_berlaku;
+                            $keanggotaanDinamis[] = ['label' => 'KADIN', 'value' => $kadinValue];
+                        }
+                        if($tentang->inkindo_nomor) {
+                            $inkindoValue = 'Nomor: ' . $tentang->inkindo_nomor;
+                            if($tentang->inkindo_berlaku) $inkindoValue .= ' | Berlaku s/d: ' . $tentang->inkindo_berlaku;
+                            $keanggotaanDinamis[] = ['label' => 'INKINDO', 'value' => $inkindoValue];
+                        }
+                    }
+                    if(empty($keanggotaanDinamis)) {
+                        $keanggotaanDinamis[] = ['label' => '', 'value' => ''];
+                    }
+                @endphp
+                
+                @foreach($keanggotaanDinamis as $idx => $anggota)
+                <div class="row g-2 align-items-end keanggotaan-row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label" style="font-size:0.8rem;color:#64748b;margin-bottom:4px;">Nama Organisasi / Asosiasi</label>
+                        <input type="text" name="keanggotaan_dinamis_label[]" class="form-control-admin" placeholder="Contoh: KADIN" value="{{ $anggota['label'] }}">
+                    </div>
+                    <div class="col-md-7">
+                        <label class="form-label" style="font-size:0.8rem;color:#64748b;margin-bottom:4px;">Detail Keanggotaan (Nomor / Masa Berlaku)</label>
+                        <input type="text" name="keanggotaan_dinamis_value[]" class="form-control-admin" placeholder="Nomor: ..., Berlaku: ..." value="{{ $anggota['value'] }}">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-outline-danger w-100 btn-remove-keanggotaan" title="Hapus">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group-admin">
-                        <label>KADIN Berlaku s/d</label>
-                        <input type="text" name="kadin_berlaku"
-                            class="form-control-admin @error('kadin_berlaku') is-invalid @enderror"
-                            value="{{ old('kadin_berlaku', $tentang->kadin_berlaku ?? '') }}"
-                            placeholder="03 Januari 2026">
-                        @error('kadin_berlaku')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group-admin">
-                        <label>Nomor Anggota INKINDO</label>
-                        <input type="text" name="inkindo_nomor"
-                            class="form-control-admin @error('inkindo_nomor') is-invalid @enderror"
-                            value="{{ old('inkindo_nomor', $tentang->inkindo_nomor ?? '') }}"
-                            placeholder="15323/P/0673.JT">
-                        @error('inkindo_nomor')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group-admin">
-                        <label>INKINDO Berlaku s/d</label>
-                        <input type="text" name="inkindo_berlaku"
-                            class="form-control-admin @error('inkindo_berlaku') is-invalid @enderror"
-                            value="{{ old('inkindo_berlaku', $tentang->inkindo_berlaku ?? '') }}"
-                            placeholder="31 Desember 2025">
-                        @error('inkindo_berlaku')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -465,6 +467,36 @@ document.addEventListener('DOMContentLoaded', function() {
     container.addEventListener('click', function(e) {
         if(e.target.closest('.btn-remove-legalitas')) {
             e.target.closest('.legalitas-row').remove();
+        }
+    });
+
+    const kgnContainer = document.getElementById('keanggotaan-container');
+    const btnAddKgn = document.getElementById('btnAddKeanggotaan');
+
+    btnAddKgn.addEventListener('click', function() {
+        const row = document.createElement('div');
+        row.className = 'row g-2 align-items-end keanggotaan-row mb-3';
+        row.innerHTML = `
+            <div class="col-md-4">
+                <label class="form-label" style="font-size:0.8rem;color:#64748b;margin-bottom:4px;">Nama Organisasi / Asosiasi</label>
+                <input type="text" name="keanggotaan_dinamis_label[]" class="form-control-admin" placeholder="Contoh: KADIN" value="">
+            </div>
+            <div class="col-md-7">
+                <label class="form-label" style="font-size:0.8rem;color:#64748b;margin-bottom:4px;">Detail Keanggotaan (Nomor / Masa Berlaku)</label>
+                <input type="text" name="keanggotaan_dinamis_value[]" class="form-control-admin" placeholder="Nomor: ..., Berlaku: ..." value="">
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-outline-danger w-100 btn-remove-keanggotaan" title="Hapus">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        `;
+        kgnContainer.appendChild(row);
+    });
+
+    kgnContainer.addEventListener('click', function(e) {
+        if(e.target.closest('.btn-remove-keanggotaan')) {
+            e.target.closest('.keanggotaan-row').remove();
         }
     });
 });

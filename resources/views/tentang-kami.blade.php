@@ -241,7 +241,7 @@
 
 {{-- DATA PERUSAHAAN (LEGALITAS) --}}
 @php
-$hasDataPerusahaan = $tentang && (!empty($tentang->legalitas_dinamis) || $tentang->npwp || $tentang->nib || $tentang->akta_nomor || $tentang->kadin_nomor || $tentang->pengesahan_badan_hukum);
+$hasDataPerusahaan = $tentang && (!empty($tentang->legalitas_dinamis) || !empty($tentang->keanggotaan_dinamis) || $tentang->npwp || $tentang->nib || $tentang->akta_nomor || $tentang->kadin_nomor || $tentang->inkindo_nomor || $tentang->pengesahan_badan_hukum);
 @endphp
 @if($hasDataPerusahaan)
 <section class="section section-alt" style="background:#f8fafc;">
@@ -322,19 +322,7 @@ $hasDataPerusahaan = $tentang && (!empty($tentang->legalitas_dinamis) || $tentan
             </div>
             @endif
 
-            {{-- Noreg KADIN --}}
-            @if($tentang->kadin_nomor)
-            <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="300">
-                <div class="legalitas-card">
-                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
-                    <div class="legalitas-title">Noreg KADIN</div>
-                    <div class="legalitas-value">
-                        Nomor : {{ $tentang->kadin_nomor }}
-                        @if($tentang->kadin_berlaku)<br> Berlaku s/d : {{ $tentang->kadin_berlaku }} @endif
-                    </div>
-                </div>
-            </div>
-            @endif
+            {{-- Noreg KADIN (Moved to Keanggotaan Dinamis below) --}}
 
             {{-- Legalitas Dinamis --}}
             @if(!empty($tentang->legalitas_dinamis))
@@ -389,19 +377,46 @@ $hasDataPerusahaan = $tentang && (!empty($tentang->legalitas_dinamis) || $tentan
                 @endif
             @endif
 
-            {{-- INKINDO --}}
-            @if($tentang->inkindo_nomor)
-            <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="600">
-                <div class="legalitas-card">
-                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
-                    <div class="legalitas-title">Noreg INKINDO</div>
-                    <div class="legalitas-value">
-                        Provinsi Jawa Tengah<br>
-                        Nomor : {{ $tentang->inkindo_nomor }}
-                        @if($tentang->inkindo_berlaku)<br> Berlaku s/d : {{ $tentang->inkindo_berlaku }} @endif
+            {{-- Keanggotaan Dinamis --}}
+            @if(!empty($tentang->keanggotaan_dinamis))
+                @foreach($tentang->keanggotaan_dinamis as $idx => $anggota)
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ 600 + ($idx * 50) }}">
+                    <div class="legalitas-card">
+                        <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                        <div class="legalitas-title">{{ $anggota['label'] ?? '' }}</div>
+                        <div class="legalitas-value">
+                            {{ $anggota['value'] ?? '' }}
+                        </div>
                     </div>
                 </div>
-            </div>
+                @endforeach
+            @else
+                {{-- Fallback Keanggotaan KADIN Lama --}}
+                @if($tentang->kadin_nomor)
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="legalitas-card">
+                        <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                        <div class="legalitas-title">Noreg KADIN</div>
+                        <div class="legalitas-value">
+                            Nomor : {{ $tentang->kadin_nomor }}
+                            @if($tentang->kadin_berlaku)<br> Berlaku s/d : {{ $tentang->kadin_berlaku }} @endif
+                        </div>
+                    </div>
+                </div>
+                @endif
+                {{-- Fallback Keanggotaan INKINDO Lama --}}
+                @if($tentang->inkindo_nomor)
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="legalitas-card">
+                        <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                        <div class="legalitas-title">Noreg INKINDO</div>
+                        <div class="legalitas-value">
+                            Nomor : {{ $tentang->inkindo_nomor }}
+                            @if($tentang->inkindo_berlaku)<br> Berlaku s/d : {{ $tentang->inkindo_berlaku }} @endif
+                        </div>
+                    </div>
+                </div>
+                @endif
             @endif
 
         </div>

@@ -62,7 +62,6 @@ class TentangKamiAdminController extends Controller
         $legalitasLabels = $request->input('legalitas_dinamis_label', []);
         $legalitasValues = $request->input('legalitas_dinamis_value', []);
         $legalitasDinamis = [];
-        
         foreach ($legalitasLabels as $index => $label) {
             if (!empty($label)) {
                 $legalitasDinamis[] = [
@@ -72,6 +71,20 @@ class TentangKamiAdminController extends Controller
             }
         }
         $tentang->legalitas_dinamis = $legalitasDinamis;
+
+        // Handle keanggotaan dinamis
+        $keanggotaanLabels = $request->input('keanggotaan_dinamis_label', []);
+        $keanggotaanValues = $request->input('keanggotaan_dinamis_value', []);
+        $keanggotaanDinamis = [];
+        foreach ($keanggotaanLabels as $index => $label) {
+            if (!empty($label)) {
+                $keanggotaanDinamis[] = [
+                    'label' => $label,
+                    'value' => $keanggotaanValues[$index] ?? '',
+                ];
+            }
+        }
+        $tentang->keanggotaan_dinamis = $keanggotaanDinamis;
 
         if ($request->hasFile('logo')) {
             if ($tentang->logo) Storage::disk('public')->delete($tentang->logo);
