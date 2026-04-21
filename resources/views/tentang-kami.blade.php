@@ -336,43 +336,57 @@ $hasDataPerusahaan = $tentang && (!empty($tentang->legalitas_dinamis) || $tentan
             </div>
             @endif
 
-            {{-- NPWP --}}
-            @if($tentang->npwp)
-            <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="legalitas-card">
-                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
-                    <div class="legalitas-title">NPWP</div>
-                    <div class="legalitas-value">
-                        Nomor : {{ $tentang->npwp }}
+            {{-- Legalitas Dinamis --}}
+            @if(!empty($tentang->legalitas_dinamis))
+                @foreach($tentang->legalitas_dinamis as $idx => $leg)
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ 400 + ($idx * 50) }}">
+                    <div class="legalitas-card">
+                        <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                        <div class="legalitas-title">{{ $leg['label'] ?? '' }}</div>
+                        <div class="legalitas-value">
+                            {{ $leg['value'] ?? '' }}
+                        </div>
                     </div>
                 </div>
-            </div>
-            @endif
-
-            {{-- NIB --}}
-            @if($tentang->nib)
-            <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="500">
-                <div class="legalitas-card">
-                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
-                    <div class="legalitas-title">NIB</div>
-                    <div class="legalitas-value">
-                        Nomor : {{ $tentang->nib }}
+                @endforeach
+            @else
+                {{-- Fallback ke data lama jika JSON kosong --}}
+                @if($tentang->npwp)
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="legalitas-card">
+                        <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                        <div class="legalitas-title">NPWP</div>
+                        <div class="legalitas-value">Nomor : {{ $tentang->npwp }}</div>
                     </div>
                 </div>
-            </div>
-            @endif
-
-            {{-- KBLI --}}
-            @if($tentang->kbli)
-            <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="550">
-                <div class="legalitas-card">
-                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
-                    <div class="legalitas-title">Izin Usaha Industri & KBLI</div>
-                    <div class="legalitas-value">
-                        Kode : {{ $tentang->kbli }}
+                @endif
+                @if($tentang->nib)
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="legalitas-card">
+                        <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                        <div class="legalitas-title">NIB</div>
+                        <div class="legalitas-value">Nomor : {{ $tentang->nib }}</div>
                     </div>
                 </div>
-            </div>
+                @endif
+                @if($tentang->kbli)
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="550">
+                    <div class="legalitas-card">
+                        <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                        <div class="legalitas-title">Izin Usaha Industri & KBLI</div>
+                        <div class="legalitas-value">Kode : {{ $tentang->kbli }}</div>
+                    </div>
+                </div>
+                @endif
+                @if($tentang->siup_tanggal)
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="700">
+                    <div class="legalitas-card">
+                        <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
+                        <div class="legalitas-title">SIUP / OSS</div>
+                        <div class="legalitas-value">Tanggal : {{ $tentang->siup_tanggal }}</div>
+                    </div>
+                </div>
+                @endif
             @endif
 
             {{-- INKINDO --}}
@@ -385,19 +399,6 @@ $hasDataPerusahaan = $tentang && (!empty($tentang->legalitas_dinamis) || $tentan
                         Provinsi Jawa Tengah<br>
                         Nomor : {{ $tentang->inkindo_nomor }}
                         @if($tentang->inkindo_berlaku)<br> Berlaku s/d : {{ $tentang->inkindo_berlaku }} @endif
-                    </div>
-                </div>
-            </div>
-            @endif
-
-            {{-- SIUP/OSS --}}
-            @if($tentang->siup_tanggal)
-            <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="700">
-                <div class="legalitas-card">
-                    <div class="legalitas-icon"><i class="bi bi-file-earmark-text-fill text-white fs-3"></i></div>
-                    <div class="legalitas-title">SIUP / OSS</div>
-                    <div class="legalitas-value">
-                        Tanggal : {{ $tentang->siup_tanggal }}
                     </div>
                 </div>
             </div>
