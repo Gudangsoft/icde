@@ -64,16 +64,15 @@
                         <label>Kategori <span class="text-danger">*</span></label>
                         <select name="kategori" class="form-control-admin select2">
                             <option value="">-- Pilih Kategori --</option>
-                            @foreach([
-                                'Perencanaan Pembangunan',
-                                'Evaluasi Pembangunan',
-                                'Analisis Pengelolaan Keuangan dan Aset Daerah',
-                                'Perencanaan Sektoral',
-                                'Penelitian dan Pengkajian',
-                                'Peningkatan Kapasitas SDM Aparatur',
-                            ] as $k)
+                            @php
+                                $kategoriLayanan = \App\Models\Layanan::where('aktif', true)->orderBy('urutan')->pluck('judul');
+                            @endphp
+                            @foreach($kategoriLayanan as $k)
                             <option value="{{ $k }}" {{ old('kategori', $pengalaman->kategori ?? '') == $k ? 'selected' : '' }}>{{ $k }}</option>
                             @endforeach
+                            @if(isset($pengalaman->kategori) && !$kategoriLayanan->contains($pengalaman->kategori))
+                            <option value="{{ $pengalaman->kategori }}" selected>{{ $pengalaman->kategori }} (Non-aktif / Lama)</option>
+                            @endif
                         </select>
                         @error('kategori')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                     </div>

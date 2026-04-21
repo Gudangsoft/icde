@@ -250,19 +250,37 @@
 @php
     use App\Models\Pengalaman;
 
-    $katConfig = [
-        'Perencanaan Pembangunan'                       => ['icon' => 'bi-building-fill-gear',      'bg' => '#1565C0'],
-        'Evaluasi Pembangunan'                          => ['icon' => 'bi-journal-bookmark-fill',   'bg' => '#E65100'],
-        'Analisis Pengelolaan Keuangan dan Aset Daerah' => ['icon' => 'bi-graph-up-arrow',          'bg' => '#2E7D32'],
-        'Perencanaan Sektoral'                          => ['icon' => 'bi-file-earmark-gear-fill',  'bg' => '#B71C1C'],
-        'Penelitian dan Pengkajian'                     => ['icon' => 'bi-search-heart-fill',       'bg' => '#00695C'],
-        'Peningkatan Kapasitas SDM Aparatur'            => ['icon' => 'bi-people-fill',             'bg' => '#1A237E'],
+    use App\Models\Layanan;
+
+    $katBgColors = [
+        '#1565C0', '#E65100', '#2E7D32', '#B71C1C', '#00695C', '#1A237E', 
+        '#6A1B9A', '#D84315', '#283593', '#0277BD', '#558B2F', '#4E342E'
     ];
+
+    $layanans = Layanan::where('aktif', true)->orderBy('urutan')->get();
+    
+    $katConfig = [];
+    foreach($layanans as $idx => $lyn) {
+        $katConfig[$lyn->judul] = [
+            'icon' => $lyn->ikon ?? 'bi-folder-fill',
+            'bg' => $katBgColors[$idx % count($katBgColors)]
+        ];
+    }
 
     $countPerKat = Pengalaman::selectRaw('kategori, count(*) as total')
         ->whereNotNull('kategori')
         ->groupBy('kategori')
         ->pluck('total', 'kategori');
+
+    // fallback for existing categories in DB but not in active Layanan
+    foreach($countPerKat->keys() as $idx => $k) {
+        if(!isset($katConfig[$k])) {
+            $katConfig[$k] = [
+                'icon' => 'bi-archive-fill',
+                'bg' => '#64748b' 
+            ];
+        }
+    }
 @endphp
 
 {{-- ── If NO category: show colored category boxes ── --}}

@@ -310,14 +310,19 @@
 
 @section('content')
 @php
-    $katConfig = [
-        'Perencanaan Pembangunan'                       => '#1565C0',
-        'Evaluasi Pembangunan'                          => '#E65100',
-        'Analisis Pengelolaan Keuangan dan Aset Daerah' => '#2E7D32',
-        'Perencanaan Sektoral'                          => '#B71C1C',
-        'Penelitian dan Pengkajian'                     => '#00695C',
-        'Peningkatan Kapasitas SDM Aparatur'            => '#1A237E',
+    use App\Models\Layanan;
+    
+    $katBgColors = [
+        '#1565C0', '#E65100', '#2E7D32', '#B71C1C', '#00695C', '#1A237E', 
+        '#6A1B9A', '#D84315', '#283593', '#0277BD', '#558B2F', '#4E342E'
     ];
+
+    $layanans = Layanan::where('aktif', true)->orderBy('urutan')->get();
+    
+    $katConfig = [];
+    foreach($layanans as $idx => $lyn) {
+        $katConfig[$lyn->judul] = $katBgColors[$idx % count($katBgColors)];
+    }
     $catColor = isset($pengalaman->kategori) && isset($katConfig[$pengalaman->kategori]) ? $katConfig[$pengalaman->kategori] : null;
 @endphp
 
