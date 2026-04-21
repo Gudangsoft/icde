@@ -580,9 +580,6 @@
                         </svg>
                     </div>
                     <h5>{{ $item->judul }}</h5>
-                    @if($item->deskripsi)
-                    <p class="mb-0 mt-3" style="font-size:0.9rem;opacity:0.9;">{{ Str::limit(strip_tags(html_entity_decode($item->deskripsi)), 120) }}</p>
-                    @endif
                 </div>
             </div>
             @empty
