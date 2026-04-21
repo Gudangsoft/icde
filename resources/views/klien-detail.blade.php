@@ -223,19 +223,28 @@
     align-items: center;
     gap: 8px;
     background: #fff;
-    border: 1px solid #e2e8f0;
-    color: #475569;
-    font-size: 0.83rem;
-    font-weight: 600;
-    padding: 9px 18px;
-    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    color: var(--icde-primary);
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 30px;
     text-decoration: none;
     transition: all .2s;
 }
+.btn-back i {
+    font-size: 1rem;
+    transition: transform .2s;
+}
 .btn-back:hover {
     background: var(--icde-primary);
-    border-color: var(--icde-primary);
     color: #fff;
+    box-shadow: 0 6px 16px rgba(27,108,168,0.25);
+    transform: translateY(-2px);
+}
+.btn-back:hover i {
+    transform: translateX(-4px);
 }
 
 /* Responsive */
@@ -315,7 +324,7 @@
     <div class="container">
 
         {{-- Back button --}}
-        <div class="mb-4" data-aos="fade-up">
+        <div class="mb-4" data-aos="fade-right">
             <a href="{{ route('klien') }}" class="btn-back">
                 <i class="bi bi-arrow-left"></i> Kembali ke Daftar Klien
             </a>

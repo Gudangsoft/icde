@@ -79,13 +79,11 @@
 
 /* ── Content layout ── */
 .detail-layout {
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 32px;
-    align-items: start;
-    padding: 44px 0 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 0 60px;
 }
-@media(max-width:992px) { .detail-layout { grid-template-columns: 1fr; } }
 
 /* ── Section card ── */
 .section-card {
@@ -200,20 +198,29 @@
     align-items: center;
     gap: 8px;
     background: #fff;
-    border: 1px solid #e2e8f0;
-    color: #475569;
-    font-size: 0.83rem;
-    font-weight: 600;
-    padding: 9px 18px;
-    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    color: var(--icde-primary);
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 30px;
     text-decoration: none;
     transition: all .2s;
     margin-bottom: 0;
 }
+.btn-back i {
+    font-size: 1rem;
+    transition: transform .2s;
+}
 .btn-back:hover {
     background: var(--icde-primary);
-    border-color: var(--icde-primary);
     color: #fff;
+    box-shadow: 0 6px 16px rgba(27,108,168,0.25);
+    transform: translateY(-2px);
+}
+.btn-back:hover i {
+    transform: translateX(-4px);
 }
 
 /* ── Related projects ── */
@@ -387,24 +394,34 @@
             <div>
 
                 {{-- Back button --}}
-                <div class="mt-0 mb-4" data-aos="fade-up">
+                <div class="mt-0 mb-3" data-aos="fade-right">
                     <a href="{{ route('pengalaman', ['kategori' => $pengalaman->kategori]) }}"
                        class="btn-back">
-                        <i class="bi bi-arrow-left"></i> Kembali ke Daftar
+                        <i class="bi bi-arrow-left"></i> Kembali ke Daftar Pekerjaan
                     </a>
                 </div>
 
                 {{-- Description --}}
                 @if($pengalaman->deskripsi)
-                <div class="section-card" data-aos="fade-up">
-                    <div class="section-card-header">
-                        <i class="bi bi-file-text-fill"></i>
-                        <h3>Deskripsi Pekerjaan</h3>
-                    </div>
-                    <div class="section-card-body">
-                        <div class="proyek-deskripsi">
+                <div class="card border-0 shadow-lg mb-4" data-aos="fade-up" style="border-radius: 24px; overflow: hidden; background: {{ $catColor ?? 'linear-gradient(135deg, #0d2c54 0%, #1B6CA8 60%, #1e88e5 100%)' }}; color: white; position: relative;">
+                    <!-- Dekorasi Background -->
+                    <i class="bi bi-file-text position-absolute" style="font-size: 14rem; opacity: 0.05; top: -30px; right: -20px; transform: rotate(-10deg);"></i>
+                    <i class="bi bi-stars position-absolute" style="font-size: 3rem; opacity: 0.15; bottom: 20px; left: 30px;"></i>
+                    
+                    <div class="p-4 p-md-5 position-relative z-1">
+                        <div class="d-inline-flex align-items-center justify-content-center mb-4" style="width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                            <i class="bi bi-file-text-fill text-white fs-3"></i>
+                        </div>
+                        <h3 class="fw-bold mb-4" style="letter-spacing: 1px; color: #fff;">Deskripsi Pekerjaan</h3>
+                        
+                        <div class="proyek-deskripsi text-white" style="font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,0.95) !important;">
                             {!! $pengalaman->deskripsi !!}
                         </div>
+                        <style>
+                            .proyek-deskripsi.text-white p, .proyek-deskripsi.text-white span, .proyek-deskripsi.text-white div, .proyek-deskripsi.text-white li { 
+                                color: rgba(255,255,255,0.95) !important;
+                            }
+                        </style>
                     </div>
                 </div>
                 @endif
@@ -439,51 +456,7 @@
             <div>
 
                 {{-- Project Info --}}
-                <div class="section-card" data-aos="fade-up" style="position:sticky; top:88px;">
-                    <div class="section-card-header">
-                        <i class="bi bi-info-circle-fill"></i>
-                        <h3>Informasi Proyek</h3>
-                    </div>
-                    <div class="section-card-body">
 
-                        <div class="info-row">
-                            <i class="bi bi-calendar-event-fill"></i>
-                            <div>
-                                <span class="info-label">Tahun</span>
-                                <span class="info-value">{{ $pengalaman->tahun }}</span>
-                            </div>
-                        </div>
-
-                        <div class="info-row">
-                            <i class="bi bi-person-workspace"></i>
-                            <div>
-                                <span class="info-label">Pemberi Kerja</span>
-                                <span class="info-value">{{ $pengalaman->pemberi_kerja }}</span>
-                            </div>
-                        </div>
-
-                        @if($pengalaman->lokasi)
-                        <div class="info-row">
-                            <i class="bi bi-geo-alt-fill"></i>
-                            <div>
-                                <span class="info-label">Lokasi</span>
-                                <span class="info-value">{{ $pengalaman->lokasi }}</span>
-                            </div>
-                        </div>
-                        @endif
-
-                        @if($pengalaman->kategori)
-                        <div class="info-row">
-                            <i class="bi bi-bookmark-fill"></i>
-                            <div>
-                                <span class="info-label">Bidang Pekerjaan</span>
-                                <span class="info-value">{{ $pengalaman->kategori }}</span>
-                            </div>
-                        </div>
-                        @endif
-
-                    </div>
-                </div>
 
                 {{-- Related projects --}}
                 @if($related && $related->count() > 0)

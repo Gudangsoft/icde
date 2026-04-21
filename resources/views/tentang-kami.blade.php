@@ -161,8 +161,10 @@
             {{-- LEVEL 2 row --}}
             <div style="display:flex;align-items:flex-start;justify-content:center;gap:0;position:relative;width:100%;">
                 {{-- horizontal connector --}}
-                @if($root->children->where('aktif',true)->count() > 1)
-                <div style="position:absolute;top:0;left:25%;right:25%;height:2px;background:#cbd5e1;"></div>
+                @php $countLvl2 = $root->children->where('aktif',true)->count(); @endphp
+                @if($countLvl2 > 1)
+                @php $offsetLvl2 = 100 / ($countLvl2 * 2); @endphp
+                <div style="position:absolute;top:0;left:{{ $offsetLvl2 }}%;right:{{ $offsetLvl2 }}%;height:2px;background:#cbd5e1;"></div>
                 @endif
 
                 @foreach($root->children->where('aktif',true) as $lvl2)
@@ -186,8 +188,10 @@
 
                     {{-- LEVEL 3 row --}}
                     <div style="display:flex;align-items:flex-start;justify-content:center;gap:0;position:relative;width:100%;">
-                        @if($lvl2->children->where('aktif',true)->count() > 1)
-                        <div style="position:absolute;top:0;left:20%;right:20%;height:2px;background:#cbd5e1;"></div>
+                        @php $countLvl3 = $lvl2->children->where('aktif',true)->count(); @endphp
+                        @if($countLvl3 > 1)
+                        @php $offsetLvl3 = 100 / ($countLvl3 * 2); @endphp
+                        <div style="position:absolute;top:0;left:{{ $offsetLvl3 }}%;right:{{ $offsetLvl3 }}%;height:2px;background:#cbd5e1;"></div>
                         @endif
 
                         @foreach($lvl2->children->where('aktif',true) as $lvl3)
