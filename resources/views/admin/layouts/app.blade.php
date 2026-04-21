@@ -390,23 +390,22 @@
             <i class="bi bi-speedometer2"></i> Dashboard
         </a>
 
-        <div class="nav-section-label mt-2">Konten Website</div>
+        <div class="nav-section-label mt-2">Konten Halaman</div>
         <a href="{{ route('admin.beranda.index') }}" class="sidebar-link {{ request()->routeIs('admin.beranda*') ? 'active' : '' }}">
             <i class="bi bi-house-fill"></i> Beranda
         </a>
-        <a href="{{ route('admin.seksi.index') }}" class="sidebar-link {{ request()->routeIs('admin.seksi*') ? 'active' : '' }}">
-            <i class="bi bi-layout-text-window-reverse"></i> Judul Seksi
-        </a>
         <a href="{{ route('admin.slider.index') }}" class="sidebar-link {{ request()->routeIs('admin.slider*') ? 'active' : '' }}">
-            <i class="bi bi-collection-play-fill"></i> Slider / Banner
+            <i class="bi bi-collection-play-fill text-muted" style="font-size:0.8rem;margin-left:8px;"></i> Slider / Banner
         </a>
-        <a href="{{ route('admin.tentang.edit') }}" class="sidebar-link {{ request()->routeIs('admin.tentang*') ? 'active' : '' }}">
+        
+        <a href="{{ route('admin.tentang.edit') }}" class="sidebar-link {{ request()->routeIs('admin.tentang*') ? 'active' : '' }} mt-1">
             <i class="bi bi-info-circle-fill"></i> Tentang Kami
         </a>
         <a href="{{ route('admin.struktur.index') }}" class="sidebar-link {{ request()->routeIs('admin.struktur*') ? 'active' : '' }}">
-            <i class="bi bi-diagram-3-fill"></i> Struktur Organisasi
+            <i class="bi bi-diagram-3-fill text-muted" style="font-size:0.8rem;margin-left:8px;"></i> Struktur Organisasi
         </a>
-        <a href="{{ route('admin.layanan.index') }}" class="sidebar-link {{ request()->routeIs('admin.layanan*') ? 'active' : '' }}">
+
+        <a href="{{ route('admin.layanan.index') }}" class="sidebar-link {{ request()->routeIs('admin.layanan*') ? 'active' : '' }} mt-1">
             <i class="bi bi-briefcase-fill"></i> Lingkup Layanan
         </a>
         <a href="{{ route('admin.sdm.index') }}" class="sidebar-link {{ request()->routeIs('admin.sdm*') ? 'active' : '' }}">
@@ -437,12 +436,15 @@
             @endif
         </a>
 
-        <div class="nav-section-label mt-2">Lainnya</div>
+        <div class="nav-section-label mt-2">Pengaturan Lanjutan</div>
+        <a href="{{ route('admin.seksi.index') }}" class="sidebar-link {{ request()->routeIs('admin.seksi*') ? 'active' : '' }}">
+            <i class="bi bi-layout-text-window-reverse"></i> Judul Seksi
+        </a>
         <a href="{{ route('admin.setting.index') }}#maintenance" class="sidebar-link {{ request()->routeIs('admin.setting*') ? 'active' : '' }}">
             <i class="bi bi-tools"></i> Mode Maintenance
         </a>
         <a href="{{ route('admin.setting.index') }}" class="sidebar-link {{ request()->routeIs('admin.setting*') ? 'active' : '' }}">
-            <i class="bi bi-gear-fill"></i> Setting Web
+            <i class="bi bi-gear-fill"></i> Konfigurasi Web
         </a>
         <a href="{{ route('beranda') }}" target="_blank" class="sidebar-link">
             <i class="bi bi-box-arrow-up-right"></i> Lihat Website
