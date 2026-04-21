@@ -54,15 +54,20 @@
 
     /* ── Client Grid 10 Kolom Seamless ── */
     .klien-grid-10 {
-        display: grid;
-        grid-template-columns: repeat(10, 1fr);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 16px;
     }
-    @media (max-width: 1400px) { .klien-grid-10 { grid-template-columns: repeat(8, 1fr); } }
-    @media (max-width: 1200px) { .klien-grid-10 { grid-template-columns: repeat(6, 1fr); } }
-    @media (max-width: 991px)  { .klien-grid-10 { grid-template-columns: repeat(4, 1fr); } }
-    @media (max-width: 575px)  { .klien-grid-10 { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 400px)  { .klien-grid-10 { grid-template-columns: repeat(2, 1fr); } }
+    .klien-grid-10 .klien-seamless {
+        flex: 0 0 calc(10% - 15px);
+        max-width: calc(10% - 15px);
+    }
+    @media (max-width: 1400px) { .klien-grid-10 .klien-seamless { flex: 0 0 calc(12.5% - 15px); max-width: calc(12.5% - 15px); } }
+    @media (max-width: 1200px) { .klien-grid-10 .klien-seamless { flex: 0 0 calc(16.666% - 15px); max-width: calc(16.666% - 15px); } }
+    @media (max-width: 991px)  { .klien-grid-10 .klien-seamless { flex: 0 0 calc(25% - 15px); max-width: calc(25% - 15px); } }
+    @media (max-width: 575px)  { .klien-grid-10 .klien-seamless { flex: 0 0 calc(33.333% - 15px); max-width: calc(33.333% - 15px); } }
+    @media (max-width: 400px)  { .klien-grid-10 .klien-seamless { flex: 0 0 calc(50% - 15px); max-width: calc(50% - 15px); } }
 
     .klien-seamless {
         text-align: center;
