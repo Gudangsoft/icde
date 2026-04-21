@@ -5,44 +5,71 @@
 @push('styles')
 <style>
     .galeri-item {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .galeri-item:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(27,108,168,0.12);
+        border-color: #cbd5e1;
+    }
+    .galeri-img-wrap {
         position: relative;
         overflow: hidden;
-        border-radius: 12px;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
-    .galeri-item img {
         width: 100%;
         height: 220px;
+        flex-shrink: 0;
+    }
+    .galeri-img-wrap img {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         transition: transform 0.4s ease;
         display: block;
     }
-    .galeri-item:hover img { transform: scale(1.08); }
-    .galeri-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(transparent 40%, rgba(27,108,168,0.85));
-        opacity: 0;
-        transition: opacity 0.3s;
-        display: flex;
-        align-items: flex-end;
-        padding: 20px;
-    }
-    .galeri-item:hover .galeri-overlay { opacity: 1; }
-    .galeri-overlay-content { color: #fff; }
-    .galeri-overlay-content h6 { font-weight:800; font-size: 1.15rem; margin:0; margin-bottom: 4px; }
-    .galeri-overlay-content small { opacity:0.95; font-size: 0.95rem; font-weight: 500; }
-    .galeri-placeholder {
-        width: 100%;
-        height: 220px;
-        background: linear-gradient(135deg, rgba(27,108,168,0.1), rgba(27,108,168,0.2));
+    .galeri-item:hover .galeri-img-wrap img { transform: scale(1.08); }
+    
+    .galeri-info {
+        padding: 16px 20px;
+        background: #fff;
+        flex-grow: 1;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+    }
+    .galeri-info h6 {
+        font-weight: 800;
+        font-size: 1.05rem;
+        margin: 0;
+        margin-bottom: 8px;
+        color: var(--icde-navy-dark);
+        line-height: 1.4;
+        transition: color 0.3s;
+    }
+    .galeri-item:hover .galeri-info h6 {
+        color: var(--icde-primary);
+    }
+    .galeri-info small {
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .galeri-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(27,108,168,0.05), rgba(27,108,168,0.12));
+        display: flex;
         align-items: center;
         justify-content: center;
         color: var(--icde-primary);
-        gap: 10px;
     }
 </style>
 @endpush
@@ -93,15 +120,14 @@
         ] as $idx => $item)
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ ($idx % 3) * 80 }}">
                 <div class="galeri-item">
-                    <div class="galeri-placeholder">
-                        <i class="bi bi-image" style="font-size:3rem;"></i>
-                        <span style="font-size:0.82rem;font-weight:600;">{{ $item['judul'] }}</span>
-                    </div>
-                    <div class="galeri-overlay">
-                        <div class="galeri-overlay-content">
-                            <h6>{{ $item['judul'] }}</h6>
-                            <small><i class="bi bi-tag me-1"></i>{{ $item['kategori'] }}</small>
+                    <div class="galeri-img-wrap">
+                        <div class="galeri-placeholder">
+                            <i class="bi bi-image" style="font-size:3rem; opacity:0.7;"></i>
                         </div>
+                    </div>
+                    <div class="galeri-info">
+                        <h6>{{ $item['judul'] }}</h6>
+                        <small><i class="bi bi-tag me-1"></i>{{ $item['kategori'] }}</small>
                     </div>
                 </div>
             </div>
@@ -112,12 +138,12 @@
             @foreach($galeri as $item)
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 80 }}">
                 <div class="galeri-item" data-bs-toggle="modal" data-bs-target="#galeriModal{{ $item->id }}">
-                    <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}">
-                    <div class="galeri-overlay">
-                        <div class="galeri-overlay-content">
-                            <h6>{{ $item->judul }}</h6>
-                            @if($item->album)<small><i class="bi bi-folder2 me-1"></i>{{ Str::limit($item->album, 30) }}</small>@endif
-                        </div>
+                    <div class="galeri-img-wrap">
+                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" loading="lazy">
+                    </div>
+                    <div class="galeri-info">
+                        <h6>{{ $item->judul }}</h6>
+                        @if($item->album)<small><i class="bi bi-folder2 me-1"></i>{{ Str::limit($item->album, 30) }}</small>@endif
                     </div>
                 </div>
             </div>

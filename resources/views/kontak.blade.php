@@ -132,33 +132,56 @@
 
             <!-- Form Kontak -->
             <div class="col-lg-8" data-aos="fade-left">
-                <div style="background:#fff;border-radius:16px;padding:40px;box-shadow:0 4px 20px rgba(0,0,0,0.07);">
-                    <h3 style="font-weight:900;color:var(--icde-navy-dark);margin-bottom:12px;font-size:2rem;">Kirim Pesan</h3>
-                    <p class="text-muted mb-4" style="font-size:1.05rem;font-weight:500;color:#334155!important;">Isi formulir di bawah ini dan tim kami akan segera merespons pesan Anda.</p>
+                <div style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border-radius:16px; padding:40px; box-shadow:0 10px 30px rgba(234,88,12,0.25); color: #fff;">
+                    <h3 style="font-weight:900; color:#fff; margin-bottom:12px; font-size:2rem;">Kirim Pesan</h3>
+                    <p class="mb-4" style="font-size:1.05rem; font-weight:500; color:rgba(255,255,255,0.9)!important;">Isi formulir di bawah ini dan tim kami akan segera merespons pesan Anda.</p>
 
                     @if(session('sukses'))
-                    <div class="alert" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:10px;color:#065f46;padding:15px 20px;margin-bottom:25px;">
+                    <div class="alert" style="background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); border-radius:10px; color:#fff; padding:15px 20px; margin-bottom:25px; font-weight: 600;">
                         <i class="bi bi-check-circle-fill me-2"></i>{{ session('sukses') }}
                     </div>
                     @endif
 
-                    <form action="{{ route('kontak.kirim') }}" method="POST" class="form-icde">
+                    <form action="{{ route('kontak.kirim') }}" method="POST" class="form-icde" style="--form-label-color: #fff;">
                         @csrf
+                        <style>
+                            .form-icde label { color: var(--form-label-color, #fff) !important; }
+                            .form-icde .form-control, .form-icde .form-select { 
+                                border: none; 
+                                box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+                            }
+                            .form-icde .form-control:focus, .form-icde .form-select:focus { 
+                                box-shadow: 0 0 0 4px rgba(255,255,255,0.3); 
+                            }
+                            .btn-contact-submit {
+                                background: #fff;
+                                color: #ea580c;
+                                font-weight: 800;
+                                border: none;
+                                border-radius: 8px;
+                                transition: all 0.3s;
+                            }
+                            .btn-contact-submit:hover {
+                                background: #fff7ed;
+                                transform: translateY(-2px);
+                                box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+                            }
+                        </style>
                         <div class="row g-4">
                             <div class="col-md-6">
-                                <label for="nama">Nama Lengkap <span style="color:red;">*</span></label>
+                                <label for="nama">Nama Lengkap <span style="color:yellow;">*</span></label>
                                 <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror"
                                     value="{{ old('nama') }}" placeholder="Masukkan nama lengkap" required>
                                 @error('nama')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback" style="color:yellow;">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <label for="email">Email <span style="color:red;">*</span></label>
+                                <label for="email">Email <span style="color:yellow;">*</span></label>
                                 <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror"
                                     value="{{ old('email') }}" placeholder="email@contoh.com" required>
                                 @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback" style="color:yellow;">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-6">
@@ -166,7 +189,7 @@
                                 <input type="tel" id="telepon" name="telepon" class="form-control @error('telepon') is-invalid @enderror"
                                     value="{{ old('telepon') }}" placeholder="+62-xxx-xxxx-xxxx">
                                 @error('telepon')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback" style="color:yellow;">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-6">
@@ -180,19 +203,19 @@
                                     <option value="Lainnya" {{ old('subjek') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                                 </select>
                                 @error('subjek')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback" style="color:yellow;">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-12">
-                                <label for="pesan">Pesan <span style="color:red;">*</span></label>
+                                <label for="pesan">Pesan <span style="color:yellow;">*</span></label>
                                 <textarea id="pesan" name="pesan" rows="6" class="form-control @error('pesan') is-invalid @enderror"
                                     placeholder="Tuliskan pesan atau pertanyaan Anda di sini..." required>{{ old('pesan') }}</textarea>
                                 @error('pesan')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback" style="color:yellow;">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn-icde-primary w-100" style="font-size:1rem;padding:14px;">
+                            <div class="col-12 mt-5">
+                                <button type="submit" class="w-100 btn-contact-submit" style="font-size:1.05rem;padding:14px;">
                                     <i class="bi bi-send-fill me-2"></i>Kirim Pesan
                                 </button>
                             </div>
