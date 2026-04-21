@@ -146,7 +146,13 @@
                 'Direksi'      => ['icon' => 'bi-briefcase-fill', 'header' => 'sdm-header-direksi',      'badge' => 'jabatan-badge-direksi'],
                 'Tenaga Ahli'  => ['icon' => 'bi-person-gear',    'header' => 'sdm-header-tenaga-ahli',  'badge' => 'jabatan-badge-tenaga-ahli'],
             ];
-            $grouped = $sdm->groupBy('jabatan');
+            $grouped = $sdm->groupBy(function($item) {
+                $jab = strtolower($item->jabatan ?? '');
+                if (str_contains($jab, 'komisaris')) return 'Komisaris';
+                if (str_contains($jab, 'direk')) return 'Direksi';
+                if (str_contains($jab, 'ahli')) return 'Tenaga Ahli';
+                return 'Lainnya';
+            });
         @endphp
 
         @foreach($categories as $category => $style)
@@ -198,8 +204,7 @@
 
         {{-- Fallback: tampilkan SDM yang jabatannya tidak masuk kategori di atas --}}
         @php
-            $knownCategories = array_keys($categories);
-            $others = $sdm->filter(fn($item) => !in_array($item->jabatan, $knownCategories));
+            $others = collect($grouped->get('Lainnya', []));
         @endphp
         @if($others->count() > 0)
         <div class="sdm-category-block" data-aos="fade-up">
