@@ -11,7 +11,7 @@ class SliderAdminController extends Controller
 {
     public function index()
     {
-        $sliders = Slider::orderBy('urutan')->get();
+        $sliders = Slider::orderBy('urutan')->paginate(12);
         return view('admin.slider.index', compact('sliders'));
     }
 
