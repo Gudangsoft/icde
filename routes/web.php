@@ -66,6 +66,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/tentang/update', [TentangKamiAdminController::class, 'update'])->name('tentang.update');
 
         // CRUD Resources
+        Route::get('/layanan/export', [LayananAdminController::class, 'export'])->name('layanan.export');
+        Route::get('/layanan/import/template', [LayananAdminController::class, 'importTemplate'])->name('layanan.import.template');
+        Route::post('/layanan/import', [LayananAdminController::class, 'import'])->name('layanan.import');
         Route::post('/layanan/bulk-delete', [LayananAdminController::class, 'bulkDestroy'])->name('layanan.bulk-destroy');
         Route::resource('/layanan', LayananAdminController::class)->names([
             'index' => 'layanan.index', 'create' => 'layanan.create', 'store' => 'layanan.store',

@@ -194,7 +194,7 @@ class KlienAdminController extends Controller
 
         $file = $request->file('file_excel');
         $spreadsheet = IOFactory::load($file->getPathname());
-        $rows = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+        $rows = $spreadsheet->getSheet(0)->toArray(null, true, true, true);
 
         $inserted = 0;
         $errors   = [];

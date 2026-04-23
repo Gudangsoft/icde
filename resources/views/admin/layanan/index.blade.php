@@ -3,6 +3,37 @@
 @section('page_title', 'Lingkup Layanan')
 
 @section('content')
+<div class="modal fade" id="importModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:16px;border:none;">
+            <div class="modal-header" style="border-bottom:1px solid #f1f5f9;">
+                <h5 class="modal-title" style="font-weight:700;"><i class="bi bi-file-earmark-arrow-up me-2" style="color:#1B6CA8;"></i>Import Data dari Excel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('admin.layanan.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body p-4">
+                    <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:0.83rem;color:#92400e;">
+                        <i class="bi bi-info-circle-fill me-1"></i>
+                        Gunakan format template yang sudah disediakan. Download template terlebih dahulu.
+                    </div>
+                    <div class="form-group-admin mb-3">
+                        <label style="font-weight:600;font-size:0.85rem;">File Excel (.xlsx / .xls)</label>
+                        <input type="file" name="file_excel" class="form-control-admin" accept=".xlsx,.xls,.csv" required>
+                    </div>
+                    <a href="{{ route('admin.layanan.import.template') }}" class="d-inline-flex align-items-center gap-2" style="font-size:0.82rem;color:#1B6CA8;text-decoration:none;">
+                        <i class="bi bi-download"></i> Download Template Excel
+                    </a>
+                </div>
+                <div class="modal-footer" style="border-top:1px solid #f1f5f9;">
+                    <button type="button" class="btn-admin btn-light-admin" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn-admin btn-primary-admin"><i class="bi bi-upload me-1"></i>Import</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @if(session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
     <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
