@@ -89,8 +89,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/klien/export', [KlienAdminController::class, 'export'])->name('klien.export');
         Route::get('/klien/import/template', [KlienAdminController::class, 'importTemplate'])->name('klien.import.template');
         Route::post('/klien/import', [KlienAdminController::class, 'import'])->name('klien.import');
-        Route::post('/klien/{klien}/logo', [KlienAdminController::class, 'updateLogo'])->name('klien.update-logo');
         Route::post('/klien/bulk-delete', [KlienAdminController::class, 'bulkDestroy'])->name('klien.bulk-destroy');
+        Route::post('/klien/{klien}/logo', [KlienAdminController::class, 'updateLogo'])->name('klien.update-logo');
         Route::resource('/klien', KlienAdminController::class)->names([
             'index' => 'klien.index', 'create' => 'klien.create', 'store' => 'klien.store',
             'edit' => 'klien.edit', 'update' => 'klien.update', 'destroy' => 'klien.destroy',

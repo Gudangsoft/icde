@@ -61,8 +61,6 @@
         </div>
     </div>
 
-<form id="bulkDeleteForm" action="{{ route('admin.klien.bulk-destroy') }}" method="POST">
-    @csrf
 <div class="admin-card">
     <div class="admin-card-header">
         <h5><i class="bi bi-building-fill me-2"></i>Daftar Klien ({{ $klien->count() }})</h5>
@@ -178,8 +176,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function confirmBulkDelete() {
-    if(confirm('Hapus semua data terpilih?')) {
-        document.getElementById('bulkDeleteForm').submit();
+    const checked = document.querySelectorAll('.checkItem:checked');
+    if (checked.length === 0) {
+        alert('Pilih data yang akan dihapus.');
+        return;
+    }
+    if(confirm('Hapus ' + checked.length + ' data terpilih?')) {
+        const form = document.getElementById('bulkDeleteForm');
+        const csrf = form.querySelector('input[name="_token"]').outerHTML;
+        form.innerHTML = csrf;
+        checked.forEach(item => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'ids[]';
+            input.value = item.value;
+            form.appendChild(input);
+        });
+        form.submit();
     }
 }
 </script>
