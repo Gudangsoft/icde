@@ -20,13 +20,13 @@
 <!-- SEJARAH -->
 <section class="section">
     <div class="container">
-        <div class="row g-5 align-items-center">
+        <div class="row g-5 align-items-stretch">
             <div class="col-lg-6" data-aos="fade-right">
                 @if(!empty($tentang->gambar))
-                    <img src="{{ asset('storage/' . $tentang->gambar) }}" class="rounded shadow-lg w-100" style="aspect-ratio:4/3; object-fit:cover;" alt="Profil Perusahaan">
+                    <img src="{{ asset('storage/' . $tentang->gambar) }}" class="rounded shadow-lg w-100 h-100" style="object-fit:cover;" alt="Profil Perusahaan">
                 @else
-                    <div class="rounded shadow-lg d-flex align-items-center justify-content-center"
-                         style="width:100%;aspect-ratio:4/3;background:linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark));">
+                    <div class="rounded shadow-lg d-flex align-items-center justify-content-center h-100"
+                         style="width:100%;background:linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark));">
                         <div class="text-center text-white p-4">
                             <i class="bi bi-buildings-fill mb-3 opacity-75" style="font-size: 4rem;"></i>
                             <div class="fw-bold fs-5">{{ $tentang->nama_lengkap ?? $tentang->nama_perusahaan ?? 'PT ICDE Semarang' }}</div>
@@ -35,7 +35,7 @@
                 @endif
             </div>
             <div class="col-lg-6" data-aos="fade-left">
-                <div class="card border-0 shadow-lg" style="border-radius: 24px; overflow: hidden; background: linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark)); color: white; position: relative;">
+                <div class="card border-0 shadow-lg h-100" style="border-radius: 24px; overflow: hidden; background: linear-gradient(135deg, var(--icde-primary), var(--icde-navy-dark)); color: white; position: relative;">
                     <!-- Decor -->
                     <i class="bi bi-clock-history position-absolute" style="font-size: 8rem; opacity: 0.05; top: -20px; right: -10px; transform: rotate(-10deg);"></i>
                     
