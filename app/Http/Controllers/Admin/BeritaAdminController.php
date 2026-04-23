@@ -88,7 +88,7 @@ class BeritaAdminController extends Controller
         return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dihapus.');
     }
 
-        public function bulkDestroy(\Illuminate\Http\Request $request)
+    public function bulkDestroy(\Illuminate\Http\Request $request)
     {
         $ids = $request->input('ids', []);
         if (empty($ids)) return back()->with('error', 'Tidak ada data yang dipilih.');
@@ -100,8 +100,6 @@ class BeritaAdminController extends Controller
             }
             $item->delete();
         }
-        return back()->with('sukses', count($ids) . ' data berhasil dihapus.');
-    }
         return back()->with('sukses', count($ids) . ' data berhasil dihapus.');
     }
 }

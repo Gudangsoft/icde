@@ -79,7 +79,7 @@ class TestimoniAdminController extends Controller
         return redirect()->route('admin.testimoni.index')->with('sukses', 'Testimoni berhasil dihapus.');
     }
 
-        public function bulkDestroy(\Illuminate\Http\Request $request)
+    public function bulkDestroy(\Illuminate\Http\Request $request)
     {
         $ids = $request->input('ids', []);
         if (empty($ids)) return back()->with('error', 'Tidak ada data yang dipilih.');
@@ -91,8 +91,6 @@ class TestimoniAdminController extends Controller
             }
             $item->delete();
         }
-        return back()->with('sukses', count($ids) . ' data berhasil dihapus.');
-    }
         return back()->with('sukses', count($ids) . ' data berhasil dihapus.');
     }
 }
