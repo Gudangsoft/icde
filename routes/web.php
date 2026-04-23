@@ -66,10 +66,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/tentang/update', [TentangKamiAdminController::class, 'update'])->name('tentang.update');
 
         // CRUD Resources
+        Route::post('/layanan/bulk-delete', [LayananAdminController::class, 'bulkDestroy'])->name('layanan.bulk-destroy');
         Route::resource('/layanan', LayananAdminController::class)->names([
             'index' => 'layanan.index', 'create' => 'layanan.create', 'store' => 'layanan.store',
             'edit' => 'layanan.edit', 'update' => 'layanan.update', 'destroy' => 'layanan.destroy',
         ]);
+        Route::post('/sdm/bulk-delete', [SdmAdminController::class, 'bulkDestroy'])->name('sdm.bulk-destroy');
         Route::resource('/sdm', SdmAdminController::class)->names([
             'index' => 'sdm.index', 'create' => 'sdm.create', 'store' => 'sdm.store',
             'edit' => 'sdm.edit', 'update' => 'sdm.update', 'destroy' => 'sdm.destroy',
@@ -78,6 +80,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/pengalaman/export', [PengalamanAdminController::class, 'export'])->name('pengalaman.export');
         Route::get('/pengalaman/import/template', [PengalamanAdminController::class, 'importTemplate'])->name('pengalaman.import.template');
         Route::post('/pengalaman/import', [PengalamanAdminController::class, 'import'])->name('pengalaman.import');
+        Route::post('/pengalaman/bulk-delete', [PengalamanAdminController::class, 'bulkDestroy'])->name('pengalaman.bulk-destroy');
         Route::resource('/pengalaman', PengalamanAdminController::class)->names([
             'index' => 'pengalaman.index', 'create' => 'pengalaman.create', 'store' => 'pengalaman.store',
             'edit' => 'pengalaman.edit', 'update' => 'pengalaman.update', 'destroy' => 'pengalaman.destroy',
@@ -87,15 +90,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/klien/import/template', [KlienAdminController::class, 'importTemplate'])->name('klien.import.template');
         Route::post('/klien/import', [KlienAdminController::class, 'import'])->name('klien.import');
         Route::post('/klien/{klien}/logo', [KlienAdminController::class, 'updateLogo'])->name('klien.update-logo');
+        Route::post('/klien/bulk-delete', [KlienAdminController::class, 'bulkDestroy'])->name('klien.bulk-destroy');
         Route::resource('/klien', KlienAdminController::class)->names([
             'index' => 'klien.index', 'create' => 'klien.create', 'store' => 'klien.store',
             'edit' => 'klien.edit', 'update' => 'klien.update', 'destroy' => 'klien.destroy',
         ]);
+        Route::post('/galeri/bulk-delete', [GaleriAdminController::class, 'bulkDestroy'])->name('galeri.bulk-destroy');
         Route::resource('/galeri', GaleriAdminController::class)->names([
             'index' => 'galeri.index', 'create' => 'galeri.create', 'store' => 'galeri.store',
             'edit' => 'galeri.edit', 'update' => 'galeri.update', 'destroy' => 'galeri.destroy',
         ]);
         Route::post('/galeri/import-proyek', [GaleriAdminController::class, 'importFromProyek'])->name('galeri.import-proyek');
+        Route::post('/testimoni/bulk-delete', [TestimoniAdminController::class, 'bulkDestroy'])->name('testimoni.bulk-destroy');
         Route::resource('/testimoni', TestimoniAdminController::class)->names([
             'index' => 'testimoni.index', 'create' => 'testimoni.create', 'store' => 'testimoni.store',
             'edit' => 'testimoni.edit', 'update' => 'testimoni.update', 'destroy' => 'testimoni.destroy',
@@ -116,12 +122,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/seksi/update', [SeksiController::class, 'update'])->name('seksi.update');
 
         // Berita
+        Route::post('/berita/bulk-delete', [BeritaAdminController::class, 'bulkDestroy'])->name('berita.bulk-destroy');
         Route::resource('/berita', BeritaAdminController::class)->except(['show'])->parameters(['berita' => 'berita'])->names([
             'index' => 'berita.index', 'create' => 'berita.create', 'store' => 'berita.store',
             'edit' => 'berita.edit', 'update' => 'berita.update', 'destroy' => 'berita.destroy',
         ]);
 
         // Slider / Banner
+        Route::post('/slider/bulk-delete', [SliderAdminController::class, 'bulkDestroy'])->name('slider.bulk-destroy');
         Route::resource('/slider', SliderAdminController::class)->except(['show'])->names([
             'index' => 'slider.index', 'create' => 'slider.create', 'store' => 'slider.store',
             'edit' => 'slider.edit', 'update' => 'slider.update', 'destroy' => 'slider.destroy',
@@ -129,6 +137,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/slider/{slider}/toggle', [SliderAdminController::class, 'toggleAktif'])->name('slider.toggle');
 
         // Struktur Organisasi
+        Route::post('/struktur/bulk-delete', [StrukturOrganisasiAdminController::class, 'bulkDestroy'])->name('struktur.bulk-destroy');
         Route::resource('/struktur', StrukturOrganisasiAdminController::class)->names([
             'index' => 'struktur.index', 'create' => 'struktur.create', 'store' => 'struktur.store',
             'edit' => 'struktur.edit', 'update' => 'struktur.update', 'destroy' => 'struktur.destroy',

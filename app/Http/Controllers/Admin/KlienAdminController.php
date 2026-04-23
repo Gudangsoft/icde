@@ -78,6 +78,22 @@ class KlienAdminController extends Controller
         return redirect()->route('admin.klien.index')->with('sukses', 'Klien berhasil dihapus.');
     }
 
+    public function bulkDestroy(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (empty($ids)) {
+            return back()->with('error', 'Tidak ada data yang dipilih.');
+        }
+
+        $items = Klien::whereIn('id', $ids)->get();
+        foreach ($items as $item) {
+            if ($item->logo) Storage::disk('public')->delete($item->logo);
+            $item->delete();
+        }
+
+        return back()->with('sukses', count($ids) . ' klien berhasil dihapus.');
+    }
+
     public function updateLogo(Request $request, Klien $klien)
     {
         $request->validate(['logo' => 'required|image|max:2048']);
