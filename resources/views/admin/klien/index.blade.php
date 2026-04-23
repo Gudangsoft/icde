@@ -61,10 +61,15 @@
         </div>
     </div>
 
+<form id="bulkDeleteForm" action="{{ route('admin.klien.bulk-destroy') }}" method="POST">
+    @csrf
 <div class="admin-card">
     <div class="admin-card-header">
         <h5><i class="bi bi-building-fill me-2"></i>Daftar Klien ({{ $klien->count() }})</h5>
         <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn-admin btn-danger" id="btnBulkDelete" style="display:none;background:#dc2626;color:white;border:none;" onclick="confirmBulkDelete()">
+                <i class="bi bi-trash-fill me-1"></i>Hapus Terpilih
+            </button>
             <a href="{{ route('admin.klien.export') }}" class="btn-admin btn-light-admin">
                 <i class="bi bi-file-earmark-excel me-1" style="color:#16a34a;"></i>Export Excel
             </a>
@@ -80,6 +85,7 @@
         <table class="table-admin table">
             <thead>
                 <tr>
+                    <th width="30"><input type="checkbox" id="checkAll" style="cursor:pointer;"></th>
                     <th width="50">#</th>
                     <th width="70">Logo</th>
                     <th>Nama Klien</th>
@@ -92,6 +98,7 @@
             <tbody>
                 @forelse($klien as $i => $item)
                 <tr>
+                    <td><input type="checkbox" name="ids[]" class="checkItem" value="{{ $item->id }}" style="cursor:pointer;"></td>
                     <td>{{ $i + 1 }}</td>
                     <td>
                         <div class="logo-cell" ondblclick="document.getElementById('logoInput{{ $item->id }}').click()"
@@ -141,6 +148,42 @@
 @endsection
 
 @push('scripts')
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkAll = document.getElementById('checkAll');
+    const checkItems = document.querySelectorAll('.checkItem');
+    const btnBulkDelete = document.getElementById('btnBulkDelete');
+
+    if(checkAll && checkItems.length > 0) {
+        checkAll.addEventListener('change', function() {
+            checkItems.forEach(item => item.checked = this.checked);
+            toggleBulkDeleteBtn();
+        });
+
+        checkItems.forEach(item => {
+            item.addEventListener('change', toggleBulkDeleteBtn);
+        });
+    }
+
+    function toggleBulkDeleteBtn() {
+        const anyChecked = Array.from(checkItems).some(item => item.checked);
+        if(btnBulkDelete) btnBulkDelete.style.display = anyChecked ? 'inline-block' : 'none';
+        
+        if (checkAll) {
+            const allChecked = Array.from(checkItems).every(item => item.checked);
+            checkAll.checked = allChecked && checkItems.length > 0;
+        }
+    }
+});
+
+function confirmBulkDelete() {
+    if(confirm('Hapus semua data terpilih?')) {
+        document.getElementById('bulkDeleteForm').submit();
+    }
+}
+</script>
+
 <script>
 function uploadLogo(input, id, url) {
     if (!input.files || !input.files[0]) return;

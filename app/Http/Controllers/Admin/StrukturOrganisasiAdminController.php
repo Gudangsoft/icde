@@ -92,4 +92,17 @@ class StrukturOrganisasiAdminController extends Controller
             'aktif'     => isset($v['aktif']) ? (bool)$v['aktif'] : false,
         ];
     }
+
+    public function bulkDestroy(\Illuminate\Http\Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (empty($ids)) return back()->with('error', 'Tidak ada data yang dipilih.');
+
+        $items = \App\Models\StrukturOrganisasi::whereIn('id', $ids)->get();
+        foreach ($items as $item) {
+                if ($item->foto) \Illuminate\Support\Facades\Storage::disk('public')->delete($item->foto);
+            $item->delete();
+        }
+        return back()->with('sukses', count($ids) . ' data berhasil dihapus.');
+    }
 }

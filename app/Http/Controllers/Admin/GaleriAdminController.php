@@ -155,4 +155,17 @@ class GaleriAdminController extends Controller
         return redirect()->route('admin.galeri.index')
             ->with('sukses', "Berhasil mengimpor {$imported} foto dari proyek ke galeri.");
     }
+
+    public function bulkDestroy(\Illuminate\Http\Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (empty($ids)) return back()->with('error', 'Tidak ada data yang dipilih.');
+
+        $items = \App\Models\Galeri::whereIn('id', $ids)->get();
+        foreach ($items as $item) {
+                if ($item->gambar) \Illuminate\Support\Facades\Storage::disk('public')->delete($item->gambar);
+            $item->delete();
+        }
+        return back()->with('sukses', count($ids) . ' data berhasil dihapus.');
+    }
 }

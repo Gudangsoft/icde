@@ -76,4 +76,17 @@ class LayananAdminController extends Controller
         $layanan->delete();
         return redirect()->route('admin.layanan.index')->with('sukses', 'Layanan berhasil dihapus.');
     }
+
+    public function bulkDestroy(\Illuminate\Http\Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (empty($ids)) return back()->with('error', 'Tidak ada data yang dipilih.');
+
+        $items = \App\Models\Layanan::whereIn('id', $ids)->get();
+        foreach ($items as $item) {
+                if ($item->gambar) \Illuminate\Support\Facades\Storage::disk('public')->delete($item->gambar);
+            $item->delete();
+        }
+        return back()->with('sukses', count($ids) . ' data berhasil dihapus.');
+    }
 }

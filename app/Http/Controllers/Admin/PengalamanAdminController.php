@@ -294,5 +294,17 @@ class PengalamanAdminController extends Controller
 
         return redirect()->route('admin.pengalaman.index')->with('sukses', $msg);
     }
-}
 
+    public function bulkDestroy(\Illuminate\Http\Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (empty($ids)) return back()->with('error', 'Tidak ada data yang dipilih.');
+
+        $items = \App\Models\Pengalaman::whereIn('id', $ids)->get();
+        foreach ($items as $item) {
+                if ($item->logo) \Illuminate\Support\Facades\Storage::disk('public')->delete($item->logo);
+            $item->delete();
+        }
+        return back()->with('sukses', count($ids) . ' data berhasil dihapus.');
+    }
+}

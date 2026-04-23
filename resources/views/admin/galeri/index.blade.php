@@ -28,10 +28,15 @@
         </div>
     </div>
 
+<form id="bulkDeleteForm" action="{{ route('admin.galeri.bulk-destroy') }}" method="POST">
+    @csrf
 <div class="admin-card">
     <div class="admin-card-header">
         <h5><i class="bi bi-images me-2"></i>Galeri Foto ({{ $galeri->count() }})</h5>
         <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn-admin btn-danger" id="btnBulkDelete" style="display:none;background:#dc2626;color:white;border:none;" onclick="confirmBulkDelete()">
+                <i class="bi bi-trash-fill me-1"></i>Hapus Terpilih
+            </button>
             <button type="button" class="btn-admin btn-light-admin" data-bs-toggle="modal" data-bs-target="#importModal">
                 <i class="bi bi-download me-1"></i>Import dari Proyek
             </button>
@@ -178,6 +183,42 @@
 </div>
 
 @push('scripts')
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkAll = document.getElementById('checkAll');
+    const checkItems = document.querySelectorAll('.checkItem');
+    const btnBulkDelete = document.getElementById('btnBulkDelete');
+
+    if(checkAll && checkItems.length > 0) {
+        checkAll.addEventListener('change', function() {
+            checkItems.forEach(item => item.checked = this.checked);
+            toggleBulkDeleteBtn();
+        });
+
+        checkItems.forEach(item => {
+            item.addEventListener('change', toggleBulkDeleteBtn);
+        });
+    }
+
+    function toggleBulkDeleteBtn() {
+        const anyChecked = Array.from(checkItems).some(item => item.checked);
+        if(btnBulkDelete) btnBulkDelete.style.display = anyChecked ? 'inline-block' : 'none';
+        
+        if (checkAll) {
+            const allChecked = Array.from(checkItems).every(item => item.checked);
+            checkAll.checked = allChecked && checkItems.length > 0;
+        }
+    }
+});
+
+function confirmBulkDelete() {
+    if(confirm('Hapus semua data terpilih?')) {
+        document.getElementById('bulkDeleteForm').submit();
+    }
+}
+</script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const selectAll = document.getElementById('selectAll');

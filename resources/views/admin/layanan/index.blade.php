@@ -29,6 +29,8 @@
         </div>
     </div>
 
+<form id="bulkDeleteForm" action="{{ route('admin.layanan.bulk-destroy') }}" method="POST">
+    @csrf
 <div class="admin-card">
     <div class="admin-card-header">
         <h5><i class="bi bi-briefcase-fill me-2"></i>Daftar Layanan ({{ $layanan->count() }})</h5>
@@ -40,6 +42,7 @@
         <table class="table-admin table">
             <thead>
                 <tr>
+                    <th width="30"><input type="checkbox" id="checkAll" style="cursor:pointer;"></th>
                     <th width="50">#</th>
                     <th width="60">Ikon</th>
                     <th>Judul Layanan</th>
@@ -52,6 +55,7 @@
             <tbody>
                 @forelse($layanan as $i => $item)
                 <tr>
+                    <td><input type="checkbox" name="ids[]" class="checkItem" value="{{ $item->id }}" style="cursor:pointer;"></td>
                     <td>{{ $i + 1 }}</td>
                     <td>
                         @if($item->ikon)
@@ -87,3 +91,42 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkAll = document.getElementById('checkAll');
+    const checkItems = document.querySelectorAll('.checkItem');
+    const btnBulkDelete = document.getElementById('btnBulkDelete');
+
+    if(checkAll && checkItems.length > 0) {
+        checkAll.addEventListener('change', function() {
+            checkItems.forEach(item => item.checked = this.checked);
+            toggleBulkDeleteBtn();
+        });
+
+        checkItems.forEach(item => {
+            item.addEventListener('change', toggleBulkDeleteBtn);
+        });
+    }
+
+    function toggleBulkDeleteBtn() {
+        const anyChecked = Array.from(checkItems).some(item => item.checked);
+        if(btnBulkDelete) btnBulkDelete.style.display = anyChecked ? 'inline-block' : 'none';
+        
+        if (checkAll) {
+            const allChecked = Array.from(checkItems).every(item => item.checked);
+            checkAll.checked = allChecked && checkItems.length > 0;
+        }
+    }
+});
+
+function confirmBulkDelete() {
+    if(confirm('Hapus semua data terpilih?')) {
+        document.getElementById('bulkDeleteForm').submit();
+    }
+}
+</script>
+
+@endpush
