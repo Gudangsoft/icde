@@ -63,10 +63,21 @@
 
 <div class="admin-card">
     <div class="admin-card-header">
-        <h5><i class="bi bi-people-fill me-2"></i>Daftar Tenaga Ahli ({{ $sdm->count() }})</h5>
-        <a href="{{ route('admin.sdm.create') }}" class="btn-admin btn-primary-admin">
-            <i class="bi bi-person-plus-fill me-1"></i>Tambah SDM
-        </a>
+        <h5><i class="bi bi-people-fill me-2"></i>Daftar Tenaga Ahli</h5>
+        <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn-admin btn-danger" id="btnBulkDelete" style="display:none;background:#dc2626;color:white;border:none;" onclick="confirmBulkDelete()">
+                <i class="bi bi-trash-fill me-1"></i>Hapus Terpilih
+            </button>
+            <a href="{{ route('admin.sdm.export') }}" class="btn-admin btn-light-admin">
+                <i class="bi bi-file-earmark-excel me-1" style="color:#16a34a;"></i>Export Excel
+            </a>
+            <button type="button" class="btn-admin btn-light-admin" data-bs-toggle="modal" data-bs-target="#importModal">
+                <i class="bi bi-file-earmark-arrow-up me-1" style="color:#d97706;"></i>Import Excel
+            </button>
+            <a href="{{ route('admin.sdm.create') }}" class="btn-admin btn-primary-admin">
+                <i class="bi bi-plus-circle-fill me-1"></i>Tambah SDM
+            </a>
+        </div>
     </div>
     <div class="admin-card-body">
         <table class="table-admin table">
@@ -142,11 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleBulkDeleteBtn() {
         const anyChecked = Array.from(checkItems).some(item => item.checked);
         if(btnBulkDelete) btnBulkDelete.style.display = anyChecked ? 'inline-block' : 'none';
-        
-        if (checkAll) {
-            const allChecked = Array.from(checkItems).every(item => item.checked);
-            checkAll.checked = allChecked && checkItems.length > 0;
-        }
     }
 });
 

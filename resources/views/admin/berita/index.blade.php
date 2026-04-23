@@ -32,10 +32,15 @@
 
 <div class="admin-card">
     <div class="admin-card-header">
-        <h5><i class="bi bi-newspaper me-2" style="color:#1B6CA8;"></i>Daftar Berita ({{ $berita->total() }})</h5>
-        <a href="{{ route('admin.berita.create') }}" class="btn-admin btn-primary-admin">
-            <i class="bi bi-plus-circle-fill me-1"></i>Tambah Berita
-        </a>
+        <h5><i class="bi bi-newspaper me-2"></i>Daftar Berita</h5>
+        <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn-admin btn-danger" id="btnBulkDelete" style="display:none;background:#dc2626;color:white;border:none;" onclick="confirmBulkDelete()">
+                <i class="bi bi-trash-fill me-1"></i>Hapus Terpilih
+            </button>
+            <a href="{{ route('admin.berita.create') }}" class="btn-admin btn-primary-admin">
+                <i class="bi bi-plus-circle-fill me-1"></i>Tambah Berita
+            </a>
+        </div>
     </div>
 
     @if($berita->isEmpty())
@@ -53,7 +58,8 @@
         <div class="row g-3">
             @foreach($berita as $item)
             <div class="col-md-6 col-lg-4">
-                <div style="border-radius:14px;border:1.5px solid {{ $item->aktif ? '#e2e8f0' : '#fecaca' }};overflow:hidden;background:#fff;transition:all 0.2s;height:100%;display:flex;flex-direction:column;">
+                <div style="border-radius:14px;border:1.5px solid {{ $item->aktif ? '#e2e8f0' : '#fecaca' }};overflow:hidden;background:#fff;transition:all 0.2s;height:100%;display:flex;flex-direction:column;position:relative;">
+                    <input type="checkbox" name="ids[]" class="checkItem" value="{{ $item->id }}" style="position:absolute;top:10px;left:10px;z-index:10;width:20px;height:20px;cursor:pointer;">
 
                     {{-- Gambar --}}
                     <div style="position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#0f172a,#1B6CA8);overflow:hidden;flex-shrink:0;">
@@ -151,11 +157,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleBulkDeleteBtn() {
         const anyChecked = Array.from(checkItems).some(item => item.checked);
         if(btnBulkDelete) btnBulkDelete.style.display = anyChecked ? 'inline-block' : 'none';
-        
-        if (checkAll) {
-            const allChecked = Array.from(checkItems).every(item => item.checked);
-            checkAll.checked = allChecked && checkItems.length > 0;
-        }
     }
 });
 

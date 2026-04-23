@@ -63,7 +63,7 @@
 
 <div class="admin-card">
     <div class="admin-card-header">
-        <h5><i class="bi bi-building-fill me-2"></i>Daftar Klien ({{ $klien->count() }})</h5>
+        <h5><i class="bi bi-building-fill me-2"></i>Daftar Klien</h5>
         <div class="d-flex gap-2 flex-wrap">
             <button type="button" class="btn-admin btn-danger" id="btnBulkDelete" style="display:none;background:#dc2626;color:white;border:none;" onclick="confirmBulkDelete()">
                 <i class="bi bi-trash-fill me-1"></i>Hapus Terpilih
@@ -75,9 +75,10 @@
                 <i class="bi bi-file-earmark-arrow-up me-1" style="color:#d97706;"></i>Import Excel
             </button>
             <a href="{{ route('admin.klien.create') }}" class="btn-admin btn-primary-admin">
-                <i class="bi bi-building-add me-1"></i>Tambah Klien
+                <i class="bi bi-plus-circle-fill me-1"></i>Tambah Klien
             </a>
         </div>
+    </div>
     </div>
     <div class="admin-card-body">
         <table class="table-admin table">
@@ -170,11 +171,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleBulkDeleteBtn() {
         const anyChecked = Array.from(checkItems).some(item => item.checked);
         if(btnBulkDelete) btnBulkDelete.style.display = anyChecked ? 'inline-block' : 'none';
-        
-        if (checkAll) {
-            const allChecked = Array.from(checkItems).every(item => item.checked);
-            checkAll.checked = allChecked && checkItems.length > 0;
-        }
     }
 });
 

@@ -81,23 +81,22 @@
 
 <div class="admin-card">
     <div class="admin-card-header">
-        <h5><i class="bi bi-folder-fill me-2"></i>Daftar Pengalaman
-            <span style="background:#eff6ff;color:#1B6CA8;padding:2px 10px;border-radius:12px;font-size:0.78rem;font-weight:600;margin-left:6px;">{{ $pengalaman->total() }}</span>
-        </h5>
+        <h5><i class="bi bi-folder-fill me-2"></i>Daftar Pengalaman</h5>
         <div class="d-flex gap-2 flex-wrap">
             <button type="button" class="btn-admin btn-danger" id="btnBulkDelete" style="display:none;background:#dc2626;color:white;border:none;" onclick="confirmBulkDelete()">
                 <i class="bi bi-trash-fill me-1"></i>Hapus Terpilih
             </button>
-            <a href="{{ route('admin.pengalaman.export', request()->only('kategori')) }}" class="btn-admin btn-light-admin">
+            <a href="{{ route('admin.pengalaman.export') }}" class="btn-admin btn-light-admin">
                 <i class="bi bi-file-earmark-excel me-1" style="color:#16a34a;"></i>Export Excel
             </a>
             <button type="button" class="btn-admin btn-light-admin" data-bs-toggle="modal" data-bs-target="#importModal">
                 <i class="bi bi-file-earmark-arrow-up me-1" style="color:#d97706;"></i>Import Excel
             </button>
             <a href="{{ route('admin.pengalaman.create') }}" class="btn-admin btn-primary-admin">
-                <i class="bi bi-folder-plus me-1"></i>Tambah Proyek
+                <i class="bi bi-plus-circle-fill me-1"></i>Tambah Pengalaman
             </a>
         </div>
+    </div>
     </div>
     <div class="admin-card-body">
         <table class="table-admin table">
@@ -116,6 +115,7 @@
             <tbody>
                 @forelse($pengalaman as $i => $item)
                 <tr>
+                    <td><input type="checkbox" name="ids[]" class="checkItem" value="{{ $item->id }}" style="cursor:pointer;"></td>
                     <td>{{ $pengalaman->firstItem() + $i }}</td>
                     <td style="font-weight:600;max-width:260px;">{{ Str::limit($item->nama_proyek, 65) }}</td>
                     <td style="font-size:0.83rem;">{{ $item->pemberi_kerja }}</td>
@@ -175,11 +175,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleBulkDeleteBtn() {
         const anyChecked = Array.from(checkItems).some(item => item.checked);
         if(btnBulkDelete) btnBulkDelete.style.display = anyChecked ? 'inline-block' : 'none';
-        
-        if (checkAll) {
-            const allChecked = Array.from(checkItems).every(item => item.checked);
-            checkAll.checked = allChecked && checkItems.length > 0;
-        }
     }
 });
 

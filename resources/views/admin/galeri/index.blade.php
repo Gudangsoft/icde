@@ -31,18 +31,16 @@
 
 <div class="admin-card">
     <div class="admin-card-header">
-        <h5><i class="bi bi-images me-2"></i>Galeri Foto ({{ $galeri->count() }})</h5>
+        <h5><i class="bi bi-image-fill me-2"></i>Daftar Galeri</h5>
         <div class="d-flex gap-2 flex-wrap">
             <button type="button" class="btn-admin btn-danger" id="btnBulkDelete" style="display:none;background:#dc2626;color:white;border:none;" onclick="confirmBulkDelete()">
                 <i class="bi bi-trash-fill me-1"></i>Hapus Terpilih
             </button>
-            <button type="button" class="btn-admin btn-light-admin" data-bs-toggle="modal" data-bs-target="#importModal">
-                <i class="bi bi-download me-1"></i>Import dari Proyek
-            </button>
             <a href="{{ route('admin.galeri.create') }}" class="btn-admin btn-primary-admin">
-                <i class="bi bi-image me-1"></i>Upload Foto
+                <i class="bi bi-plus-circle-fill me-1"></i>Tambah Galeri
             </a>
         </div>
+    </div>
     </div>
     <div class="admin-card-body">
 
@@ -86,6 +84,7 @@
                 @foreach($items as $item)
                 <div class="col-6 col-md-3 col-lg-2">
                     <div style="border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;position:relative;background:#f8fafc;">
+                        <input type="checkbox" name="ids[]" class="checkItem" value="{{ $item->id }}" style="position:absolute;top:5px;left:5px;z-index:10;width:18px;height:18px;cursor:pointer;">
                         @if($item->gambar)
                         <img src="{{ asset('storage/'.$item->gambar) }}" style="width:100%;height:140px;object-fit:cover;">
                         @else
@@ -203,11 +202,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleBulkDeleteBtn() {
         const anyChecked = Array.from(checkItems).some(item => item.checked);
         if(btnBulkDelete) btnBulkDelete.style.display = anyChecked ? 'inline-block' : 'none';
-        
-        if (checkAll) {
-            const allChecked = Array.from(checkItems).every(item => item.checked);
-            checkAll.checked = allChecked && checkItems.length > 0;
-        }
     }
 });
 
