@@ -10,14 +10,10 @@
 </div>
 @endif
 
-
 <div class="admin-card">
     <div class="admin-card-header">
         <h5><i class="bi bi-images me-2"></i>Daftar Slider</h5>
         <div class="d-flex gap-2 flex-wrap">
-            <button type="button" class="btn-admin btn-danger" id="btnBulkDelete" style="display:none;background:#dc2626;color:white;border:none;" onclick="confirmBulkDelete()">
-                <i class="bi bi-trash-fill me-1"></i>Hapus Terpilih
-            </button>
             <a href="{{ route('admin.slider.create') }}" class="btn-admin btn-primary-admin">
                 <i class="bi bi-plus-circle-fill me-1"></i>Tambah Slider
             </a>
@@ -40,8 +36,7 @@
         <div class="row g-3">
             @foreach($sliders as $item)
             <div class="col-md-6 col-lg-4">
-                <div style="border-radius:14px;border:2px solid {{ $item->aktif ? '#1B6CA8' : '#e2e8f0' }};overflow:hidden;background:#fff;transition:all 0.2s;position:relative;" class="h-100">
-                    <input type="checkbox" name="ids[]" class="checkItem" value="{{ $item->id }}" style="position:absolute;top:10px;left:10px;z-index:10;width:20px;height:20px;cursor:pointer;">
+                <div style="border-radius:14px;border:2px solid {{ $item->aktif ? '#1B6CA8' : '#e2e8f0' }};overflow:hidden;background:#fff;transition:all 0.2s;" class="h-100">
 
                     {{-- Gambar Preview --}}
                     <div style="position:relative;aspect-ratio:16/7;background:linear-gradient(135deg,#0f172a,#1B6CA8);overflow:hidden;">
@@ -83,7 +78,7 @@
                         @if($item->teks_tombol)
                         <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:10px;">
                             <i class="bi bi-link-45deg me-1"></i>Tombol: <strong style="color:#1B6CA8;">{{ $item->teks_tombol }}</strong>
-                            @if($item->link_tombol)→ <code style="font-size:0.7rem;">{{ $item->link_tombol }}</code>@endif
+                            @if($item->link_tombol)' <code style="font-size:0.7rem;">{{ $item->link_tombol }}</code>@endif
                         </div>
                         @endif
 
@@ -101,7 +96,7 @@
                             <form action="{{ route('admin.slider.destroy', $item) }}" method="POST" onsubmit="return confirm('Hapus slide ini?')" style="display:inline;margin-left:auto;">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="btn-sm-admin btn-delete">
-                                    <i class="bi bi-trash-fill"></i>
+                                    <i class="bi bi-trash-fill me-1"></i>Hapus
                                 </button>
                             </form>
                         </div>
@@ -110,65 +105,31 @@
             </div>
             @endforeach
         </div>
-    </div>
 
-    {{-- Tips --}}
-    <div style="margin:0 24px 24px;background:#eff6ff;border-radius:10px;padding:14px 18px;border:1px solid #bfdbfe;font-size:0.8rem;color:#1e40af;">
-        <i class="bi bi-info-circle-fill me-2"></i>
-        Slide ditampilkan secara berurutan sesuai nomor <strong>Urutan</strong>. Hanya slide berstatus <strong>Aktif</strong> yang muncul di halaman beranda.
+        <div class="mt-4">
+            {{ $sliders->links() }}
+        </div>
     </div>
     @endif
 </div>
-<form id="bulkDeleteForm" action="{{ route('admin.slider.bulk-destroy') }}" method="POST" style="display:none;">
-    @csrf
-</form>
 @endsection
 
 @push('scripts')
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const checkAll = document.getElementById('checkAll');
-    const checkItems = document.querySelectorAll('.checkItem');
-    const btnBulkDelete = document.getElementById('btnBulkDelete');
-
-    if(checkAll && checkItems.length > 0) {
-        checkAll.addEventListener('change', function() {
-            checkItems.forEach(item => item.checked = this.checked);
-            toggleBulkDeleteBtn();
-        });
-
-        checkItems.forEach(item => {
-            item.addEventListener('change', toggleBulkDeleteBtn);
-        });
-    }
-
-    function toggleBulkDeleteBtn() {
-        const anyChecked = Array.from(checkItems).some(item => item.checked);
-        if(btnBulkDelete) btnBulkDelete.style.display = anyChecked ? 'inline-block' : 'none';
-    }
-});
-
-function confirmBulkDelete() {
-    const checked = document.querySelectorAll('.checkItem:checked');
-    if (checked.length === 0) {
-        alert('Pilih data yang akan dihapus.');
-        return;
-    }
-    if(confirm('Hapus ' + checked.length + ' data terpilih?')) {
-        const form = document.getElementById('bulkDeleteForm');
-        const csrf = form.querySelector('input[name="_token"]').outerHTML;
-        form.innerHTML = csrf;
-        checked.forEach(item => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'ids[]';
-            input.value = item.value;
-            form.appendChild(input);
-        });
-        form.submit();
-    }
+<style>
+.btn-sm-admin {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s;
 }
-</script>
-
+.btn-edit { background: rgba(27,108,168,0.1); color: #1B6CA8; }
+.btn-edit:hover { background: #1B6CA8; color: #fff; }
+.btn-delete { background: rgba(220,38,38,0.1); color: #dc2626; }
+.btn-delete:hover { background: #dc2626; color: #fff; }
+</style>
 @endpush
