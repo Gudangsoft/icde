@@ -141,11 +141,12 @@ class KlienAdminController extends Controller
         $filename = 'klien_' . date('Ymd_His') . '.xlsx';
         $writer = new Xlsx($spreadsheet);
 
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Cache-Control: max-age=0');
-        $writer->save('php://output');
-        exit;
+        return response()->streamDownload(function() use ($writer) {
+            $writer->save('php://output');
+        }, $filename, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Cache-Control' => 'max-age=0',
+        ]);
     }
 
     // ── TEMPLATE IMPORT ──────────────────────────────────────
@@ -176,18 +177,19 @@ class KlienAdminController extends Controller
         }
 
         $writer = new Xlsx($spreadsheet);
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="template_import_klien.xlsx"');
-        header('Cache-Control: max-age=0');
-        $writer->save('php://output');
-        exit;
+        return response()->streamDownload(function() use ($writer) {
+            $writer->save('php://output');
+        }, 'template_import_klien.xlsx', [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Cache-Control' => 'max-age=0',
+        ]);
     }
 
     // ── IMPORT ──────────────────────────────────────────────
     public function import(Request $request)
     {
         $request->validate([
-            'file_excel' => 'required|file|mimes:xlsx,xls,csv|max:5120',
+            'file_excel' => 'required|file|max:5120',
         ]);
 
         $file = $request->file('file_excel');

@@ -88,16 +88,20 @@ class BeritaAdminController extends Controller
         return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dihapus.');
     }
 
-    public function bulkDestroy(\Illuminate\Http\Request $request)
+        public function bulkDestroy(\Illuminate\Http\Request $request)
     {
         $ids = $request->input('ids', []);
         if (empty($ids)) return back()->with('error', 'Tidak ada data yang dipilih.');
 
         $items = \App\Models\Berita::whereIn('id', $ids)->get();
         foreach ($items as $item) {
-                if ($item->gambar) \Illuminate\Support\Facades\Storage::disk('public')->delete($item->gambar);
+            if ($item->gambar) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($item->gambar);
+            }
             $item->delete();
         }
+        return back()->with('sukses', count($ids) . ' data berhasil dihapus.');
+    }
         return back()->with('sukses', count($ids) . ' data berhasil dihapus.');
     }
 }

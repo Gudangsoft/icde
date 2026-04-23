@@ -71,16 +71,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
             'index' => 'layanan.index', 'create' => 'layanan.create', 'store' => 'layanan.store',
             'edit' => 'layanan.edit', 'update' => 'layanan.update', 'destroy' => 'layanan.destroy',
         ]);
+        Route::get('/sdm/export', [SdmAdminController::class, 'export'])->name('sdm.export');
+        Route::get('/sdm/import/template', [SdmAdminController::class, 'importTemplate'])->name('sdm.import.template');
+        Route::post('/sdm/import', [SdmAdminController::class, 'import'])->name('sdm.import');
         Route::post('/sdm/bulk-delete', [SdmAdminController::class, 'bulkDestroy'])->name('sdm.bulk-destroy');
         Route::resource('/sdm', SdmAdminController::class)->names([
             'index' => 'sdm.index', 'create' => 'sdm.create', 'store' => 'sdm.store',
             'edit' => 'sdm.edit', 'update' => 'sdm.update', 'destroy' => 'sdm.destroy',
         ]);
         // Pengalaman
+        Route::post('/pengalaman/bulk-delete', [PengalamanAdminController::class, 'bulkDestroy'])->name('pengalaman.bulk-destroy');
         Route::get('/pengalaman/export', [PengalamanAdminController::class, 'export'])->name('pengalaman.export');
         Route::get('/pengalaman/import/template', [PengalamanAdminController::class, 'importTemplate'])->name('pengalaman.import.template');
         Route::post('/pengalaman/import', [PengalamanAdminController::class, 'import'])->name('pengalaman.import');
-        Route::post('/pengalaman/bulk-delete', [PengalamanAdminController::class, 'bulkDestroy'])->name('pengalaman.bulk-destroy');
         Route::resource('/pengalaman', PengalamanAdminController::class)->names([
             'index' => 'pengalaman.index', 'create' => 'pengalaman.create', 'store' => 'pengalaman.store',
             'edit' => 'pengalaman.edit', 'update' => 'pengalaman.update', 'destroy' => 'pengalaman.destroy',

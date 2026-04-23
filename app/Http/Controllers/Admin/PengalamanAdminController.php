@@ -113,11 +113,7 @@ class PengalamanAdminController extends Controller
                     $toKeep[] = $img;
                 }
             }
-            // IF we also uploaded new images, they were added to the old ones earlier. Wait, no.
-            // Let's refine.
-            // Replace previous gallery logic if we process hapus_galeri
             $updatedGaleri = $toKeep;
-            // Now add newly uploaded ones
             if ($request->hasFile('galeri_proyek')) {
                 foreach ($request->file('galeri_proyek') as $foto) {
                     $updatedGaleri[] = $foto->store('pengalaman/galeri', 'public');
@@ -188,11 +184,12 @@ class PengalamanAdminController extends Controller
         $filename = 'pengalaman_' . date('Ymd_His') . '.xlsx';
         $writer = new Xlsx($spreadsheet);
 
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Cache-Control: max-age=0');
-        $writer->save('php://output');
-        exit;
+        return response()->streamDownload(function() use ($writer) {
+            $writer->save('php://output');
+        }, $filename, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Cache-Control' => 'max-age=0',
+        ]);
     }
 
     // ── TEMPLATE IMPORT ──────────────────────────────────────
@@ -245,18 +242,19 @@ class PengalamanAdminController extends Controller
         $spreadsheet->setActiveSheetIndex(0);
 
         $writer = new Xlsx($spreadsheet);
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="template_import_pengalaman.xlsx"');
-        header('Cache-Control: max-age=0');
-        $writer->save('php://output');
-        exit;
+        return response()->streamDownload(function() use ($writer) {
+            $writer->save('php://output');
+        }, 'template_import_pengalaman.xlsx', [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Cache-Control' => 'max-age=0',
+        ]);
     }
 
     // ── IMPORT ──────────────────────────────────────────────
     public function import(Request $request)
     {
         $request->validate([
-            'file_excel' => 'required|file|mimes:xlsx,xls,csv|max:5120',
+            'file_excel' => 'required|file|max:5120',
         ]);
 
         $file = $request->file('file_excel');
@@ -302,7 +300,14 @@ class PengalamanAdminController extends Controller
 
         $items = \App\Models\Pengalaman::whereIn('id', $ids)->get();
         foreach ($items as $item) {
-                if ($item->logo) \Illuminate\Support\Facades\Storage::disk('public')->delete($item->logo);
+            if ($item->logo) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($item->logo);
+            }
+            if ($item->galeri_proyek) {
+                foreach ($item->galeri_proyek as $foto) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($foto);
+                }
+            }
             $item->delete();
         }
         return back()->with('sukses', count($ids) . ' data berhasil dihapus.');

@@ -143,6 +143,9 @@
         </table>
     </div>
 </div>
+<form id="bulkDeleteForm" action="{{ route('admin.klien.bulk-destroy') }}" method="POST" style="display:none;">
+    @csrf
+</form>
 @endsection
 
 @push('scripts')
