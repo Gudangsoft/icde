@@ -165,30 +165,35 @@
             @endphp
 
             @if($rootSek)
-            {{-- T-junction: Sekretaris branches LEFT from vertical line below ROOT --}}
-            <div style="display:flex;width:100%;align-items:center;">
-                <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;padding:20px 0 20px 8px;">
-                    <div style="background:#fff;border-top:4px solid var(--icde-secondary);border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,0.08);padding:16px 20px;min-width:150px;max-width:210px;text-align:center;">
-                        @if($rootSek->foto)
-                        <img src="{{ asset('storage/'.$rootSek->foto) }}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:3px solid var(--icde-secondary);margin-bottom:8px;">
-                        @else
-                        <div style="width:52px;height:52px;border-radius:50%;background:rgba(132,204,22,0.1);border:3px solid var(--icde-secondary);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:1.3rem;color:var(--icde-secondary);"><i class="bi bi-person-fill"></i></div>
-                        @endif
-                        <div style="font-weight:700;font-size:0.85rem;color:#1e293b;">{{ $rootSek->nama ?: $rootSek->jabatan }}</div>
-                        @if($rootSek->gelar)<div style="font-size:0.7rem;color:#94a3b8;">{{ $rootSek->gelar }}</div>@endif
-                        <span style="display:inline-block;background:rgba(132,204,22,0.15);color:#4d7c0f;font-size:0.68rem;font-weight:700;padding:3px 10px;border-radius:10px;margin-top:6px;">{{ $rootSek->jabatan }}</span>
+            {{-- T-junction wrapper: single absolute vertical line, no gaps --}}
+            <div style="position:relative;width:100%;display:flex;flex-direction:column;align-items:center;">
+                {{-- ONE continuous vertical line from ROOT bottom to Directors top --}}
+                <div style="position:absolute;left:50%;margin-left:-1px;top:0;bottom:0;width:2px;background:#cbd5e1;"></div>
+                {{-- Sekretaris branch content --}}
+                <div style="position:relative;z-index:1;width:100%;display:flex;align-items:center;padding:28px 0;">
+                    <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;padding-left:8px;">
+                        <div style="background:#fff;border-top:4px solid var(--icde-secondary);border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,0.08);padding:16px 20px;min-width:150px;max-width:210px;text-align:center;">
+                            @if($rootSek->foto)
+                            <img src="{{ asset('storage/'.$rootSek->foto) }}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:3px solid var(--icde-secondary);margin-bottom:8px;">
+                            @else
+                            <div style="width:52px;height:52px;border-radius:50%;background:rgba(132,204,22,0.1);border:3px solid var(--icde-secondary);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:1.3rem;color:var(--icde-secondary);"><i class="bi bi-person-fill"></i></div>
+                            @endif
+                            <div style="font-weight:700;font-size:0.85rem;color:#1e293b;">{{ $rootSek->nama ?: $rootSek->jabatan }}</div>
+                            @if($rootSek->gelar)<div style="font-size:0.7rem;color:#94a3b8;">{{ $rootSek->gelar }}</div>@endif
+                            <span style="display:inline-block;background:rgba(132,204,22,0.15);color:#4d7c0f;font-size:0.68rem;font-weight:700;padding:3px 10px;border-radius:10px;margin-top:6px;">{{ $rootSek->jabatan }}</span>
+                        </div>
+                        <div style="width:40px;height:2px;background:#cbd5e1;flex-shrink:0;"></div>
                     </div>
-                    <div style="width:40px;height:2px;background:#cbd5e1;flex-shrink:0;"></div>
+                    <div style="flex:1;"></div>
                 </div>
-                <div style="width:2px;background:#cbd5e1;align-self:stretch;flex-shrink:0;"></div>
-                <div style="flex:1;"></div>
+                {{-- 28px bottom spacer (line continues here via absolute) --}}
+                <div style="position:relative;z-index:1;height:28px;width:100%;"></div>
             </div>
             @else
             <div style="width:2px;height:28px;background:#cbd5e1;"></div>
             @endif
 
             @if($rootDirs->isNotEmpty())
-            <div style="width:2px;height:28px;background:#cbd5e1;"></div>
 
             {{-- LEVEL 2 row (Directors only) --}}
             <div style="display:flex;align-items:flex-start;justify-content:center;gap:0;position:relative;width:100%;">
