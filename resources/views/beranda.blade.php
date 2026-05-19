@@ -419,13 +419,13 @@
                 {{-- Caption --}}
                 <div style="position:absolute;top:50%;left:8%;right:40%;transform:translateY(-50%);">
                     @if($slide->subjudul)
-                    <div style="display:inline-block;background:rgba(132,204,22,0.18);border:1px solid var(--icde-gold);color:var(--icde-gold);padding:5px 18px;border-radius:20px;font-size:0.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">
-                        <i class="bi bi-award-fill me-1"></i>{{ $slide->subjudul }}
+                    <div style="font-size:clamp(2.4rem,4.5vw,4rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:10px;letter-spacing:.01em;">
+                        <i class="bi bi-award-fill" style="color:var(--icde-gold);font-size:0.55em;vertical-align:middle;margin-right:8px;"></i>{{ $slide->subjudul }}
                     </div>
                     @endif
-                    <h1 style="font-size:clamp(2rem,4vw,3.5rem);font-weight:900;line-height:1.22;margin-bottom:16px;color:{{ $slide->warna_teks === 'dark' ? '#0f172a' : '#fff' }};">
+                    <p style="font-size:clamp(1rem,1.6vw,1.25rem);font-weight:600;line-height:1.6;margin-bottom:20px;color:rgba(255,255,255,0.88);max-width:540px;">
                         {!! nl2br(e($slide->judul)) !!}
-                    </h1>
+                    </p>
                     @if($slide->deskripsi)
                     <div style="font-size:1.1rem;font-weight:500;line-height:1.8;max-width:600px;margin-bottom:28px;color:{{ $slide->warna_teks === 'dark' ? '#334155' : 'rgba(255,255,255,0.95)' }};">
                         {!! $slide->deskripsi !!}

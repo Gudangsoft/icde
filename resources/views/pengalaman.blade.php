@@ -308,7 +308,6 @@
                     <i class="bi bi-check-lg"></i>
                 </div>
                 <span class="cat-name">{{ $kat }}</span>
-                <span class="cat-count">{{ $countPerKat[$kat] }} Proyek</span>
                 <span style="font-size: 0.8rem; opacity: 0.85; margin-top: 4px; font-weight: 500;">
                     Selengkapnya <i class="bi bi-arrow-right"></i>
                 </span>
@@ -335,8 +334,7 @@
                     <a href="{{ route('pengalaman', ['kategori' => $kat]) }}"
                        class="sidebar-cat-item {{ $activeKat == $kat ? 'active' : '' }}">
                         <i class="bi bi-chevron-right kat-dot" style="font-size:0.7rem;"></i>
-                        <span style="flex:1;">{{ $kat }}</span>
-                        <span style="font-size:0.72rem;font-weight:700;background:{{ $activeKat == $kat ? 'var(--icde-primary)' : '#e8edf5' }};color:{{ $activeKat == $kat ? '#fff' : '#64748b' }};padding:1px 7px;border-radius:10px;flex-shrink:0;">{{ $countPerKat[$kat] }}</span>
+                        {{ $kat }}
                     </a>
                     @endif
                     @endforeach
