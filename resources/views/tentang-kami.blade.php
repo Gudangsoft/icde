@@ -171,30 +171,56 @@
                 <div style="display:flex;flex-direction:column;align-items:center;flex:1;padding:0 8px;min-width:180px;">
                     <div style="width:2px;height:28px;background:#cbd5e1;"></div>
 
-                    {{-- LVL2 BOX --}}
-                    <div style="background:#fff;border-top:4px solid var(--icde-secondary);border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,0.08);padding:16px 20px;min-width:160px;max-width:220px;text-align:center;width:100%;">
-                        @if($lvl2->foto)
-                        <img src="{{ asset('storage/'.$lvl2->foto) }}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:3px solid var(--icde-secondary);margin-bottom:8px;">
-                        @else
-                        <div style="width:52px;height:52px;border-radius:50%;background:rgba(132,204,22,0.1);border:3px solid var(--icde-secondary);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:1.3rem;color:var(--icde-secondary);"><i class="bi bi-person-fill"></i></div>
+                    @php
+                        $sek = $lvl2->children->where('aktif', true)
+                            ->filter(fn($c) => stripos($c->jabatan, 'sekretaris') !== false)
+                            ->first();
+                        $lvl3Children = $lvl2->children->where('aktif', true)
+                            ->filter(fn($c) => stripos($c->jabatan, 'sekretaris') === false);
+                    @endphp
+
+                    {{-- LVL2 BOX + optional Sekretaris to the right --}}
+                    <div style="display:flex;align-items:center;justify-content:center;">
+                        <div style="background:#fff;border-top:4px solid var(--icde-secondary);border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,0.08);padding:16px 20px;min-width:160px;max-width:220px;text-align:center;">
+                            @if($lvl2->foto)
+                            <img src="{{ asset('storage/'.$lvl2->foto) }}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:3px solid var(--icde-secondary);margin-bottom:8px;">
+                            @else
+                            <div style="width:52px;height:52px;border-radius:50%;background:rgba(132,204,22,0.1);border:3px solid var(--icde-secondary);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:1.3rem;color:var(--icde-secondary);"><i class="bi bi-person-fill"></i></div>
+                            @endif
+                            <div style="font-weight:700;font-size:0.85rem;color:#1e293b;">{{ $lvl2->nama ?: $lvl2->jabatan }}</div>
+                            @if($lvl2->gelar)<div style="font-size:0.7rem;color:#94a3b8;">{{ $lvl2->gelar }}</div>@endif
+                            <span style="display:inline-block;background:rgba(132,204,22,0.15);color:#4d7c0f;font-size:0.68rem;font-weight:700;padding:3px 10px;border-radius:10px;margin-top:6px;">{{ $lvl2->jabatan }}</span>
+                        </div>
+
+                        @if($sek)
+                        {{-- Horizontal connector --}}
+                        <div style="width:36px;height:2px;background:#cbd5e1;flex-shrink:0;"></div>
+                        {{-- Sekretaris box beside Direktur Utama --}}
+                        <div style="background:#fff;border-top:4px solid #f59e0b;border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.07);padding:12px 14px;text-align:center;min-width:130px;max-width:180px;">
+                            @if($sek->foto)
+                            <img src="{{ asset('storage/'.$sek->foto) }}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #f59e0b;margin-bottom:6px;">
+                            @else
+                            <div style="width:40px;height:40px;border-radius:50%;background:rgba(245,158,11,0.1);border:2px solid #f59e0b;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:1rem;color:#f59e0b;"><i class="bi bi-person-fill"></i></div>
+                            @endif
+                            <div style="font-weight:700;font-size:0.8rem;color:#1e293b;">{{ $sek->nama ?: $sek->jabatan }}</div>
+                            @if($sek->gelar)<div style="font-size:0.68rem;color:#94a3b8;">{{ $sek->gelar }}</div>@endif
+                            <span style="display:inline-block;background:rgba(245,158,11,0.15);color:#92400e;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:8px;margin-top:4px;">{{ $sek->jabatan }}</span>
+                        </div>
                         @endif
-                        <div style="font-weight:700;font-size:0.85rem;color:#1e293b;">{{ $lvl2->nama ?: $lvl2->jabatan }}</div>
-                        @if($lvl2->gelar)<div style="font-size:0.7rem;color:#94a3b8;">{{ $lvl2->gelar }}</div>@endif
-                        <span style="display:inline-block;background:rgba(132,204,22,0.15);color:#4d7c0f;font-size:0.68rem;font-weight:700;padding:3px 10px;border-radius:10px;margin-top:6px;">{{ $lvl2->jabatan }}</span>
                     </div>
 
-                    @if($lvl2->children->where('aktif',true)->isNotEmpty())
+                    @if($lvl3Children->isNotEmpty())
                     <div style="width:2px;height:24px;background:#cbd5e1;"></div>
 
-                    {{-- LEVEL 3 row --}}
+                    {{-- LEVEL 3 row (Directors only, Sekretaris shown beside parent above) --}}
                     <div style="display:flex;align-items:flex-start;justify-content:center;gap:0;position:relative;width:100%;">
-                        @php $countLvl3 = $lvl2->children->where('aktif',true)->count(); @endphp
+                        @php $countLvl3 = $lvl3Children->count(); @endphp
                         @if($countLvl3 > 1)
                         @php $offsetLvl3 = 100 / ($countLvl3 * 2); @endphp
                         <div style="position:absolute;top:0;left:{{ $offsetLvl3 }}%;right:{{ $offsetLvl3 }}%;height:2px;background:#cbd5e1;"></div>
                         @endif
 
-                        @foreach($lvl2->children->where('aktif',true) as $lvl3)
+                        @foreach($lvl3Children as $lvl3)
                         <div style="display:flex;flex-direction:column;align-items:center;flex:1;padding:0 6px;min-width:140px;">
                             <div style="width:2px;height:24px;background:#cbd5e1;"></div>
 

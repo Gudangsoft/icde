@@ -335,7 +335,8 @@
                     <a href="{{ route('pengalaman', ['kategori' => $kat]) }}"
                        class="sidebar-cat-item {{ $activeKat == $kat ? 'active' : '' }}">
                         <i class="bi bi-chevron-right kat-dot" style="font-size:0.7rem;"></i>
-                        {{ $kat }}
+                        <span style="flex:1;">{{ $kat }}</span>
+                        <span style="font-size:0.72rem;font-weight:700;background:{{ $activeKat == $kat ? 'var(--icde-primary)' : '#e8edf5' }};color:{{ $activeKat == $kat ? '#fff' : '#64748b' }};padding:1px 7px;border-radius:10px;flex-shrink:0;">{{ $countPerKat[$kat] }}</span>
                     </a>
                     @endif
                     @endforeach

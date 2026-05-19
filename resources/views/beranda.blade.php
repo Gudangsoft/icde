@@ -750,7 +750,7 @@
 <section class="section section-alt">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title text-center">{{ $settings['section_testimoni_title'] ?? 'Apa Kata Klien Kami' }}</h2>
+            <h2 class="section-title text-center">{{ $settings['section_testimoni_title'] ?? 'KATA KLIEN KAMI' }}</h2>
         </div>
         <div class="row g-4">
             @foreach($testimoni as $t)

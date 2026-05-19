@@ -19,7 +19,7 @@
 <section class="section">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title text-center">Apa Kata Klien Kami</h2>
+            <h2 class="section-title text-center">KATA KLIEN KAMI</h2>
         </div>
 
         <style>

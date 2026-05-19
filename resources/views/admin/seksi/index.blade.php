@@ -253,7 +253,7 @@ $sections = [
         'desc'  => 'Ulasan dari klien/mitra',
         'show_key' => 'show_section_testimoni',
         'fields' => [
-            ['key' => 'section_testimoni_title', 'label' => 'Teks Judul', 'ph' => 'Apa Kata Klien Kami'],
+            ['key' => 'section_testimoni_title', 'label' => 'Teks Judul', 'ph' => 'KATA KLIEN KAMI'],
         ],
     ],
     [
