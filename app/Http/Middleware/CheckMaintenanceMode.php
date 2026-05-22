@@ -26,8 +26,8 @@ class CheckMaintenanceMode
             $maintenanceMessage = 'Mohon maaf, website sedang dalam proses pemeliharaan. Silakan coba kembali beberapa saat lagi.';
         }
 
-        // Allow admin to bypass maintenance mode on the main web page
-        if ($maintenanceMode && !(Auth::check() && Auth::user()->role === 'admin')) {
+        // Allow admin and viewer to bypass maintenance mode on the main web page
+        if ($maintenanceMode && !(Auth::check() && in_array(Auth::user()->role, ['admin', 'viewer']))) {
             return response()->view('maintenance', [
                 'maintenanceTitle' => $maintenanceTitle,
                 'maintenanceMessage' => $maintenanceMessage,
