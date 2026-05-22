@@ -4,6 +4,25 @@
 
 @section('content')
 
+@if(Auth::user()->role === 'viewer')
+{{-- Viewer dashboard --}}
+<div style="max-width:520px;margin:60px auto 0;text-align:center;">
+    <div class="stat-card p-5">
+        <div style="font-size:3rem;margin-bottom:16px;">👀</div>
+        <h4 style="font-weight:800;color:#1e293b;margin-bottom:8px;">Selamat Datang!</h4>
+        <p style="color:#64748b;font-size:0.95rem;margin-bottom:6px;">{{ Auth::user()->name }}</p>
+        <span style="display:inline-block;background:rgba(245,158,11,0.12);color:#d97706;font-size:0.78rem;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:24px;">Akun Viewer</span>
+        <p style="color:#94a3b8;font-size:0.88rem;margin-bottom:28px;">Akun Anda memiliki akses <strong>Viewer</strong>. Anda hanya dapat melihat tampilan website.</p>
+        <a href="{{ route('beranda') }}" target="_blank"
+           class="btn-admin btn-primary-admin"
+           style="display:inline-flex;gap:8px;font-size:1rem;padding:12px 28px;">
+            <i class="bi bi-box-arrow-up-right"></i> Lihat Website
+        </a>
+    </div>
+</div>
+@else
+{{-- Admin dashboard --}}
+
 <!-- Stats Grid -->
 <div class="row g-3 mb-4">
     @foreach([
@@ -112,5 +131,7 @@
         </div>
     </div>
 </div>
+
+@endif
 
 @endsection

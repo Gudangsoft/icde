@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\BeritaAdminController;
 use App\Http\Controllers\Admin\SliderAdminController;
 use App\Http\Controllers\Admin\StrukturOrganisasiAdminController;
 use App\Http\Controllers\Admin\SeksiController;
+use App\Http\Controllers\Admin\PenggunaAdminController;
 
 Route::middleware('maintenance')->group(function () {
     Route::get('/', [BerandaController::class, 'index'])->name('beranda');
@@ -147,6 +148,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/struktur', StrukturOrganisasiAdminController::class)->names([
             'index' => 'struktur.index', 'create' => 'struktur.create', 'store' => 'struktur.store',
             'edit' => 'struktur.edit', 'update' => 'struktur.update', 'destroy' => 'struktur.destroy',
+        ]);
+
+        // Pengguna (admin only — viewer is blocked by AdminMiddleware)
+        Route::resource('/pengguna', PenggunaAdminController::class)->except(['show'])->names([
+            'index' => 'pengguna.index', 'create' => 'pengguna.create', 'store' => 'pengguna.store',
+            'edit' => 'pengguna.edit', 'update' => 'pengguna.update', 'destroy' => 'pengguna.destroy',
         ]);
     });
 });

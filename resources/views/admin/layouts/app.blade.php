@@ -390,6 +390,7 @@
             <i class="bi bi-speedometer2"></i> Dashboard
         </a>
 
+        @if(Auth::user()->role === 'admin')
         <div class="nav-section-label mt-2">Konten Halaman</div>
         <a href="{{ route('admin.beranda.index') }}" class="sidebar-link {{ request()->routeIs('admin.beranda*') ? 'active' : '' }}">
             <i class="bi bi-house-fill"></i> Beranda
@@ -397,7 +398,7 @@
         <a href="{{ route('admin.slider.index') }}" class="sidebar-link {{ request()->routeIs('admin.slider*') ? 'active' : '' }}">
             <i class="bi bi-collection-play-fill" style="margin-left:8px; opacity:0.7;"></i> Slider / Banner
         </a>
-        
+
         <a href="{{ route('admin.tentang.edit') }}" class="sidebar-link {{ request()->routeIs('admin.tentang*') ? 'active' : '' }} mt-1">
             <i class="bi bi-info-circle-fill"></i> Tentang Kami
         </a>
@@ -446,7 +447,12 @@
         <a href="{{ route('admin.setting.index') }}" class="sidebar-link {{ request()->routeIs('admin.setting*') ? 'active' : '' }}">
             <i class="bi bi-gear-fill"></i> Konfigurasi Web
         </a>
-        <a href="{{ route('beranda') }}" target="_blank" class="sidebar-link">
+        <a href="{{ route('admin.pengguna.index') }}" class="sidebar-link {{ request()->routeIs('admin.pengguna*') ? 'active' : '' }}">
+            <i class="bi bi-person-gear"></i> Pengguna
+        </a>
+        @endif
+
+        <a href="{{ route('beranda') }}" target="_blank" class="sidebar-link {{ Auth::user()->role === 'viewer' ? 'mt-2' : '' }}">
             <i class="bi bi-box-arrow-up-right"></i> Lihat Website
         </a>
     </nav>
@@ -456,7 +462,7 @@
             <div class="user-avatar"><i class="bi bi-person-fill"></i></div>
             <div class="flex-grow-1 overflow-hidden">
                 <div class="user-name text-truncate">{{ Auth::user()->name }}</div>
-                <div class="user-role">Administrator</div>
+                <div class="user-role">{{ Auth::user()->role === 'viewer' ? 'Viewer' : 'Administrator' }}</div>
             </div>
             <form method="POST" action="{{ route('admin.logout') }}" class="mb-0">
                 @csrf
@@ -479,12 +485,14 @@
         <div class="topbar-title">@yield('page_title', 'Dashboard')</div>
         <div class="d-flex align-items-center gap-3">
             <span style="font-size:0.8rem;color:#94a3b8;">{{ date('d M Y') }}</span>
+            @if(Auth::user()->role === 'admin')
             @php $pb = \App\Models\KontakPesan::where('sudah_dibaca', false)->count(); @endphp
             @if($pb > 0)
             <a href="{{ route('admin.kontak.index') }}" class="position-relative" style="color:#64748b;font-size:1.2rem;">
                 <i class="bi bi-bell-fill"></i>
                 <span style="position:absolute;top:-4px;right:-6px;background:var(--icde-secondary);color:#fff;font-size:0.6rem;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;">{{ $pb }}</span>
             </a>
+            @endif
             @endif
         </div>
     </div>
